@@ -1,0 +1,7 @@
+<?if(count($this->player->getMessages()))foreach ($this->player->getMessages() as $message){?>
+<?if(!$message->viewed){?>
+	<?=$message->message?><br>
+<?}else{?>
+<em><?=$message->message?><br></em>
+<?}?>
+<?}?>

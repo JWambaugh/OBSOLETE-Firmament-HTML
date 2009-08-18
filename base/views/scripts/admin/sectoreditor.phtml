@@ -1,0 +1,42 @@
+
+<h2>Sector Editor:</h2>
+<form action="/admin/saveSector" method="POST">
+Latitude:
+<input type="text" name="latitude" value="<?=$this->sector['latitude']?>" readonly />
+<br>
+Longitude:
+<input type="text" name="longitude" value="<?=$this->sector['longitude']?>" readonly />
+<br>
+
+name:
+<input type="text" name="name" value="<?=$this->sector['name']?>" /><br>
+
+Text:<br>
+<textarea cols="70" rows="10" name="text" ><?=$this->sector['text']['text']?></textarea>
+<br>
+
+
+
+Actions:<br>
+<select name="newActionID" />
+<option></option>
+<?if(count($this->actions))foreach($this->actions as $action){?>
+
+<option value="<?=$action->id?>"><?=$action->name?></option>
+<?}?>
+ : <input type="text" name="newActionParams" />
+ 
+
+<?//current actions
+if(count($this->sector->actions))foreach ($this->sector->actions as $action){?>
+<br> <?=$action->action->name?> : <?=$action->parameters?>
+<?}?>
+
+
+</select>
+
+<br>
+<input type="submit" value="Save" />
+<input type="hidden" name="id" value="<?=$this->sector['id']?>" />
+
+</form>

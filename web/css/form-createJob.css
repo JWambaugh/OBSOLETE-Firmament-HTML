@@ -1,0 +1,91 @@
+/* Create a Job Listing Form */
+
+/* page 1*/
+#createJob1,
+#createJob2,
+#createJob3{
+	background:url('../img/bkg-form.gif') no-repeat top left transparent;
+	height:797px; /* image height - .form padding */
+}
+#jobInfoFS legend,
+#locationFS legend,
+#salaryFS legend{ display:none; }
+
+.form #jobShiftFS,
+.form #jobStatusFS,
+.form #jobTypeFS{
+	border:none;
+	margin-left:90px;	
+	position:relative;
+	top:-10px;
+	width:375px;
+}
+.form #jobStatusFS{ top:-40px; }
+.form #jobShiftFS{ top:-70px; }
+
+.form #jobShiftFS legend,
+.form #jobStatusFS legend,
+.form #jobTypeFS legend{
+	display:inline;
+	font-weight:bold;
+	margin:0 0 0 0;
+	padding-left:30px;
+}
+.form #jobShiftFS input,
+.form #jobStatusFS input,
+.form #jobTypeFS input{
+	clear:left;
+	float:left;
+	width:15px;	
+}
+.form #jobShiftFS label,
+.form #jobStatusFS label,
+.form #jobTypeFS label{
+	clear:none;
+	float:left;
+	font-weight:normal;
+	height:15px;
+	margin:-15px 0 20px 100px;	
+	text-align:left;
+	width:200px;	
+}
+
+#jobInfoFS{ border:0; }
+#salaryFS{
+	border-top:2px solid #999;
+	margin-top:-85px; 
+	padding-top:20px;
+}
+#locationFS{
+	padding-top:20px;
+}
+.form .buttons input:hover,
+.form .buttons input{
+	background:url('../img/btn-large.gif') no-repeat top left transparent;
+	border:0;
+	color:#fff;
+	cursor:pointer;
+	font-weight:bold;
+	height:45px;
+	padding-bottom:15px;
+	width:188px;
+}
+
+/* page 2 */
+#mediaFS legend,
+#descriptionFS legend,
+#requirementsFS legend{ display:none; }
+
+#descriptionFS label{
+	text-align:left;
+	
+}
+#descriptionFS textarea{
+	height:250px;
+	width:530px;
+}
+
+/* page 3 */
+#contactFS legend{ display:none; }
+#postalFS input[type="checkbox"],
+#contactFS input[type="checkbox"]{ width:18px; }

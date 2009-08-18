@@ -1,0 +1,4 @@
+#dont allow any spiders until we go live
+
+User-agent: *
+Disallow: /

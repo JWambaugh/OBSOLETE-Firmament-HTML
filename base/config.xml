@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<configdata>
+	<development>
+		<database>
+	        <adapter>PDO_MYSQL</adapter>
+        	<config>
+            	<host>localhost</host>
+            	<username>firmament</username>
+            	<password>!firmament1</password>
+            	<dbname>firmament</dbname>
+        	</config>
+        </database>    	
+    </development>
+</configdata>

@@ -1,0 +1,22 @@
+<frameset>
+<legend>Inventory</legend>
+<?
+
+if(count($this->player->items))foreach($this->player->items as $item){
+	if(!$item->container_id){
+		echo "<h3>".$item->item->name." (".$item->getWeight()." lbs) </h3>";
+		echo $item->getObject()->getDescription();
+		$options=(array)$item->getObject()->getItemOptions();
+		if(count($options)){
+			echo "<ul>";
+			foreach ($options as $option){
+
+				echo "<li>".$option."</li>";
+			}
+			echo "</ul>";
+		}
+	}
+
+}
+?>
+</frameset>

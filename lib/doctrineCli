@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+
+require_once('Doctrine.php');
+
+spl_autoload_register(array('Doctrine', 'autoload'));
+
+//in order to export we need a database connection
+Doctrine_Manager::connection('mysql://root:elizabeth@localhost/firmament');
+
+Doctrine::createTablesFromModels('../base/models');

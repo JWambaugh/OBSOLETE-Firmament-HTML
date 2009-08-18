@@ -1,0 +1,25 @@
+<?php $sector=$this->getCurrentSector();
+if($sector->id){
+	if($sector->name){
+		$color="#00ff00";
+	}else{
+		$color="#ffffaa";
+	}
+}
+?>
+<div <?=$color? "style='background-color:$color'":""?>>
+<?=$this->x?>:<?=$this->y?><br>
+
+<?=substr($this->getCurrentSector()->name,0,14)?>
+<form action="/admin/editSector" method="POST" >
+<input type="hidden" name="latlong" value="<?=$this->x?>,<?=$this->y?>" />
+
+<input type="hidden" name="id" value="<?=$this->getCurrentSector()->id?>" />
+
+<?=$this->getCurrentSector()->id ? "<".$this->getCurrentSector()->id.">" :""?>
+<br>
+<input type="submit" name="action" value="edit" />
+
+
+</form>
+</div>

@@ -1,0 +1,62 @@
+<script src="/jscripts/prototype.js" type="text/javascript"></script>
+
+<?
+$descriptions=$this->player->getDescriptions();
+$descriptions=implode("<br>\n",(array)$descriptions);
+?>
+<div style="float:left;margin-left:10px">
+<h2>
+<?=$this->player->sector()->name?>
+</h2>
+
+
+<?
+if($opts=$this->player->getOptions()){?>
+	
+	<div>
+		<?foreach($opts as $opt){?>
+		<?=$opt?>
+		<br />
+		<?}?>
+	</div>
+<?}?>
+
+
+<?=$descriptions?><br>
+
+<?=$this->player->sector()->text->text?>
+</div>
+<br style="clear: both;" />
+<div id="messageBox" style="overflow:auto;height:130px;width:400px;border:1px solid #000000">
+<?if(count($this->player->getMessages()))foreach ($this->player->getMessages() as $message){?>
+<?if(!$message->viewed){$message->viewed=1;$message->save();?>
+	<?=$message->message?><br>
+<?}else{?>
+<em><?=$message->message?><br></em>
+<?}?>
+<?}?>
+</div>
+<div>
+<form action="/play/command" method="POST">
+<input type="text" name="command" style="width:400px" id="commandInput"/>
+</form>
+</div>
+<script type="text/javascript">
+$('commandInput').focus();
+function scrollBottom(){
+	$('messageBox').scrollTop=$('messageBox').scrollHeight;
+	
+}
+scrollBottom();
+new Ajax.PeriodicalUpdater('messageBox', '/play/getMessages',
+{
+	method: 'get',
+	frequency: 5,
+	decay: 1,
+	onSuccess: function(){setTimeout("scrollBottom()",100)}
+});
+
+function redirect(url){
+	window.location=url;
+}
+</script>

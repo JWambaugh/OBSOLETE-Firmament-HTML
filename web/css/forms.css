@@ -1,0 +1,180 @@
+/**
+  * Forms
+  **/
+.form{ 
+	padding: 70px 0 0 345px; 
+	position:relative;
+}
+.form i{ color:#f00; }
+.formFooter{ 
+	background:url('../img/bkg-form-bottom.gif') no-repeat top left transparent; 
+	height:61px;
+	margin:0;
+}
+#bkgdText{
+	font:1.4em Arial normal;
+	position:absolute;
+	text-align:center;
+	top:80px;
+	left:105px;
+}
+#bkgdText strong{
+	color:#34679A;
+	font-weight:bold;
+}
+#bkgdText strong span{
+	color:#000;
+	font-size:1.5em;
+}
+.form fieldset{
+	border:none;
+	border-bottom:2px solid #999;
+	float:left;
+	margin-top:10px;
+	padding-bottom:15px;
+	width:560px;
+}
+.form h2{
+	color:#33669A;
+	font-size:24px;
+}
+.form label{
+	clear:left;
+	float:left;
+	font-weight:bold;
+	margin-bottom:10px;
+	text-align:right;
+	width:375px;
+}
+.form input{
+	margin-left:5px;
+	width:175px;
+}
+.form select{
+	margin-left:5px;
+	width:179px;
+}
+.form .helperText,
+.form .legal{
+	color:#666;
+	float:left;
+	font-size:.8em;
+	margin-left:3px;
+}
+.form .buttons{
+	float:left;
+	margin-left:195px;
+	margin-top:10px;
+	width:370px;
+}
+.form .buttons input{
+	background:url('../img/form-btn-up.gif') no-repeat top left transparent;
+	border:0;
+	cursor:pointer;
+	height:45px;
+	width:188px;
+}
+.form .buttons input:hover{ background:url('../img/form-btn-over.gif') no-repeat top left transparent; }
+
+/* specific forms */
+#registrationForm{
+	background:url('../img/bkg-form.gif') no-repeat top left transparent;
+	height:797px; /* image height - .form padding */
+}
+#personalInfoFS legend{ display:none; }
+.form #helperTextEmail{
+	float:none;
+	margin:72px 50px 0 380px;	
+}
+.form #helperTextPostal{
+	float:none;
+	margin:100px 50px 0 380px;	
+}
+.form #helperTextIndustry{
+	margin-left:200px; /*label width - input width */
+	margin-top:-5px;	
+}
+.form #helperTextEducation{
+	margin-left:200px;
+	margin-top:-15px;	
+}
+
+.form .legal{ margin-top:50px; }
+.form .legal a{ 
+	color:#0000ff;
+	text-decoration:none;
+}
+.form #educationDates,
+.form #employmentType{
+	border:none;
+	margin-left:90px;	
+	position:relative;
+	width:375px;
+}
+.form #educationDates legend,
+.form #employmentType legend{
+	font-weight:bold;
+	margin:0 0 0 0px;
+}
+.form #employmentType input{
+	clear:left;
+	float:left;
+	width:15px;	
+}
+.form #employmentType label{
+	clear:none;
+	float:left;
+	font-weight:normal;
+	height:15px;
+	margin:-15px 0 20px 100px;	
+	text-align:left;
+	width:200px;	
+}
+.form #educationFS{ 
+	border:0; 
+	margin-top:20px;
+}
+.form #sp_state{ 
+	clear:both; 
+	margin-left:190px;
+}
+.form #school_id,
+.form #school_other{ 
+	margin-left:195px;
+	margin-top:5px;
+}
+.form #begin_date{ margin-left:105px; }
+.form select#education{ width:223px; }
+.form #educationDates select{
+	width:100px;
+}
+.form #educationDates select,
+.form #educationDates span{
+	position:relative;
+	top:-20px;
+}
+/* end registration form */
+
+/* for the autocomplete */
+div.autocomplete {
+    position:absolute;
+    width:250px;
+    background-color:white;
+    border:1px solid #888;
+    margin:0px;
+    padding:0px;
+}
+div.autocomplete ul {
+    list-style-type:none;
+    margin:0px;
+    padding:0px;
+}
+div.autocomplete ul li.selected { background-color: #ffb;}
+div.autocomplete ul li {
+    list-style-type:none;
+    display:block;
+    margin:0;
+    padding:2px;
+    height:32px;
+	cursor:pointer;
+}
