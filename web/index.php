@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Los_Angeles');
 error_reporting(E_ALL);
 set_include_path('.' .
 PATH_SEPARATOR . '../lib/' .
@@ -31,11 +32,11 @@ class ClassLoader extends Zend_Loader {
 
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //error_reporting(E_WARNING);
-//error_reporting(E_ALL);
+error_reporting(E_ALL);
 //date_default_timezone_set('Europe/London');
 
 //enable zend's autoloading functionality (this way we dont need to include every class file we use
-Zend_Loader::registerAutoload("ClassLoader");
+@Zend_Loader::registerAutoload("ClassLoader");
 // load configuration
 $config = new Zend_Config_Xml('../base/config.xml', 'development');
 $dbConfig = $config->database;

@@ -73,23 +73,43 @@ class PlayController extends Zend_Controller_Action
 
 		}
 		$player->sector()->triggerNpcEvent('onPlayerEnter',array($player));
-		$this->showLocation();
+		$this->view->jsonResponse=array();
+		$this->view->jsonResponse[0]['command']='updateRadar';
+		$this->view->jsonResponse[1]['command']='updateChat';
+		$this->view->jsonResponse[2]['command']='updateLocationDescription';
+		$this->render('json');
+
+
+
+
+	//	$this->showLocation();
 
 	}
 
-	public function getMessagesAction(){
-		if(!$_SESSION['playerID']){
-			return;
+	public function getmessagesAction(){
+		try{
+			if(!$_SESSION['playerID']){
+				return;
+			}
+			$this->initPlayer();
+			//record this player's presence
+			$this->view->player->updated=date('Y-m-d H:i:s', time());
+			$this->view->player->save();
+			
+			$this->view->jsonResponse=array();
+			$this->view->jsonResponse[0]['command']='setMessages';
+			foreach($this->view->player->getMessages() as $message){
+				$msg=array();
+				$msg['id']=$message->id;
+				$msg['message']=$message->message;
+
+				$this->view->jsonResponse[0]['messages'][]=$msg;	
+			}
+			
+			$this->render("json");
+		} catch(Exception $e){
+			echo $e->getMessage();
 		}
-		$this->initPlayer();
-		//record this player's presence
-		$this->view->player->updated=date('Y-m-d H:i:s', time());
-		$this->view->player->save();
-		
-		//$this->initView();
-
-		$this->render("messages");
-
 	}
 
 	public function commandAction(){
@@ -119,7 +139,81 @@ class PlayController extends Zend_Controller_Action
 		}
 	}
 
+	public function getlocationdescriptionAction(){
+		$this->initPlayer();
 
+
+		$this->view->jsonResponse=array();
+		/**
+		 * Trigger our last-minute before-display event
+		 */
+		$this->view->player->triggerAction("onDisplay");
+
+		//add other players to description
+		$players=$this->view->player->sector()->players();
+		$this->view->jsonResponse[0]['command']='updatePlayerList';
+		if(count($players))foreach ($players as $player){
+			if($player->id!=$this->view->player->id){
+				if((time()-strtotime($player->updated))<60)
+					$p=array();
+					$p['name']=$player->name;
+					$p['id']=$player->id;
+					$this->view->jsonResponse[0]['players'][]=$p;
+			}
+		}
+		
+		//display npcs in the area
+		$this->view->jsonResponse[1]['command']='updateNPCs';
+		$spawners=$this->view->player->sector()->spawners;
+		if(count($spawners))foreach ($spawners as $spawner){
+			$npcs=$spawner->npcs;
+					
+			if(count($npcs))foreach($npcs as $npc){
+				$p=array();
+				$p['description']=$npc->getObject()->getDescription();
+				$p['id']=$npc->id;
+				$this->view->jsonResponse[1]['npcs'][]=$p;
+
+			}
+		}
+		$this->view->jsonResponse[2]['command']='setLocationDescripton';
+		$descriptions=$this->view->player->getDescriptions();
+		$this->view->jsonResponse[2]['title']=$this->view->player->sector()->name;
+		$this->view->jsonResponse[2]['playerDescriptions']=$descriptions;
+		$this->view->jsonResponse[2]['description']=$this->view->player->sector()->text->text;
+
+		$this->view->jsonResponse[2]['options']=$this->view->player->getOptions();
+		$this->render('json');
+		
+
+
+	}
+	
+
+	public function getradarAction(){
+		if(!$_SESSION['playerID']){
+			return;
+		}
+		$this->initPlayer();
+		$this->view->jsonResponse=array();
+		$this->view->jsonResponse[0]['command']='setRadar';
+		
+
+		$directions=array('upLeft','up','upRight','left','right','downLeft','down','downRight');
+		
+		foreach($directions as $direction){
+			$t=$this->view->player->sector()->$direction();
+			if($t){
+				$this->view->jsonResponse[0]['directions'][$direction]='1';
+			}else {
+				$this->view->jsonResponse[0]['directions'][$direction]='0';
+
+			}
+		}
+		
+		$this->render('json');
+		$this->view->player->triggerAction("afterDisplay");
+	}
 
 	private function showLocation(){
 

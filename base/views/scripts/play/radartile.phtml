@@ -2,6 +2,7 @@
 <center>
 
 <?
+$buf='';
 if($this->y > $this->center->longitude())$buf.= "S";
 if($this->y < $this->center->longitude())$buf.= "N";
 if($this->x < $this->center->latitude())$buf.= "W";

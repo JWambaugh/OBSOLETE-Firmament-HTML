@@ -2,11 +2,11 @@
 <configdata>
 	<development>
 		<database>
-	        <adapter>PDO_MYSQL</adapter>
+	        <adapter>Pdo_Mysql</adapter>
         	<config>
             	<host>localhost</host>
-            	<username>firmament</username>
-            	<password>!firmament1</password>
+            	<username>root</username>
+            	<password>elizabeth</password>
             	<dbname>firmament</dbname>
         	</config>
         </database>    	

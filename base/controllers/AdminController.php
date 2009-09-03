@@ -14,7 +14,7 @@ class AdminController extends Zend_Controller_Action
 
 
 	//displays a plane
-	public function showPlaneAction(){
+	public function showplaneAction(){
 		$this->initView();
 
 
@@ -25,7 +25,7 @@ class AdminController extends Zend_Controller_Action
 
 
 	//displays a plane
-	public function addPlaneAction(){
+	public function addplaneAction(){
 		$this->initView();
 		$plane=new Plane();
 		$plane->name=$_POST['name'];
@@ -36,7 +36,7 @@ class AdminController extends Zend_Controller_Action
 		$this->showPlaneEditor();
 	}
 	//displays a plane
-	public function selectPlaneAction(){
+	public function selectplaneAction(){
 		$this->initView();
 		$_SESSION['plane']=$_POST['plane'];
 
@@ -44,7 +44,7 @@ class AdminController extends Zend_Controller_Action
 		$this->showPlaneEditor();
 	}
 
-	public function editSectorAction(){
+	public function editsectorAction(){
 		$this->initView();
 		if($_POST['id']){
 			$query=new Doctrine_Query();
@@ -65,7 +65,7 @@ class AdminController extends Zend_Controller_Action
 	}
 
 
-	public function saveSectorAction(){
+	public function savesectorAction(){
 		$query=new Doctrine_Query();
 		$this->initView();
 		if(!isset($_POST['latitude']) || !isset($_POST['longitude'])){
@@ -133,9 +133,9 @@ class AdminController extends Zend_Controller_Action
 		//Zend_Debug::dump($_POST);
 		$this->render("selectPlane");
 		$this->render("addPlane");
-		$this->render('sectoreditor');
+		$this->render('sectorEditor');
 		if($this->view->plane)
-		$this->render("planeviewer");
+		$this->render("planeViewer");
 	}
 
 }

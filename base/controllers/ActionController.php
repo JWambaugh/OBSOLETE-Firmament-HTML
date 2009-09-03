@@ -36,7 +36,8 @@ class ActionController extends Zend_Controller_Action
 					$action->action->init($player,$action->parameters);
 					$event=$_GET['e'];
 					$retval= $action->action->getObject()->$event($_GET['p']);
-
+					//let npcs know about the action
+					$player->sector()->triggerNpcEvent('onPlayerAction',array($player,$action->action));
 				}
 			}
 

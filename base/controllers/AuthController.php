@@ -11,11 +11,15 @@ class AuthController extends Zend_Controller_Action
 	}
 
 	public function loginAction(){
+		
+		$this->initView();
+		$this->view->jsonResponse=array();
 		$query= new Doctrine_Query();
 		$user=$query->from('User u')->where("u.email = ? and u.password = ?")->fetchOne(array($_POST['email'],$_POST['password']));
 		if(!$user){
-			echo "invalid password!";
-			$this->_forward("index");
+		
+			$this->view->jsonResponse[0]['command']='loginFailure';
+			$this->render('json');
 			return;
 		}else{
 			if(count($user->players)){
@@ -30,8 +34,11 @@ class AuthController extends Zend_Controller_Action
 				$user->save();
 				$_SESSION['playerID']=$user->players[0]->id;
 			}
-			
-			$this->_forward("index","play");
+			$this->view->jsonResponse[0]['command']='loginSuccess';
+			$this->view->jsonResponse[0]['playerId']=$_SESSION['playerID'];
+
+			$this->render('json');
+			//$this->_forward("index","play");
 			return ;
 		}
 		

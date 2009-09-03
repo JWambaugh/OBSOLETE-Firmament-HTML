@@ -36,6 +36,14 @@ class BaseNpc {
 	/**
 	 * EVENT HANDLERS
 	 */
+
+	
+	/**
+	 * Called when the npc is first spawned.
+	*/
+	function onSpawn(){
+	}
+
 	
 	/**
 	 * Called each time a system update fires. Used for any tasks that need to be done on a regular timed interval

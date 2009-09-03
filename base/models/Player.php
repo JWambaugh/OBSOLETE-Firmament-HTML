@@ -133,6 +133,7 @@ class Player extends Doctrine_Record
 	
 	public function triggerAction($event,$params=""){
 		$retvals=array();
+		if($params=="")$params=array();
 		if(count($this->sector()->actions))foreach ($this->sector()->actions as $action){
 	//	Zend_Debug::dump($action->action->toArray(1));
 			$action->action->init($this,$action->parameters);
@@ -142,6 +143,7 @@ class Player extends Doctrine_Record
 	}
 	
 	public function triggerItemEvent($event,$params=""){
+		if($params=="")$params=array();
 		$retvals=array();
 		if(count($this->items))foreach ($this->items as $item){
 	//	Zend_Debug::dump($action->action->toArray(1));

@@ -1,0 +1,131 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/jscripts/ext/resources/css/ext-all.css" />
+
+<script src="/jscripts/ext/adapter/ext/ext-base-debug.js"></script>
+<script src="/jscripts/ext/ext-all.js"></script>
+<script src="/jscripts/firmament.js"></script>
+<script>
+Ext.onReady(function(){
+		
+	
+	Firmament.guiObject = new Firmament.Gui('<?=$_SESSION['playerID']?>');
+});
+
+</script>
+
+
+
+<style>
+body{
+	font-family:verdana,helvetica,arial;
+	font-size:12px;
+}
+
+.chatWindow{
+		font-size:10px
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+
+<div id="radar">
+<table border="1">
+	<tr>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="NW" id="upLeftButton" style="width:30px;height:23px"/>
+ </center>
+</div>
+		</td>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="N" id="upButton" style="width:30px;height:23px"/>
+ </center>
+</div>
+		</td>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="NE" id="upRightButton" style="width:30px;height:23px"/>
+ </center>
+</div>
+		</td>
+		</tr>
+	<tr>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="W" id="leftButton" style="width:30px;height:23px" />
+
+ </center>
+</div>
+		</td>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="" disabled style="width:30px;height:23px" />
+
+ </center>
+</div>
+		</td>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="E" id="rightButton" style="width:30px;height:23px" />
+
+ </center>
+</div>
+		</td>
+		</tr>
+	<tr>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="SW" id="downLeftButton" style="width:30px;height:23px" />
+
+ </center>
+</div>
+		</td>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="S" id="downButton" style="width:30px;height:23px" />
+
+ </center>
+</div>
+		</td>
+			<td>
+		<div style="width:30px;height:23px">
+<center>
+
+  	<input type="submit" value="SE" id="downRightButton" style="width:30px;height:23px" />
+
+ </center>
+</div>
+		</td>
+		</tr>
+</table>
+
+
+</div>
+
+
+</body>
+
+</html>

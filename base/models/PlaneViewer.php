@@ -120,7 +120,7 @@ class PlaneViewer{
 		return $this->y++;
 	}
 	public function getCurrentSector(){
-		if($this->planeMap[$this->x][$this->y])
+		if(@$this->planeMap[$this->x][$this->y])
 		return $this->planeMap[$this->x][$this->y];
 		else return $this->emptySector;
 	}
