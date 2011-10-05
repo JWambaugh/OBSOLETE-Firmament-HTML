@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="Firmament.js"></script>
+        
+        <script>
+        
+        function init(){
+            var game=new FGame(new FVector(0,10));
+            game.addCanvas(document.getElementById('canvas'));
+            game.createEntity({
+                type:'dynamic'
+                ,position:new FVector(0,1)
+                ,shapes:[{
+                    type:'circle'
+                    ,width:1
+                    ,height:1
+                    ,radius:1
+                    ,density:1
+                    }]
+                });
+        }
+        </script>
+    </head>
+    <body onload="init();">
+        
+         <canvas id="canvas" width="600" height="400"></canvas>
+        
+        
+        
+        
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<project name="Firmament" default="js" basedir=".">
+    <description>
+        simple example build file
+    </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="external"  location="external"/>
+  <property name="buildDest" location="."/>
+  <target name='js'>
+     <concat destfile="${buildDest}/Firmament.js" fixlastline="yes" eol="lf">
+        <filelist dir="${external}">
+            <file name="Box2dWeb-2.1.a.3.js" />
+        </filelist>
+        <filelist dir="${src}">
+            <file name="Firmament.js" />
+            <file name="polyfill.js" />
+            <file name="FVector.js" />
+            <file name="FRenderable.js" />
+            <file name="FEntity.js" />
+            <file name="FRenderer.js" />
+            <file name="FGame.js" />
+            <file name="FCamera.js" />
+        </filelist>
+     </concat>
+  </target>
+  
+  </project>
