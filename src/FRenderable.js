@@ -8,7 +8,6 @@ FRenderable.prototype={
 		renderer: null
 		,position: new FVector(0,0)
 		,positionBase:'w' //'w' = world based, 'c' = camera based
-		
 };
 
 

@@ -10883,7 +10883,16 @@ delete Box2D.postDefs;
          	,	b2DebugDraw = Box2D.Dynamics.b2DebugDraw
             ;
 
-
+var Firmament={
+		
+		log:function(ob){
+			if(window.console){
+				window.console.log(ob);
+			}
+		}
+		
+		
+}
 
 
 
@@ -10955,7 +10964,6 @@ FRenderable.prototype={
 		renderer: null
 		,position: new FVector(0,0)
 		,positionBase:'w' //'w' = world based, 'c' = camera based
-		
 };
 
 
@@ -10976,7 +10984,8 @@ FRenderable.prototype.getRenderer=function(){
 FRenderable.prototype.setPosition=function(p){
 	this.position = p;
 };
-function FEntity(game,config){
+function FPhysicsEntity(world,config){
+	this.world=world;
     this.config=config;
     var def = new b2BodyDef;
     if(config.position){
@@ -10991,7 +11000,7 @@ function FEntity(game,config){
     else def.type=b2Body.b2_staticBody;
     
     
-    this.body=game.world.CreateBody(def);
+    this.body=this.world.b2world.CreateBody(def);
     //process shape definitions
     for(var x=0;x<config.shapes.length;x++){
         var fixDef=new b2FixtureDef;
@@ -11008,14 +11017,80 @@ function FEntity(game,config){
         fixDef.restitution=config.restitution;
         this.body.CreateFixture(fixDef);
     }
-    window.console.log(this.body);
+    Firmament.log(this.body);
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
     
 }
 
 //FEntity extends FRenderable
-FEntity.prototype = Object.create(FRenderable);
+FPhysicsEntity.prototype = Object.create(FRenderable);
+
+
+
+
+
+function FWorld(){
+	
+	
+	
+}
+
+
+FWorld.prototype={
+		
+	entities: []
+		
+};
+
+
+
+FWorld.prototype.step=function(){};
+
+FWorld.prototype.addEntity=function(ent){
+	this.entities.push(ent);
+};
+
+FWorld.prototype.getAllEntities=function(){
+	return this.entities;
+	
+};
+
+
+
+function FPhysicsWorld(gravity){
+	this.b2world = new b2World(
+            new b2Vec2(gravity.x, gravity.y)    //gravity
+         ,  true                 //allow sleep
+      );
+	
+}
+
+
+//extends FRenderable
+FPhysicsWorld.prototype = Object.create(FWorld);
+
+
+
+FPhysicsWorld.prototype.step=function(){
+	
+	this.b2world.Step(
+            1 / 60   //frame-rate
+         ,  10       //velocity iterations
+         ,  10       //position iterations
+      );
+	//this.world.DrawDebugData();
+	this.b2world.ClearForces();
+}
+
+
+FPhysicsWorld.prototype.createEntity=function(config){
+	Firmament.log(this);
+    var ent= new FPhysicsEntity(this,config);
+    this.addEntity(ent);
+    return ent;
+};
+
 
 
 
@@ -11041,10 +11116,7 @@ function FGame(gravity){
     if(!gravity){
         gravity=new FVector(0,0);
     }
-     this.world = new b2World(
-               new b2Vec2(gravity.x, gravity.y)    //gravity
-            ,  true                 //allow sleep
-         );
+     
      
      /*
        //setup debug draw
@@ -11063,9 +11135,7 @@ function FGame(gravity){
 
 FGame.prototype={
 		 cameras: 	[]
-		,world:		null
-		
-		
+		,worlds:	[]
 };
 
 FGame.prototype.addCamera=function(camera){
@@ -11079,25 +11149,23 @@ FGame.prototype.addCanvas = function(canvas){
 };
 
 
-FGame.prototype.createEntity=function(config){
-    return new FEntity(this,config);
-    
-};
+
+
+FGame.prototype.addWorld=function(world){
+	this.worlds.push(world);
+}
 
 FGame.prototype.step=function() {
-         this.world.Step(
-               1 / 60   //frame-rate
-            ,  10       //velocity iterations
-            ,  10       //position iterations
-         );
-         //this.world.DrawDebugData();
-         this.world.ClearForces();
-         //window.console.log(this.world);
-         //call render on all cameras
-         for(var x=0; x<this.cameras.length;x++){
-        	 this.cameras[x].render();
-         }
-      };
+	for(var x=0;x<this.worlds.length;x++){
+		this.worlds[x].step();
+	}
+	
+	//window.console.log(this.world);
+	//call render on all cameras
+	for(var x=0; x<this.cameras.length;x++){
+		this.cameras[x].render();
+	}
+  };
 
 
 
@@ -11118,8 +11186,13 @@ FCamera.prototype={
 		,game: null
 };
 
-FCamera.prototype.render=function(){
-	
+FCamera.prototype.render=function(worlds){
+	for(var x=0;x<worlds.length;x++){
+		var world = worlds[x];
+		var entities = world.getAllEntities();
+		
+		
+	}
 };
 
 

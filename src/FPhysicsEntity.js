@@ -1,4 +1,5 @@
-function FEntity(game,config){
+function FPhysicsEntity(world,config){
+	this.world=world;
     this.config=config;
     var def = new b2BodyDef;
     if(config.position){
@@ -13,7 +14,7 @@ function FEntity(game,config){
     else def.type=b2Body.b2_staticBody;
     
     
-    this.body=game.world.CreateBody(def);
+    this.body=this.world.b2world.CreateBody(def);
     //process shape definitions
     for(var x=0;x<config.shapes.length;x++){
         var fixDef=new b2FixtureDef;
@@ -30,14 +31,14 @@ function FEntity(game,config){
         fixDef.restitution=config.restitution;
         this.body.CreateFixture(fixDef);
     }
-    window.console.log(this.body);
+    Firmament.log(this.body);
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
     
 }
 
 //FEntity extends FRenderable
-FEntity.prototype = Object.create(FRenderable);
+FPhysicsEntity.prototype = Object.create(FRenderable);
 
 
 

@@ -16,8 +16,13 @@ FCamera.prototype={
 		,game: null
 };
 
-FCamera.prototype.render=function(){
-	
+FCamera.prototype.render=function(worlds){
+	for(var x=0;x<worlds.length;x++){
+		var world = worlds[x];
+		var entities = world.getAllEntities();
+		
+		
+	}
 };
 
 

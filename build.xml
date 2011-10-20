@@ -17,7 +17,9 @@
             <file name="polyfill.js" />
             <file name="FVector.js" />
             <file name="FRenderable.js" />
-            <file name="FEntity.js" />
+            <file name="FPhysicsEntity.js" />
+            <file name="FWorld.js" />
+            <file name="FPhysicsWorld.js" />
             <file name="FRenderer.js" />
             <file name="FGame.js" />
             <file name="FCamera.js" />

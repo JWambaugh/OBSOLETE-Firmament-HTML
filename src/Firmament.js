@@ -17,7 +17,16 @@
          	,	b2DebugDraw = Box2D.Dynamics.b2DebugDraw
             ;
 
-
+var Firmament={
+		
+		log:function(ob){
+			if(window.console){
+				window.console.log(ob);
+			}
+		}
+		
+		
+}
 
 
 

@@ -8,10 +8,7 @@ function FGame(gravity){
     if(!gravity){
         gravity=new FVector(0,0);
     }
-     this.world = new b2World(
-               new b2Vec2(gravity.x, gravity.y)    //gravity
-            ,  true                 //allow sleep
-         );
+     
      
      /*
        //setup debug draw
@@ -30,9 +27,7 @@ function FGame(gravity){
 
 FGame.prototype={
 		 cameras: 	[]
-		,world:		null
-		
-		
+		,worlds:	[]
 };
 
 FGame.prototype.addCamera=function(camera){
@@ -46,24 +41,22 @@ FGame.prototype.addCanvas = function(canvas){
 };
 
 
-FGame.prototype.createEntity=function(config){
-    return new FEntity(this,config);
-    
-};
+
+
+FGame.prototype.addWorld=function(world){
+	this.worlds.push(world);
+}
 
 FGame.prototype.step=function() {
-         this.world.Step(
-               1 / 60   //frame-rate
-            ,  10       //velocity iterations
-            ,  10       //position iterations
-         );
-         //this.world.DrawDebugData();
-         this.world.ClearForces();
-         //window.console.log(this.world);
-         //call render on all cameras
-         for(var x=0; x<this.cameras.length;x++){
-        	 this.cameras[x].render();
-         }
-      };
+	for(var x=0;x<this.worlds.length;x++){
+		this.worlds[x].step();
+	}
+	
+	//window.console.log(this.world);
+	//call render on all cameras
+	for(var x=0; x<this.cameras.length;x++){
+		this.cameras[x].render();
+	}
+  };
 
 

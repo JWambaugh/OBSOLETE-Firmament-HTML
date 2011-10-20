@@ -6,9 +6,11 @@
         <script>
         
         function init(){
-            var game=new FGame(new FVector(0,10));
+            var game=new FGame();
             game.addCanvas(document.getElementById('canvas'));
-            game.createEntity({
+            var world = new FPhysicsWorld(new FVector(0,10));
+            game.addWorld(world);
+            world.createEntity({
                 type:'dynamic'
                 ,position:new FVector(0,1)
                 ,shapes:[{
