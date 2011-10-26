@@ -10930,8 +10930,10 @@ if ( !Function.prototype.bind ) {
 
 
 
+
 //object.create polyfill
 if (!Object.create) {
+	
     Object.create = function (o) {
         if (arguments.length > 1) {
             throw new Error('Object.create implementation only accepts the first parameter.');
@@ -10972,6 +10974,13 @@ FRenderable.prototype.getRelativeCameraPosition=function(cameraPosition){
 	
 };
 
+
+
+FRenderable.prototype.getShapes=function(){
+	
+	return [];
+}
+
 FRenderable.prototype.setRenderer=function(r){
 	this.renderer=r;
 };
@@ -10983,6 +10992,13 @@ FRenderable.prototype.getRenderer=function(){
 
 FRenderable.prototype.setPosition=function(p){
 	this.position = p;
+};
+
+FRenderable.prototype.getPositionX=function(){
+	return this.position.x;
+};
+FRenderable.prototype.getPositionY=function(){
+	return this.position.y;
 };
 function FPhysicsEntity(world,config){
 	this.world=world;
@@ -11021,13 +11037,27 @@ function FPhysicsEntity(world,config){
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
     
+    this.setRenderer(new FWireframeRenderer);
+    
 }
 
 //FEntity extends FRenderable
-FPhysicsEntity.prototype = Object.create(FRenderable);
+FPhysicsEntity.prototype = new FRenderable;
 
+FPhysicsEntity.prototype.getShapes=function(){
+	var shapes = [];
+	var s = this.body.GetFixtureList();
+	while(s){
+		shapes.push(s.GetShape());
+		s = s.GetNext();
+	}
+	return shapes;
+}
 
-
+FPhysicsEntity.prototype.getPosition=function(){
+	
+	return this.body.GetPosition();
+}
 
 
 function FWorld(){
@@ -11067,8 +11097,8 @@ function FPhysicsWorld(gravity){
 }
 
 
-//extends FRenderable
-FPhysicsWorld.prototype = Object.create(FWorld);
+//extends FWorld
+FPhysicsWorld.prototype = new FWorld;
 
 
 
@@ -11103,9 +11133,47 @@ function FRenderer(){
 /**
  * Renders a renderable object
  */
-FRenderer.prototype.render=function(){
+FRenderer.prototype.render=function(cxt,item,camera){
 	
 };
+
+
+
+
+/**
+ * 
+ */
+
+
+
+function FWireframeRenderer(){
+	
+	
+	
+}
+
+
+FWireframeRenderer.prototype = new FRenderer;
+
+
+FWireframeRenderer.prototype.render = function(cxt,item,camera){
+	var shapes=item.getShapes();
+	
+	
+	for(var x=0;x<shapes.length;x++){
+		var s=shapes[x];
+		var pos = item.getPosition();
+		//console.log(pos);
+		if(s.m_radius){
+			cxt.beginPath();
+			cxt.arc(pos.x*100,pos.y*100,s.m_radius*100,0,Math.PI*2,true);
+			cxt.closePath();
+			cxt.stroke();
+		}
+	}
+	
+	//console.log(shapes);
+}
 
 
 /**
@@ -11163,7 +11231,7 @@ FGame.prototype.step=function() {
 	//window.console.log(this.world);
 	//call render on all cameras
 	for(var x=0; x<this.cameras.length;x++){
-		this.cameras[x].render();
+		this.cameras[x].render(this.worlds);
 	}
   };
 
@@ -11175,6 +11243,8 @@ FGame.prototype.step=function() {
  */
 function FCamera(canvas){
 	this.canvas=canvas;
+	this.width=canvas.width;
+	this.height=canvas.height;
 	
 }
 
@@ -11187,14 +11257,23 @@ FCamera.prototype={
 };
 
 FCamera.prototype.render=function(worlds){
+	var cxt = this.getCanvas().getContext('2d');
+	cxt.clearRect(0, 0, this.width, this.height);
 	for(var x=0;x<worlds.length;x++){
 		var world = worlds[x];
 		var entities = world.getAllEntities();
-		
+		for(var y=0;y<entities.length;y++){
+			var ent = entities[y];
+			ent.getRenderer().render(cxt,ent,this);
+		}
 		
 	}
 };
 
+
+FCamera.prototype.getCanvas = function(){
+	return this.canvas;
+}
 
 FCamera.prototype.setGame=function(g){
 	this.game = g;

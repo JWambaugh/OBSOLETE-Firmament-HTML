@@ -35,10 +35,24 @@ function FPhysicsEntity(world,config){
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
     
+    this.setRenderer(new FWireframeRenderer);
+    
 }
 
 //FEntity extends FRenderable
-FPhysicsEntity.prototype = Object.create(FRenderable);
+FPhysicsEntity.prototype = new FRenderable;
 
+FPhysicsEntity.prototype.getShapes=function(){
+	var shapes = [];
+	var s = this.body.GetFixtureList();
+	while(s){
+		shapes.push(s.GetShape());
+		s = s.GetNext();
+	}
+	return shapes;
+}
 
-
+FPhysicsEntity.prototype.getPosition=function(){
+	
+	return this.body.GetPosition();
+}

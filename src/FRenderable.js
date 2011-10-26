@@ -16,6 +16,13 @@ FRenderable.prototype.getRelativeCameraPosition=function(cameraPosition){
 	
 };
 
+
+
+FRenderable.prototype.getShapes=function(){
+	
+	return [];
+}
+
 FRenderable.prototype.setRenderer=function(r){
 	this.renderer=r;
 };
@@ -27,4 +34,11 @@ FRenderable.prototype.getRenderer=function(){
 
 FRenderable.prototype.setPosition=function(p){
 	this.position = p;
+};
+
+FRenderable.prototype.getPositionX=function(){
+	return this.position.x;
+};
+FRenderable.prototype.getPositionY=function(){
+	return this.position.y;
 };

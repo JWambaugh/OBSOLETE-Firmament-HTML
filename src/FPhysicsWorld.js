@@ -10,8 +10,8 @@ function FPhysicsWorld(gravity){
 }
 
 
-//extends FRenderable
-FPhysicsWorld.prototype = Object.create(FWorld);
+//extends FWorld
+FPhysicsWorld.prototype = new FWorld;
 
 
 

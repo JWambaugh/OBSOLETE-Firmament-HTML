@@ -55,7 +55,7 @@ FGame.prototype.step=function() {
 	//window.console.log(this.world);
 	//call render on all cameras
 	for(var x=0; x<this.cameras.length;x++){
-		this.cameras[x].render();
+		this.cameras[x].render(this.worlds);
 	}
   };
 
