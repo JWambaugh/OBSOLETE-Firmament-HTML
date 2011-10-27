@@ -16,6 +16,7 @@ FCamera.prototype={
 		,height: null
 		,canvas: null
 		,game: null
+		,zoom:100
 };
 
 FCamera.prototype.render=function(worlds){
@@ -61,5 +62,7 @@ FCamera.prototype.setHeight=function(h){
     this.height=h;
 };
 
-
+FCamera.prototype.getZoom=function(){
+	return this.zoom;
+}
 

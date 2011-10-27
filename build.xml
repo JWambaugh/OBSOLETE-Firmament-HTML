@@ -22,6 +22,7 @@
             <file name="FPhysicsWorld.js" />
             <file name="FRenderer.js" />
             <file name="FWireframeRenderer.js" />
+             <file name="FSpriteRenderer.js" />
             <file name="FGame.js" />
             <file name="FCamera.js" />
         </filelist>

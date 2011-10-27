@@ -42,3 +42,13 @@ FRenderable.prototype.getPositionX=function(){
 FRenderable.prototype.getPositionY=function(){
 	return this.position.y;
 };
+
+FRenderable.prototype.getCurrentImage=function(){
+	return null;
+}
+
+FRenderable.prototype.getAngle=function(){
+	
+	return 0;
+}
+

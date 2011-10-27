@@ -11000,10 +11000,22 @@ FRenderable.prototype.getPositionX=function(){
 FRenderable.prototype.getPositionY=function(){
 	return this.position.y;
 };
+
+FRenderable.prototype.getCurrentImage=function(){
+	return null;
+}
+
+FRenderable.prototype.getAngle=function(){
+	
+	return 0;
+}
+
 function FPhysicsEntity(world,config){
 	this.world=world;
     this.config=config;
     var def = new b2BodyDef;
+    
+    
     if(config.position){
         def.position.x=config.position.x;
         def.position.y=config.position.y;
@@ -11011,11 +11023,13 @@ function FPhysicsEntity(world,config){
         def.position.x=0;
         def.position.y=0;
     }
-    
+    //def.fixedRotation=false;
     if(config.type=='dynamic')def.type=b2Body.b2_dynamicBody;
     else def.type=b2Body.b2_staticBody;
-    
-    
+    if(config.angle){
+    	def.angle=config.angle;
+    }
+    console.log(def);
     this.body=this.world.b2world.CreateBody(def);
     //process shape definitions
     for(var x=0;x<config.shapes.length;x++){
@@ -11024,7 +11038,7 @@ function FPhysicsEntity(world,config){
         
         if(shape.type=='box'){
             fixDef.shape=new b2PolygonShape();
-            fixDef.shape.SetAsBox(shape.height,shape.width);
+            fixDef.shape.SetAsBox(shape.width,shape.height);
         } else if(shape.type=='circle'){
             fixDef.shape = new b2CircleShape(shape.radius);
         }
@@ -11036,8 +11050,18 @@ function FPhysicsEntity(world,config){
     Firmament.log(this.body);
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
-    
-    this.setRenderer(new FWireframeRenderer);
+    if(config.image){
+    	console.log(typeof(config.image))
+    	if(typeof(config.image)=='string'){
+    		var i= document.createElement('img');
+    		i.src=config.image;
+    		config.image=i;
+    	}
+    	this.currentImage=config.image;
+    	this.setRenderer(new FSpriteRenderer);
+    }else{
+    	this.setRenderer(new FWireframeRenderer);
+    }
     
 }
 
@@ -11057,6 +11081,15 @@ FPhysicsEntity.prototype.getShapes=function(){
 FPhysicsEntity.prototype.getPosition=function(){
 	
 	return this.body.GetPosition();
+}
+
+FPhysicsEntity.prototype.getAngle=function(){
+	
+	return this.body.GetAngle();
+}
+
+FPhysicsEntity.prototype.getCurrentImage=function(){
+	return this.currentImage;
 }
 
 
@@ -11159,21 +11192,81 @@ FWireframeRenderer.prototype = new FRenderer;
 FWireframeRenderer.prototype.render = function(cxt,item,camera){
 	var shapes=item.getShapes();
 	
-	
+	var bodyAngle=item.getAngle();
+	//console.log(bodyAngle);
 	for(var x=0;x<shapes.length;x++){
 		var s=shapes[x];
 		var pos = item.getPosition();
-		//console.log(pos);
-		if(s.m_radius){
-			cxt.beginPath();
-			cxt.arc(pos.x*100,pos.y*100,s.m_radius*100,0,Math.PI*2,true);
-			cxt.closePath();
-			cxt.stroke();
+		
+		if(s.m_vertices){
+			this.renderPolygon(cxt,s,pos,bodyAngle);
+		}
+		else{
+			this.renderCircle(cxt,s,pos);
 		}
 	}
 	
 	//console.log(shapes);
 }
+
+
+FWireframeRenderer.prototype.renderCircle=function(cxt,s,pos){
+	cxt.beginPath();
+	cxt.arc(pos.x*100,pos.y*100,s.m_radius*100,0,Math.PI*2,true);
+	cxt.closePath();
+	cxt.stroke();
+}
+
+//todo: add polygon rotation
+FWireframeRenderer.prototype.renderPolygon=function(cxt,s,pos,angle){
+	cxt.beginPath();
+	
+	var verts=s.GetVertices();
+	for(var x=0;x<verts.length;x++){
+		//console.log((verts[x].x+pos.x)*100);
+		cxt.moveTo((verts[x].x+pos.x)*100,(verts[x].y+pos.y)*100);
+		var y=x+1;
+		if(y>=verts.length){
+			y=0;
+		};
+		cxt.lineTo((verts[y].x+pos.x)*100,(verts[y].y+pos.y)*100);
+	}
+	
+	cxt.closePath();
+	cxt.stroke();
+}
+
+/**
+ * 
+ */
+
+
+
+function FSpriteRenderer(){
+	
+	
+	
+}
+
+
+FSpriteRenderer.prototype = new FRenderer;
+
+
+FSpriteRenderer.prototype.render = function(cxt,item,camera){
+	var shapes=item.getShapes();
+	var pos = item.getPosition();
+	var bodyAngle=item.getAngle();
+	var image=item.getCurrentImage();
+	var x=pos.x*camera.getZoom() - image.width/2;
+	var y=pos.y*camera.getZoom() - image.height/2;
+	cxt.save();
+	cxt.translate(x,y)
+	cxt.rotate(bodyAngle);
+	cxt.drawImage(image,0,0);
+	cxt.restore();
+	//console.log(shapes);
+}
+
 
 
 /**
@@ -11197,6 +11290,10 @@ function FGame(gravity){
         this.world.SetDebugDraw(debugDraw);
         */
         window.setInterval(this.step.bind(this), 1000 / 60);
+        window.setInterval(this.frameCount.bind(this),1000);
+        this.frames=0;
+        this.instep=0;
+        
       
 }
 
@@ -11224,6 +11321,8 @@ FGame.prototype.addWorld=function(world){
 }
 
 FGame.prototype.step=function() {
+	if(this.instep)return;
+	this.instep=true;
 	for(var x=0;x<this.worlds.length;x++){
 		this.worlds[x].step();
 	}
@@ -11233,7 +11332,14 @@ FGame.prototype.step=function() {
 	for(var x=0; x<this.cameras.length;x++){
 		this.cameras[x].render(this.worlds);
 	}
+	this.frames++;
+	this.instep=false;
   };
+  
+  FGame.prototype.frameCount=function(){
+	  console.log(this.frames);
+	  this.frames=0;
+  }
 
 
 
@@ -11254,6 +11360,7 @@ FCamera.prototype={
 		,height: null
 		,canvas: null
 		,game: null
+		,zoom:100
 };
 
 FCamera.prototype.render=function(worlds){
@@ -11299,5 +11406,7 @@ FCamera.prototype.setHeight=function(h){
     this.height=h;
 };
 
-
+FCamera.prototype.getZoom=function(){
+	return this.zoom;
+}
 

@@ -21,6 +21,10 @@ function FGame(gravity){
         this.world.SetDebugDraw(debugDraw);
         */
         window.setInterval(this.step.bind(this), 1000 / 60);
+        window.setInterval(this.frameCount.bind(this),1000);
+        this.frames=0;
+        this.instep=0;
+        
       
 }
 
@@ -48,6 +52,8 @@ FGame.prototype.addWorld=function(world){
 }
 
 FGame.prototype.step=function() {
+	if(this.instep)return;
+	this.instep=true;
 	for(var x=0;x<this.worlds.length;x++){
 		this.worlds[x].step();
 	}
@@ -57,6 +63,13 @@ FGame.prototype.step=function() {
 	for(var x=0; x<this.cameras.length;x++){
 		this.cameras[x].render(this.worlds);
 	}
+	this.frames++;
+	this.instep=false;
   };
+  
+  FGame.prototype.frameCount=function(){
+	  console.log(this.frames);
+	  this.frames=0;
+  }
 
 
