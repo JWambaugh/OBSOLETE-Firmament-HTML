@@ -25,6 +25,7 @@
              <file name="FSpriteRenderer.js" />
             <file name="FGame.js" />
             <file name="FCamera.js" />
+            <file name="FHelper.js" />
         </filelist>
      </concat>
   </target>

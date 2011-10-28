@@ -2,7 +2,7 @@ function FPhysicsEntity(world,config){
 	this.world=world;
     this.config=config;
     var def = new b2BodyDef;
-    
+    var width=0;
     
     if(config.position){
         def.position.x=config.position.x;
@@ -17,6 +17,12 @@ function FPhysicsEntity(world,config){
     if(config.angle){
     	def.angle=config.angle;
     }
+    
+    
+    
+    
+    
+    def.userData=this;
     console.log(def);
     this.body=this.world.b2world.CreateBody(def);
     //process shape definitions
@@ -26,13 +32,17 @@ function FPhysicsEntity(world,config){
         
         if(shape.type=='box'){
             fixDef.shape=new b2PolygonShape();
-            fixDef.shape.SetAsBox(shape.width,shape.height);
+            fixDef.shape.SetAsBox(shape.width/2,shape.height/2);
+            width=shape.width;
         } else if(shape.type=='circle'){
+        	width=shape.radius*2;
             fixDef.shape = new b2CircleShape(shape.radius);
         }
-        fixDef.density=config.density;
-        fixDef.friction=config.friction;
-        fixDef.restitution=config.restitution;
+        
+        fixDef.density=shape.density;
+        fixDef.friction=shape.friction;
+        fixDef.restitution=shape.restitution;
+        console.log(fixDef)
         this.body.CreateFixture(fixDef);
     }
     Firmament.log(this.body);
@@ -47,6 +57,16 @@ function FPhysicsEntity(world,config){
     	}
     	this.currentImage=config.image;
     	this.setRenderer(new FSpriteRenderer);
+    	
+    	if(config.imageScale){
+        	if(config.imageScale=='auto'){
+        		this.imageScale=this.currentImage.width/width;
+        	}else{
+        		this.imageScale=config.imageScale;
+        	}
+        }
+    	
+    	
     }else{
     	this.setRenderer(new FWireframeRenderer);
     }

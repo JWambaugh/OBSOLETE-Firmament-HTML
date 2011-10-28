@@ -8,6 +8,7 @@ FRenderable.prototype={
 		renderer: null
 		,position: new FVector(0,0)
 		,positionBase:'w' //'w' = world based, 'c' = camera based
+		,imageScale:100
 };
 
 
@@ -16,7 +17,9 @@ FRenderable.prototype.getRelativeCameraPosition=function(cameraPosition){
 	
 };
 
-
+FRenderable.prototype.getImageScale=function(){
+	return this.imageScale;
+}
 
 FRenderable.prototype.getShapes=function(){
 	

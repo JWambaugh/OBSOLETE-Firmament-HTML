@@ -27,7 +27,7 @@ FWireframeRenderer.prototype.render = function(cxt,item,camera){
 			this.renderPolygon(cxt,s,pos,bodyAngle);
 		}
 		else{
-			this.renderCircle(cxt,s,pos);
+			this.renderCircle(cxt,s,pos,camera);
 		}
 	}
 	
@@ -35,9 +35,9 @@ FWireframeRenderer.prototype.render = function(cxt,item,camera){
 }
 
 
-FWireframeRenderer.prototype.renderCircle=function(cxt,s,pos){
+FWireframeRenderer.prototype.renderCircle=function(cxt,s,pos,camera){
 	cxt.beginPath();
-	cxt.arc(pos.x*100,pos.y*100,s.m_radius*100,0,Math.PI*2,true);
+	cxt.arc(pos.x*camera.getZoom(),pos.y*camera.getZoom(),s.m_radius*camera.getZoom(),0,Math.PI*2,true);
 	cxt.closePath();
 	cxt.stroke();
 }
