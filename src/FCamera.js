@@ -7,21 +7,20 @@ function FCamera(canvas){
 	this.canvas=canvas;
 	this.width=canvas.width;
 	this.height=canvas.height;
-	
+
+
+	this.game= null;
+	this.zoom=100;
 }
 
-FCamera.prototype={
-		
-		width: null
-		,height: null
-		,canvas: null
-		,game: null
-		,zoom:100
-};
+FCamera.prototype=new FObservable;
+
 
 FCamera.prototype.render=function(worlds){
 	var cxt = this.getCanvas().getContext('2d');
 	cxt.clearRect(0, 0, this.width, this.height);
+
+	this.emit('beginRender',[cxt]);
 	for(var x=0;x<worlds.length;x++){
 		var world = worlds[x];
 		var entities = world.getAllEntities();
@@ -29,8 +28,9 @@ FCamera.prototype.render=function(worlds){
 			var ent = entities[y];
 			ent.getRenderer().render(cxt,ent,this);
 		}
-		
 	}
+	
+	this.emit('endRender',[cxt]);
 };
 
 

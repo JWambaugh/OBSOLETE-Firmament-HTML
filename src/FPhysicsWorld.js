@@ -28,7 +28,7 @@ FPhysicsWorld.prototype.step=function(){
 
 
 FPhysicsWorld.prototype.createEntity=function(config){
-	Firmament.log(this);
+	//Firmament.log(this);
     var ent= new FPhysicsEntity(this,config);
     this.addEntity(ent);
     return ent;

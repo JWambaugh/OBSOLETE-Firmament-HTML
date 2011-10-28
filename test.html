@@ -8,13 +8,16 @@
         function init(){
             var game=new FGame();
             game.addCanvas(document.getElementById('canvas'));
-            var world = new FPhysicsWorld(new FVector(0,1));
+            game.connect('fpsUpdate',function(fps){
+            	document.getElementById('fps').innerHTML=fps;
+            });
+            var world = new FPhysicsWorld(new FVector(0,5));
             game.addWorld(world);
-            for(var x=0;x<1;x++){
+            for(var x=0;x<50;x++){
             world.createEntity({
                 type:'dynamic'
                 
-                ,position:new FVector(1.5,0)
+                ,position:new FVector(Math.random()*3,Math.random()*-2)
                 ,image:'http://profile.ak.fbcdn.net/hprofile-ak-snc4/50514_51074710227_6579_q.jpg'
                 ,imageScale:'auto'
                 ,imageWidth:50
@@ -71,6 +74,6 @@
         
         
         
-        
+        FPS:<span id='fps'></span>
     </body>
 </html>

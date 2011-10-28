@@ -10944,6 +10944,55 @@ if (!Object.create) {
     };
 }
 /**
+ * 
+ */
+
+
+
+function FObservable(){
+	this._connections={};
+}
+
+
+
+FObservable.prototype.connect=function(eventName,func){
+	if(this._connections[eventName] == undefined){
+		this._connections[eventName]=[];
+	}
+	
+	this._connections[eventName].push(func);
+}
+
+FObservable.prototype.disconnect=function(eventName,func){
+	//only remove specified function
+	if(func != undefined){
+		var connections=this._connections[eventName];
+		if(connections != undefined){
+			for(var x=0;x<connections.length;x++){
+				if(connections[x]==func){
+					connections.splice(x,1);
+				}
+			}
+		}
+	} else{
+		//remove all functions connected to event
+		this._connections[eventName]=[];
+	}
+}
+
+
+FObservable.prototype.emit=function(eventName,params){
+	
+	var connections=this._connections[eventName];
+	if(connections != undefined){
+		for(var x=0;x<connections.length;x++){
+			connections[x].apply(null,params);
+		}
+	}
+	
+}
+
+/**
  * FVector class
  * represents a location in 2D space
  */
@@ -11038,7 +11087,7 @@ function FPhysicsEntity(world,config){
     
     
     def.userData=this;
-    console.log(def);
+    //console.log(def);
     this.body=this.world.b2world.CreateBody(def);
     //process shape definitions
     for(var x=0;x<config.shapes.length;x++){
@@ -11057,14 +11106,14 @@ function FPhysicsEntity(world,config){
         fixDef.density=shape.density;
         fixDef.friction=shape.friction;
         fixDef.restitution=shape.restitution;
-        console.log(fixDef)
+        //console.log(fixDef)
         this.body.CreateFixture(fixDef);
     }
-    Firmament.log(this.body);
+    //Firmament.log(this.body);
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
     if(config.image){
-    	console.log(typeof(config.image))
+    	//console.log(typeof(config.image))
     	if(typeof(config.image)=='string'){
     		var i= document.createElement('img');
     		i.src=config.image;
@@ -11076,9 +11125,11 @@ function FPhysicsEntity(world,config){
     	if(config.imageScale){
         	if(config.imageScale=='auto'){
         		if(!config.imageWidth){
-        			Firmament.log("Image width must be set for auto scale!");
+        			Firmament.log("Image width must be set for auto scale! Defaulting to 1:1");
+        			this.imageScale=100;
+        		}else {
+        			this.imageScale=config.imageWidth/width;
         		}
-        		this.imageScale=config.imageWidth/width;
         	}else{
         		this.imageScale=config.imageScale;
         	}
@@ -11174,7 +11225,7 @@ FPhysicsWorld.prototype.step=function(){
 
 
 FPhysicsWorld.prototype.createEntity=function(config){
-	Firmament.log(this);
+	//Firmament.log(this);
     var ent= new FPhysicsEntity(this,config);
     this.addEntity(ent);
     return ent;
@@ -11386,15 +11437,15 @@ function FGame(gravity){
         window.setInterval(this.frameCount.bind(this),1000);
         this.frames=0;
         this.instep=0;
-        
+        this.cameras=[];
+		this.worlds=	[];
+		this.fps=0;
       
 }
 
+FGame.prototype=new FObservable;
 
-FGame.prototype={
-		 cameras: 	[]
-		,worlds:	[]
-};
+
 
 FGame.prototype.addCamera=function(camera){
 	camera.setGame(this);
@@ -11416,21 +11467,26 @@ FGame.prototype.addWorld=function(world){
 FGame.prototype.step=function() {
 	if(this.instep)return;
 	this.instep=true;
+	this.emit("beginStep");
 	for(var x=0;x<this.worlds.length;x++){
 		this.worlds[x].step();
 	}
-	
+	this.emit("endStep");
 	//window.console.log(this.world);
 	//call render on all cameras
+	
+	this.emit("endRender");
 	for(var x=0; x<this.cameras.length;x++){
 		this.cameras[x].render(this.worlds);
 	}
+	this.emit("endRender");
 	this.frames++;
 	this.instep=false;
   };
   
   FGame.prototype.frameCount=function(){
-	  console.log(this.frames);
+	  this.fps=this.frames;
+	  this.emit("fpsUpdate",[this.fps]);
 	  this.frames=0;
   }
 
@@ -11444,21 +11500,20 @@ function FCamera(canvas){
 	this.canvas=canvas;
 	this.width=canvas.width;
 	this.height=canvas.height;
-	
+
+
+	this.game= null;
+	this.zoom=100;
 }
 
-FCamera.prototype={
-		
-		width: null
-		,height: null
-		,canvas: null
-		,game: null
-		,zoom:100
-};
+FCamera.prototype=new FObservable;
+
 
 FCamera.prototype.render=function(worlds){
 	var cxt = this.getCanvas().getContext('2d');
 	cxt.clearRect(0, 0, this.width, this.height);
+
+	this.emit('beginRender',[cxt]);
 	for(var x=0;x<worlds.length;x++){
 		var world = worlds[x];
 		var entities = world.getAllEntities();
@@ -11466,8 +11521,9 @@ FCamera.prototype.render=function(worlds){
 			var ent = entities[y];
 			ent.getRenderer().render(cxt,ent,this);
 		}
-		
 	}
+	
+	this.emit('endRender',[cxt]);
 };
 
 

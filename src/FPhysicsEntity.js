@@ -23,7 +23,7 @@ function FPhysicsEntity(world,config){
     
     
     def.userData=this;
-    console.log(def);
+    //console.log(def);
     this.body=this.world.b2world.CreateBody(def);
     //process shape definitions
     for(var x=0;x<config.shapes.length;x++){
@@ -42,14 +42,14 @@ function FPhysicsEntity(world,config){
         fixDef.density=shape.density;
         fixDef.friction=shape.friction;
         fixDef.restitution=shape.restitution;
-        console.log(fixDef)
+        //console.log(fixDef)
         this.body.CreateFixture(fixDef);
     }
-    Firmament.log(this.body);
+    //Firmament.log(this.body);
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
     if(config.image){
-    	console.log(typeof(config.image))
+    	//console.log(typeof(config.image))
     	if(typeof(config.image)=='string'){
     		var i= document.createElement('img');
     		i.src=config.image;

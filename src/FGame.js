@@ -24,15 +24,15 @@ function FGame(gravity){
         window.setInterval(this.frameCount.bind(this),1000);
         this.frames=0;
         this.instep=0;
-        
+        this.cameras=[];
+		this.worlds=	[];
+		this.fps=0;
       
 }
 
+FGame.prototype=new FObservable;
 
-FGame.prototype={
-		 cameras: 	[]
-		,worlds:	[]
-};
+
 
 FGame.prototype.addCamera=function(camera){
 	camera.setGame(this);
@@ -54,21 +54,26 @@ FGame.prototype.addWorld=function(world){
 FGame.prototype.step=function() {
 	if(this.instep)return;
 	this.instep=true;
+	this.emit("beginStep");
 	for(var x=0;x<this.worlds.length;x++){
 		this.worlds[x].step();
 	}
-	
+	this.emit("endStep");
 	//window.console.log(this.world);
 	//call render on all cameras
+	
+	this.emit("endRender");
 	for(var x=0; x<this.cameras.length;x++){
 		this.cameras[x].render(this.worlds);
 	}
+	this.emit("endRender");
 	this.frames++;
 	this.instep=false;
   };
   
   FGame.prototype.frameCount=function(){
-	  console.log(this.frames);
+	  this.fps=this.frames;
+	  this.emit("fpsUpdate",[this.fps]);
 	  this.frames=0;
   }
 
