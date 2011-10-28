@@ -60,7 +60,12 @@ function FPhysicsEntity(world,config){
     	
     	if(config.imageScale){
         	if(config.imageScale=='auto'){
-        		this.imageScale=this.currentImage.width/width;
+        		if(!config.imageWidth){
+        			Firmament.log("Image width must be set for auto scale! Defaulting to 1:1");
+        			this.imageScale=100;
+        		}else {
+        			this.imageScale=config.imageWidth/width;
+        		}
         	}else{
         		this.imageScale=config.imageScale;
         	}

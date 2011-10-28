@@ -13,7 +13,7 @@ function FSpriteRenderer(){
 
 FSpriteRenderer.prototype = new FRenderer;
 
-
+var renderCount=0;
 FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	var shapes=item.getShapes();
 	var pos = item.getPosition();
@@ -66,24 +66,33 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	
 	
 	//get inverse of matrix
-	ia=d/(a*d-b*c);
-	ib=-b/(a*d-b*c);
-	ic=-c/(a*d-b*c);
-	id=a/(a*d-b*c);
-	tx=(c*ty-d*tx)/(a*d-b*c);
-	ty=(a*ty-b*tx)/(a*d-b*c)
+	var ia=d/(a*d-b*c);
+	var ib=-b/(a*d-b*c);
+	var ic=-c/(a*d-b*c);
+	var id=a/(a*d-b*c);
+	var itx=(c*ty-d*tx)/(a*d-b*c);
+	var ity=(a*ty-b*tx)/(a*d-b*c)
 	
 	
 	
 	//get x and y in relation to the inverted matrix
 	var x=pos.x*camera.getZoom()/ratio;
 	var y=pos.y*camera.getZoom()/ratio;
-	var nx=ia*x+ic*y+tx;
-	var ny=id*y+ib*x+ty;
-	
+	var nx=ia*x+ic*y+itx;
+	var ny=id*y+ib*x+ity;
+	/*if(renderCount%50==0){
+		console.log("x:"+x+" y:"+y)
+		console.log("posx:"+pos.x+" posy:"+pos.y)
+		console.log("zoom "+camera.getZoom())
+		console.log("ratio "+ratio)
+		console.log(" a:"+a+" b:"+b+" c:"+c+" d:"+d+" tx:"+tx+" ty:"+ty);
+		console.log(" ia:"+ia+" ib:"+ib+" ic:"+ic+" id:"+id+" itx:"+itx+" ity:"+ity);
+		console.log("ny:"+ny+ " nx:"+nx);
+	}*/
 	
 	cxt.drawImage(image,nx-image.width/2,ny-image.height/2);
 	cxt.restore();
 	//console.log(shapes);
+	renderCount++;
 }
 
