@@ -11288,8 +11288,9 @@ FWireframeRenderer.prototype.render = function(cxt,item,camera){
 
 
 FWireframeRenderer.prototype.renderCircle=function(cxt,s,pos,camera){
+	var cameraPos=camera.getTopLeftPosition();
 	cxt.beginPath();
-	cxt.arc(pos.x*camera.getZoom(),pos.y*camera.getZoom(),s.m_radius*camera.getZoom(),0,Math.PI*2,true);
+	cxt.arc((pos.x-cameraPos.x)*camera.getZoom(),(pos.y-cameraPos.y)*camera.getZoom(),s.m_radius*camera.getZoom(),0,Math.PI*2,true);
 	cxt.closePath();
 	cxt.stroke();
 }
@@ -11330,8 +11331,17 @@ FSpriteRenderer.prototype = new FRenderer;
 
 var renderCount=0;
 FSpriteRenderer.prototype.render = function(cxt,item,camera){
-	var shapes=item.getShapes();
+	var cameraPos=camera.getTopLeftPosition();
 	var pos = item.getPosition();
+	
+	//make sure item is within rendering range
+	if(pos.x < cameraPos.x-2 || pos.x >cameraPos.x+camera.getWidth()+2)return;
+	if(pos.y < cameraPos.y-2 || pos.y >cameraPos.y+camera.getHeight()+2)return;
+	
+	
+	
+	var shapes=item.getShapes();
+	
 	var bodyAngle=item.getAngle();
 	var image=item.getCurrentImage();
 	var ratio=camera.getZoom()/item.getImageScale();
@@ -11344,8 +11354,8 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	
 	
 	
-	
-	cxt.scale(ratio,ratio);
+	if(ratio!=1)
+		cxt.scale(ratio,ratio);
 	//Below code scales the matrix, but we can let the context do that.
 	/*a*=ratio;
 	b*=ratio;
@@ -11357,53 +11367,58 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	
 	
 	
-	
-	//rotate our matrix
-	var _a=a;
-	var _b=b;
-	var _c=c;
-	var _d=d;
-	var _tx=tx;
-	var _ty=ty;
-	var sin=Math.sin(bodyAngle);
-	var cos=Math.cos(bodyAngle);
-	a=_a*cos-_b*sin;
-	b=_a*sin + _b*cos;
-	c = _c*cos - _d*sin;
-	d = _c*sin +_d*cos;
-	tx=_tx*cos-_ty*sin;
-	ty =_tx*sin+_ty*cos;
-	
-	
-	//apply rotation
-	cxt.transform(a,b,c,d,tx,ty);
-	
-	
-	
-	//get inverse of matrix
-	var ia=d/(a*d-b*c);
-	var ib=-b/(a*d-b*c);
-	var ic=-c/(a*d-b*c);
-	var id=a/(a*d-b*c);
-	var itx=(c*ty-d*tx)/(a*d-b*c);
-	var ity=(a*ty-b*tx)/(a*d-b*c)
-	
-	
-	
-	//get x and y in relation to the inverted matrix
-	var x=pos.x*camera.getZoom()/ratio;
-	var y=pos.y*camera.getZoom()/ratio;
-	var nx=ia*x+ic*y+itx;
-	var ny=id*y+ib*x+ity;
-	/*if(renderCount%50==0){
-		console.log("x:"+x+" y:"+y)
-		console.log("posx:"+pos.x+" posy:"+pos.y)
-		console.log("zoom "+camera.getZoom())
-		console.log("ratio "+ratio)
-		console.log(" a:"+a+" b:"+b+" c:"+c+" d:"+d+" tx:"+tx+" ty:"+ty);
-		console.log(" ia:"+ia+" ib:"+ib+" ic:"+ic+" id:"+id+" itx:"+itx+" ity:"+ity);
-		console.log("ny:"+ny+ " nx:"+nx);
-	}*/
+	if(bodyAngle!=0){
+		//rotate our matrix
+		var _a=a;
+		var _b=b;
+		var _c=c;
+		var _d=d;
+		var _tx=tx;
+		var _ty=ty;
+		var sin=Math.sin(bodyAngle);
+		var cos=Math.cos(bodyAngle);
+		a=_a*cos-_b*sin;
+		b=_a*sin + _b*cos;
+		c = _c*cos - _d*sin;
+		d = _c*sin +_d*cos;
+		tx=_tx*cos-_ty*sin;
+		ty =_tx*sin+_ty*cos;
+		
+		
+		//apply rotation
+		cxt.transform(a,b,c,d,tx,ty);
+		
+		
+		
+		//get inverse of matrix
+		var ia=d/(a*d-b*c);
+		var ib=-b/(a*d-b*c);
+		var ic=-c/(a*d-b*c);
+		var id=a/(a*d-b*c);
+		var itx=(c*ty-d*tx)/(a*d-b*c);
+		var ity=(a*ty-b*tx)/(a*d-b*c)
+		
+		
+		
+		//get x and y in relation to the inverted matrix
+		var x=(pos.x-cameraPos.x)*camera.getZoom()/ratio;
+		var y=(pos.y-cameraPos.y)*camera.getZoom()/ratio;
+		var nx=ia*x+ic*y+itx;
+		var ny=id*y+ib*x+ity;
+		if(renderCount%50==0){
+			/*console.log("x:"+x+" y:"+y)
+			console.log("posx:"+pos.x+" posy:"+pos.y)
+			console.log("zoom "+camera.getZoom())
+			console.log("ratio "+ratio)
+			console.log(" a:"+a+" b:"+b+" c:"+c+" d:"+d+" tx:"+tx+" ty:"+ty);
+			console.log(" ia:"+ia+" ib:"+ib+" ic:"+ic+" id:"+id+" itx:"+itx+" ity:"+ity);
+			console.log("ny:"+ny+ " nx:"+nx);*/
+			console.log(cameraPos);
+		}
+	} else {
+		var nx=(pos.x-cameraPos.x)*camera.getZoom()/ratio;
+		var ny=(pos.y-cameraPos.y)*camera.getZoom()/ratio;
+	}
 	
 	cxt.drawImage(image,nx-image.width/2,ny-image.height/2);
 	cxt.restore();
@@ -11504,6 +11519,8 @@ function FCamera(canvas){
 
 	this.game= null;
 	this.zoom=100;
+	this.topLeftPosition=new FVector();
+	this.setPosition(new FVector(0,0));
 }
 
 FCamera.prototype=new FObservable;
@@ -11543,8 +11560,12 @@ FCamera.prototype.setGame=function(g){
 
 FCamera.prototype.setWidth=function(w){
     this.width=w;
+    this.calculateTopLeftPosition();
 };
 
+FCamera.prototype.getWidth=function(){
+	return this.width;
+}
 
 /**
  * Sets the width of the camera's display
@@ -11553,11 +11574,101 @@ FCamera.prototype.setWidth=function(w){
 
 FCamera.prototype.setHeight=function(h){
     this.height=h;
+    this.calculateTopLeftPosition();
 };
+
+FCamera.prototype.getHeight=function(){
+	return this.height;
+}
+
 
 FCamera.prototype.getZoom=function(){
 	return this.zoom;
 }
+
+FCamera.prototype.setZoom=function(z){
+	this.zoom=z;
+	this.calculateTopLeftPosition();
+}
+FCamera.prototype.getPosition=function(){
+	return this.position;
+}
+
+
+FCamera.prototype.setPosition=function(pos){
+	this.position=pos;
+	this.calculateTopLeftPosition();
+}
+
+FCamera.prototype.getTopLeftPosition=function(){
+	return this.topLeftPosition;
+}
+
+FCamera.prototype.calculateTopLeftPosition=function(){
+	this.topLeftPosition.x=this.position.x-(this.width/this.zoom)/2;
+	this.topLeftPosition.y=this.position.y-(this.height/this.zoom)/2;
+}
+
+
+function FInput(element){
+	this.listenElement=element;
+	this.keysPressed={};
+	element.onkeyup=this._keyup.bind(this);
+	element.onkeydown=this._keydown.bind(this);
+
+	element.onmousdown=this._mouseDown.bind(this);
+	element.onmouseup=this._mouseUp.bind(this);
+}
+
+FInput.prototype=new FObservable;
+
+
+FInput.prototype._mouseDown=function(e){
+	console.log(e)
+	this.emit('mouseDown',[e]);
+};
+
+
+
+FInput.prototype._mouseUp=function(e){
+	this.emit('mouseUp',[e]);
+};
+
+
+FInput.prototype._keyup=function(e){
+	var keyCode=this._getKeyCode(e);
+	this.keysPressed[keyCode]=false;
+	this.emit('keyUp',[keyCode,e]);
+};
+
+
+
+FInput.prototype._keydown=function(e){
+	var keyCode=this._getKeyCode(e);
+	this.keysPressed[keyCode]=true;
+	this.emit('keyDown',[keyCode,e]);
+};
+
+
+FInput.prototype._getKeyCode=function(e){
+	var keynum;
+	if(window.event) // IE
+	{
+		keynum = e.keyCode
+	}
+	else if(e.which) // Netscape/Firefox/Opera
+	{
+		keynum = e.which
+	}
+	return keynum;
+}
+
+
+FInput.prototype.isKeyPressed=function(key){
+	if(this.keysPressed[key])return true;
+	return false;
+};
+
 
 
 /**

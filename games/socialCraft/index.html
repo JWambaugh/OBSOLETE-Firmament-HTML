@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="../../Firmament.js"></script>
+        
+        <script>
+        "use strict";var Timer=Timer||(function(){var c,b,a=Date.now||function(){return(new Date()).getTime()};if(typeof chrome!=="undefined"&&typeof chrome.Interval==="function"){b=(c=chrome.Interval).prototype;b.milliseconds=function(){return this.microseconds()/1000}}else{b=(c=function(){var e=0,d=0;this.start=function(){d=0;e=a()};this.stop=function(){d=a();if(e===0){d=0}};this.milliseconds=function(){var f=d;if(f===0&&e!==0){f=a()}return f-e}}).prototype;b.microseconds=function(){return this.milliseconds()*1000}}b.profile=function(d,e){if(typeof d==="string"){d=new Function(d)}this.start();while(e--){d()}this.stop()};b.seconds=function(){return this.milliseconds()/1000};return c}());
+        function init(){
+            var game=new FGame();
+            var canvasEl=document.getElementById('canvas');
+            var input=new FInput(document);
+            input.connect('keyDown',function(){
+            	console.log('key down!!!');
+            })
+            var camera=new FCamera(canvasEl);
+            camera.setPosition(new FVector(3,0));
+            game.addCamera(camera);
+            game.connect('fpsUpdate',function(fps){
+                document.getElementById('fps').innerHTML=fps;
+            });
+            var world = new FPhysicsWorld(new FVector(0,5));
+            game.addWorld(world);
+            
+            world.createEntity({
+            	type:'dynamic'
+            		,position:new FVector(0,-3)
+            	,shapes:[
+            	        {
+            	        	type:'circle'
+            	        	,radius:.5
+            	        }
+            	]
+            })
+            
+            
+            
+            for(var x=0;x<50;x++){
+            	for(var y=4;y<50;y++){
+		            world.createEntity({
+		                type:'static'
+		                ,position:new FVector(x*.5,y*.5)
+		                ,image:'images/terrain.png'
+		                ,imageScale:'auto'
+		                ,imageWidth:16
+		                ,shapes:[{
+		                    type:'box'
+		                    ,width:.5
+		                    ,height:.5
+		                    //,radius:.5
+		                    ,density:1
+		                    ,restitution:.2
+		                    }
+		                    ]
+		                });
+            	}
+            }
+            
+           
+            
+          
+            
+            
+            
+        }
+        </script>
+    </head>
+    <body onload="init();">
+        
+         <canvas id="canvas" width="900" height="700"></canvas>
+        
+        
+        
+        FPS:<span id='fps'></span>
+    </body>
+</html>

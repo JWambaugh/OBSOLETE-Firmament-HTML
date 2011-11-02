@@ -11,6 +11,8 @@ function FCamera(canvas){
 
 	this.game= null;
 	this.zoom=100;
+	this.topLeftPosition=new FVector();
+	this.setPosition(new FVector(0,0));
 }
 
 FCamera.prototype=new FObservable;
@@ -50,8 +52,12 @@ FCamera.prototype.setGame=function(g){
 
 FCamera.prototype.setWidth=function(w){
     this.width=w;
+    this.calculateTopLeftPosition();
 };
 
+FCamera.prototype.getWidth=function(){
+	return this.width;
+}
 
 /**
  * Sets the width of the camera's display
@@ -60,9 +66,37 @@ FCamera.prototype.setWidth=function(w){
 
 FCamera.prototype.setHeight=function(h){
     this.height=h;
+    this.calculateTopLeftPosition();
 };
+
+FCamera.prototype.getHeight=function(){
+	return this.height;
+}
+
 
 FCamera.prototype.getZoom=function(){
 	return this.zoom;
 }
 
+FCamera.prototype.setZoom=function(z){
+	this.zoom=z;
+	this.calculateTopLeftPosition();
+}
+FCamera.prototype.getPosition=function(){
+	return this.position;
+}
+
+
+FCamera.prototype.setPosition=function(pos){
+	this.position=pos;
+	this.calculateTopLeftPosition();
+}
+
+FCamera.prototype.getTopLeftPosition=function(){
+	return this.topLeftPosition;
+}
+
+FCamera.prototype.calculateTopLeftPosition=function(){
+	this.topLeftPosition.x=this.position.x-(this.width/this.zoom)/2;
+	this.topLeftPosition.y=this.position.y-(this.height/this.zoom)/2;
+}

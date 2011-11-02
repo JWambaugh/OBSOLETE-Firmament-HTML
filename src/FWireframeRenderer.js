@@ -36,8 +36,9 @@ FWireframeRenderer.prototype.render = function(cxt,item,camera){
 
 
 FWireframeRenderer.prototype.renderCircle=function(cxt,s,pos,camera){
+	var cameraPos=camera.getTopLeftPosition();
 	cxt.beginPath();
-	cxt.arc(pos.x*camera.getZoom(),pos.y*camera.getZoom(),s.m_radius*camera.getZoom(),0,Math.PI*2,true);
+	cxt.arc((pos.x-cameraPos.x)*camera.getZoom(),(pos.y-cameraPos.y)*camera.getZoom(),s.m_radius*camera.getZoom(),0,Math.PI*2,true);
 	cxt.closePath();
 	cxt.stroke();
 }
