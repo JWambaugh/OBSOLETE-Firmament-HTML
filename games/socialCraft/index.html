@@ -4,6 +4,7 @@
         <script src="../../Firmament.js"></script>
         
         <script>
+	var camera;
         "use strict";var Timer=Timer||(function(){var c,b,a=Date.now||function(){return(new Date()).getTime()};if(typeof chrome!=="undefined"&&typeof chrome.Interval==="function"){b=(c=chrome.Interval).prototype;b.milliseconds=function(){return this.microseconds()/1000}}else{b=(c=function(){var e=0,d=0;this.start=function(){d=0;e=a()};this.stop=function(){d=a();if(e===0){d=0}};this.milliseconds=function(){var f=d;if(f===0&&e!==0){f=a()}return f-e}}).prototype;b.microseconds=function(){return this.milliseconds()*1000}}b.profile=function(d,e){if(typeof d==="string"){d=new Function(d)}this.start();while(e--){d()}this.stop()};b.seconds=function(){return this.milliseconds()/1000};return c}());
         function init(){
             var game=new FGame();
@@ -12,7 +13,7 @@
             input.connect('keyDown',function(){
             	console.log('key down!!!');
             })
-            var camera=new FCamera(canvasEl);
+             camera=new FCamera(canvasEl);
             camera.setPosition(new FVector(3,0));
             game.addCamera(camera);
             game.connect('fpsUpdate',function(fps){
@@ -62,6 +63,51 @@
             
             
         }
+	
+	    
+
+count=0
+  function rightAnimate(){
+	var IntervalR=setInterval(function(){
+	    count++
+	     pos=camera.getPosition();
+	     pos.x= pos.x+.1;
+	     camera.setPosition(pos);
+	     },15);
+	 setTimeout(function(){clearInterval(IntervalR)},250)
+ }
+	function leftAnimate(){
+	    var IntervalR=setInterval(function(){
+		count++
+		 pos=camera.getPosition();
+		 pos.x= pos.x-.1;
+		camera.setPosition(pos);
+		},15);
+  
+	     setTimeout(function(){clearInterval(IntervalR)},250)
+ }
+ function downAnimate(){
+	var IntervalR=setInterval(function(){
+	    count++
+	     pos=camera.getPosition();
+	     pos.y= pos.y+.1;
+	     camera.setPosition(pos);
+	     },15);
+	 setTimeout(function(){clearInterval(IntervalR)},250)
+ }
+	 function upAnimate(){
+	var IntervalR=setInterval(function(){
+	    count++
+	     pos=camera.getPosition();
+	     pos.y= pos.y-.1;
+	     camera.setPosition(pos);
+	     },15);
+	 setTimeout(function(){clearInterval(IntervalR)},250)
+ }
+    
+
+	
+	
         </script>
     </head>
     <body onload="init();">
@@ -71,5 +117,10 @@
         
         
         FPS:<span id='fps'></span>
+	
+	<button onclick='upAnimate()'>Move Camera Up</button>
+	<button onclick='downAnimate()'>Move Camera Down</button>
+	<button onclick='rightAnimate()'>Move Camera Right</button>
+	<button onclick='leftAnimate()'>Move Camera Left</button>
     </body>
 </html>

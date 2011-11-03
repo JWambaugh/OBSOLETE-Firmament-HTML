@@ -11,7 +11,13 @@
             game.connect('fpsUpdate',function(fps){
             	document.getElementById('fps').innerHTML=fps;
             });
-            var world = new FPhysicsWorld(new FVector(0,5));
+            var camera=new FCamera(canvasEl);
+            camera.setPosition(new FVector(0,0));
+            game.addCamera(camera);
+            game.connect('fpsUpdate',function(fps){
+                document.getElementById('fps').innerHTML=fps;
+            });
+	    var world = new FPhysicsWorld(new FVector(0,5));
             game.addWorld(world);
             for(var x=0;x<50;x++){
             world.createEntity({
@@ -66,13 +72,16 @@
                     ]
                 });
         }
+	function screenDown(){
+	    window.scrollBy(0,100)
+	}
         </script>
     </head>
     <body onload="init();">
         
          <canvas id="canvas" width="900" height="700"></canvas>
         
-        
+<button onclick='  screenDown()'> Screen Down</button>        
         
         FPS:<span id='fps'></span>
     </body>
