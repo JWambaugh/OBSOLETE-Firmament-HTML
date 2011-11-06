@@ -11616,7 +11616,7 @@ function FInput(element){
 	element.onkeyup=this._keyup.bind(this);
 	element.onkeydown=this._keydown.bind(this);
 
-	element.onmousdown=this._mouseDown.bind(this);
+	element.onmousedown=this._mouseDown.bind(this);
 	element.onmouseup=this._mouseUp.bind(this);
 }
 
@@ -11624,14 +11624,21 @@ FInput.prototype=new FObservable;
 
 
 FInput.prototype._mouseDown=function(e){
-	console.log(e)
+	//console.log(e)
+	this.listenElement.onmousemove=this._mouseDrag.bind(this);
 	this.emit('mouseDown',[e]);
 };
 
 
 
 FInput.prototype._mouseUp=function(e){
+	this.listenElement.onmousemove=null;
 	this.emit('mouseUp',[e]);
+};
+
+FInput.prototype._mouseDrag=function(e){
+	//console.log(e);
+	this.emit('mouseDrag',[e]);
 };
 
 
