@@ -9,11 +9,23 @@
         function init(){
             var game=new FGame();
             var canvasEl=document.getElementById('canvas');
-            var input=new FInput(document);
-            input.connect('keyDown',function(){
-            	console.log('key down!!!');
+            
+			
+			//FInput object lets us get input from user
+			var input=new FInput(document);
+			
+			//get mouse drag movements
+            input.connect('mouseDrag',function(e){
+            	console.log('x: '+e.x+' y: '+e.y);
             })
-             camera=new FCamera(canvasEl);
+			
+			
+			//get keyboard inputs
+            input.connect('keyDown',function(code){
+            	console.log('Key: '+code);
+            })
+			
+            camera=new FCamera(canvasEl);
             camera.setPosition(new FVector(3,0));
             game.addCamera(camera);
             game.connect('fpsUpdate',function(fps){
