@@ -1,15 +1,12 @@
 
 function FRenderable(){
-	
+	this.renderer= null;
+    this.imageScale=100;
 	
 }
 
-FRenderable.prototype={
-		renderer: null
-		,position: new FVector(0,0)
-		,positionBase:'w' //'w' = world based, 'c' = camera based
-		,imageScale:100
-};
+FRenderable.prototype=new FWorldPositional;
+
 
 
 FRenderable.prototype.getRelativeCameraPosition=function(cameraPosition){
@@ -35,23 +32,9 @@ FRenderable.prototype.getRenderer=function(){
 	return this.renderer;
 };
 
-FRenderable.prototype.setPosition=function(p){
-	this.position = p;
-};
-
-FRenderable.prototype.getPositionX=function(){
-	return this.position.x;
-};
-FRenderable.prototype.getPositionY=function(){
-	return this.position.y;
-};
 
 FRenderable.prototype.getCurrentImage=function(){
 	return null;
 }
 
-FRenderable.prototype.getAngle=function(){
-	
-	return 0;
-}
 

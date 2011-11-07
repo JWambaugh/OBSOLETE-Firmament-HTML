@@ -11006,17 +11006,53 @@ function FVector(x,y){
 
 FVector.prototype = Object.create(Box2D.Common.Math.b2Vec2);
 
-function FRenderable(){
-	
+/**
+ * A positional object has a position in the game world.
+ */
+
+function FWorldPositional(){
+	this.position = new FVector(0,0);
+    this.positionBase='w'; //'w' = world based, 'c' = camera based
+    this.angle=0;
 	
 }
 
-FRenderable.prototype={
-		renderer: null
-		,position: new FVector(0,0)
-		,positionBase:'w' //'w' = world based, 'c' = camera based
-		,imageScale:100
+FWorldPositional.prototype=new FObservable;
+
+
+
+FWorldPositional.prototype.setPosition=function(p){
+	this.position = p;
 };
+
+
+FWorldPositional.prototype.getPosition=function(){
+	return this.position;
+};
+
+
+FWorldPositional.prototype.getPositionX=function(){
+	return this.position.x;
+};
+FWorldPositional.prototype.getPositionY=function(){
+	return this.position.y;
+};
+
+
+FWorldPositional.prototype.getAngle=function(){
+	
+	return 0;
+}
+
+
+function FRenderable(){
+	this.renderer= null;
+    this.imageScale=100;
+	
+}
+
+FRenderable.prototype=new FWorldPositional;
+
 
 
 FRenderable.prototype.getRelativeCameraPosition=function(cameraPosition){
@@ -11042,25 +11078,11 @@ FRenderable.prototype.getRenderer=function(){
 	return this.renderer;
 };
 
-FRenderable.prototype.setPosition=function(p){
-	this.position = p;
-};
-
-FRenderable.prototype.getPositionX=function(){
-	return this.position.x;
-};
-FRenderable.prototype.getPositionY=function(){
-	return this.position.y;
-};
 
 FRenderable.prototype.getCurrentImage=function(){
 	return null;
 }
 
-FRenderable.prototype.getAngle=function(){
-	
-	return 0;
-}
 
 function FPhysicsEntity(world,config){
 	this.world=world;
@@ -11523,7 +11545,7 @@ function FCamera(canvas){
 	this.setPosition(new FVector(0,0));
 }
 
-FCamera.prototype=new FObservable;
+FCamera.prototype=new FWorldPositional;
 
 
 FCamera.prototype.render=function(worlds){
@@ -11590,9 +11612,7 @@ FCamera.prototype.setZoom=function(z){
 	this.zoom=z;
 	this.calculateTopLeftPosition();
 }
-FCamera.prototype.getPosition=function(){
-	return this.position;
-}
+
 
 
 FCamera.prototype.setPosition=function(pos){

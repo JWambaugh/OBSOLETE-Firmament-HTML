@@ -18,6 +18,8 @@
             <file name="FObservable.js" />
             
             <file name="FVector.js" />
+            <file name="FWorldPositional.js" />
+            
             <file name="FRenderable.js" />
             <file name="FPhysicsEntity.js" />
             <file name="FWorld.js" />

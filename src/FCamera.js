@@ -15,7 +15,7 @@ function FCamera(canvas){
 	this.setPosition(new FVector(0,0));
 }
 
-FCamera.prototype=new FObservable;
+FCamera.prototype=new FWorldPositional;
 
 
 FCamera.prototype.render=function(worlds){
@@ -82,9 +82,7 @@ FCamera.prototype.setZoom=function(z){
 	this.zoom=z;
 	this.calculateTopLeftPosition();
 }
-FCamera.prototype.getPosition=function(){
-	return this.position;
-}
+
 
 
 FCamera.prototype.setPosition=function(pos){
