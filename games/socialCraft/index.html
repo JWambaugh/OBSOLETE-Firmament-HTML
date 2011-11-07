@@ -79,6 +79,21 @@
 	    
 
 count=0
+var input=new FInput(document);
+input.connect('keyDown',function(code){
+    if (code==37){
+	moveAnimate(1,-.1)//move left
+    }
+    if (code==39){
+	moveAnimate(1,.1)//move right
+    }
+    if (code==38){
+	moveAnimate(2,-.1)//move up
+    }
+    else if (code==40){
+	moveAnimate(2,.1)//move down
+    }
+})
   function moveAnimate(axis,mover){
 	var IntervalR=setInterval(function(){
 	    count++
@@ -93,6 +108,7 @@ count=0
 	     },15);
 	 setTimeout(function(){clearInterval(IntervalR)},250)
  }
+
 	
 function zoom(inOrOut){
     var IntervalZO=setInterval(function(){
@@ -114,11 +130,8 @@ function zoom(inOrOut){
         
         
         FPS:<span id='fps'></span>
-	<button onclick='zoom(.1)'>Zoom Camera In</button>
-	<button onclick='zoom(-.1)'>Zoom Camera Out</button>
-	<button onclick='moveAnimate(2,-.1)'>Move Camera Up</button>
-	<button onclick='moveAnimate(2,.1)'>Move Camera Down</button>
-	<button onclick='moveAnimate(1,.1)'>Move Camera Right</button>
-	<button onclick='moveAnimate(1,-.1)'>Move Camera Left</button>
+	<button onclick='zoom(.5)'>Zoom Camera In</button>
+	<button onclick='zoom(-.5)'>Zoom Camera Out</button>
+	
     </body>
 </html>
