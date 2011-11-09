@@ -11,19 +11,7 @@
             var canvasEl=document.getElementById('canvas');
             
 			
-			//FInput object lets us get input from user
-			var input=new FInput(document);
 			
-			//get mouse drag movements
-            input.connect('mouseDrag',function(e){
-            	console.log('x: '+e.x+' y: '+e.y);
-            })
-			
-			
-			//get keyboard inputs
-            input.connect('keyDown',function(code){
-            	console.log('Key: '+code);
-            })
 			
             camera=new FCamera(canvasEl);
             camera.setPosition(new FVector(3,0));
@@ -33,6 +21,24 @@
             });
             var world = new FPhysicsWorld(new FVector(0,5));
             game.addWorld(world);
+            
+            
+            //FInput object lets us get input from user
+            var input=new FInput(document);
+            
+            //get mouse drag movements
+            input.connect('mouseDrag',function(e){
+                console.log('x: '+e.x+' y: '+e.y);
+            })
+            
+            input.connect('mouseDown',function(e){
+                var pos = input.getMouseWorldPos(camera)
+                console.log(pos.x+'    '+pos.y);
+            });
+            //get keyboard inputs
+            input.connect('keyDown',function(code){
+                console.log('Key: '+code);
+            })
             
             world.createEntity({
             	type:'dynamic'

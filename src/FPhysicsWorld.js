@@ -49,7 +49,7 @@ FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX
     	selectEntities.push(fixture.GetBody().GetUserData());
     	return true;
     },query);
-    Firmament.log(selectEntities.length);
+   // Firmament.log(selectEntities.length);
     return selectEntities;
 }
 

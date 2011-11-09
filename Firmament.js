@@ -10900,6 +10900,17 @@ var Firmament={
 		
 }
 
+Firmament.getElementOffset = function( el ) {
+    var _x = 0;
+    var _y = 0;
+    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+        _x += el.offsetLeft //- el.scrollLeft;
+        _y += el.offsetTop //- el.scrollTop;
+        el = el.offsetParent;
+    }
+    return { y: _y, x: _x };
+}
+
 
 
 
@@ -11301,7 +11312,7 @@ FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX
     	selectEntities.push(fixture.GetBody().GetUserData());
     	return true;
     },query);
-    Firmament.log(selectEntities.length);
+   // Firmament.log(selectEntities.length);
     return selectEntities;
 }
 
@@ -11684,6 +11695,7 @@ FCamera.prototype.calculateTopLeftPosition=function(){
 
 
 function FInput(element){
+	if(element==undefined) element=document;
 	this.listenElement=element;
 	this.keysPressed={};
 	element.onkeyup=this._keyup.bind(this);
@@ -11691,29 +11703,71 @@ function FInput(element){
 
 	element.onmousedown=this._mouseDown.bind(this);
 	element.onmouseup=this._mouseUp.bind(this);
+	element.onmousemove=this._mouseMove.bind(this);
+	
+	this.mouseX=0;
+	this.mouseY=0;
+	this.leftMouseDown=false;
+	this.rightMouseDown=false;
+	
 }
 
 FInput.prototype=new FObservable;
 
 
 FInput.prototype._mouseDown=function(e){
+	this._updateMousePos(e);
 	//console.log(e)
-	this.listenElement.onmousemove=this._mouseDrag.bind(this);
+	this.leftMouseDown=true;
 	this.emit('mouseDown',[e]);
 };
 
 
 
 FInput.prototype._mouseUp=function(e){
-	this.listenElement.onmousemove=null;
+	this.leftMouseDown=false;
+	
+	this._updateMousePos(e);
 	this.emit('mouseUp',[e]);
 };
 
-FInput.prototype._mouseDrag=function(e){
+FInput.prototype._mouseMove=function(e){
+	this._updateMousePos(e);
+	
 	//console.log(e);
-	this.emit('mouseDrag',[e]);
+	if(this.leftMouseDown){
+		this.emit('mouseDrag',[e]);
+	}
+	this.emit('mouseMove', [e]);
 };
 
+FInput.prototype.getMouseScreenPos=function(e){
+	return new FVector(this.mouseX,this.mouseY);
+};
+
+/**
+ * Returns the position
+ * @param camera FCamera
+ */
+FInput.prototype.getMouseWorldPos=function(camera){
+	var offset=Firmament.getElementOffset(camera.getCanvas());
+	Firmament.log(offset);
+	Firmament.log(this.mouseX);
+	var x=this.mouseX-offset.x;
+	var y=this.mouseY-offset.y;
+	var cameraPos = camera.getTopLeftPosition();
+	var cameraZoom=camera.getZoom();
+	x=(this.mouseX / cameraZoom) + cameraPos.x;
+	y=(this.mouseY / cameraZoom) + cameraPos.y;
+	return new FVector(x,y);
+}
+	
+
+	
+FInput.prototype._updateMousePos=function(e){
+	this.mouseX=e.x;
+	this.mouseY=e.y;
+};
 
 FInput.prototype._keyup=function(e){
 	var keyCode=this._getKeyCode(e);
