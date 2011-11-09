@@ -10870,6 +10870,7 @@ delete Box2D.postDefs;
  * All Rights Reserved. Do not duplicate without express written permission.
  */
 
+console.log(Box2D);
 
  var   b2Vec2 = Box2D.Common.Math.b2Vec2
          	,	b2BodyDef = Box2D.Dynamics.b2BodyDef
@@ -10885,11 +10886,16 @@ delete Box2D.postDefs;
 
 var Firmament={
 		
-		log:function(ob){
+		log:function(ob,once){
 			if(window.console){
-				window.console.log(ob);
+				if(once !=true || this._logHistory.indexOf(ob)==-1){
+					this._logHistory.push(ob);
+					window.console.log(ob);
+				}
+				
 			}
 		}
+		,_logHistory:[]
 		
 		
 }
@@ -11046,9 +11052,9 @@ FWorldPositional.prototype.getAngle=function(){
 
 
 function FRenderable(){
-	this.renderer= null;
-    this.imageScale=100;
-	
+	this.renderer = null;
+    this.imageScale = 100;
+	this.zPosition = 0;
 }
 
 FRenderable.prototype=new FWorldPositional;
@@ -11083,7 +11089,13 @@ FRenderable.prototype.getCurrentImage=function(){
 	return null;
 }
 
+FRenderable.prototype.getZPosition=function(){
+	return this.zPosition;
+}
 
+FRenderable.prototype.setZPosition=function(z){
+	this.zPosition=z;
+}
 function FPhysicsEntity(world,config){
 	this.world=world;
     this.config=config;
@@ -11134,6 +11146,10 @@ function FPhysicsEntity(world,config){
     //Firmament.log(this.body);
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
+    
+    //set z value
+    this.zPosition =0;
+    
     if(config.image){
     	//console.log(typeof(config.image))
     	if(typeof(config.image)=='string'){
@@ -11190,6 +11206,12 @@ FPhysicsEntity.prototype.getAngle=function(){
 FPhysicsEntity.prototype.getCurrentImage=function(){
 	return this.currentImage;
 }
+
+
+
+
+
+
 
 
 function FWorld(){
@@ -11253,6 +11275,24 @@ FPhysicsWorld.prototype.createEntity=function(config){
     return ent;
 };
 
+
+
+FPhysicsWorld.prototype.getEntitiesInBox=function(upperBoundX,upperBoundY,lowerBoundX,lowerBoundY){
+	var selectEntities=[];
+	var query = new Box2D.Collision.b2AABB;
+	
+	query.upperBound.Set(upperBoundX,upperBoundY);
+    query.lowerBound.Set(lowerBoundX,lowerBoundY);
+    //Firmament.log(query,true);
+    //Firmament.log(query);
+    this.b2world.QueryAABB(function(fixture){
+    	//Firmament.log("here");
+    	selectEntities.push(fixture.GetBody().GetUserData());
+    	return true;
+    },query);
+    Firmament.log(selectEntities.length);
+    return selectEntities;
+}
 
 
 
@@ -11357,8 +11397,8 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	var pos = item.getPosition();
 	
 	//make sure item is within rendering range
-	if(pos.x < cameraPos.x-2 || pos.x >cameraPos.x+camera.getWidth()+2)return;
-	if(pos.y < cameraPos.y-2 || pos.y >cameraPos.y+camera.getHeight()+2)return;
+	/*if(pos.x < cameraPos.x-2 || pos.x >cameraPos.x+camera.getWidth()+2)return;
+	if(pos.y < cameraPos.y-2 || pos.y >cameraPos.y+camera.getHeight()+2)return;*/
 	
 	
 	
@@ -11555,7 +11595,8 @@ FCamera.prototype.render=function(worlds){
 	this.emit('beginRender',[cxt]);
 	for(var x=0;x<worlds.length;x++){
 		var world = worlds[x];
-		var entities = world.getAllEntities();
+		var entities=world.getEntitiesInBox(this.position.x+this.width/2/this.zoom,this.position.y+this.height/2/this.zoom,this.position.x-this.width/2/this.zoom,this.position.y-this.height/2/this.zoom);
+		Firmament.log(entities);
 		for(var y=0;y<entities.length;y++){
 			var ent = entities[y];
 			ent.getRenderer().render(cxt,ent,this);

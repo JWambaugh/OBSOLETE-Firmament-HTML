@@ -1,8 +1,8 @@
 
 function FRenderable(){
-	this.renderer= null;
-    this.imageScale=100;
-	
+	this.renderer = null;
+    this.imageScale = 100;
+	this.zPosition = 0;
 }
 
 FRenderable.prototype=new FWorldPositional;
@@ -37,4 +37,10 @@ FRenderable.prototype.getCurrentImage=function(){
 	return null;
 }
 
+FRenderable.prototype.getZPosition=function(){
+	return this.zPosition;
+}
 
+FRenderable.prototype.setZPosition=function(z){
+	this.zPosition=z;
+}

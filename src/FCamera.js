@@ -25,7 +25,9 @@ FCamera.prototype.render=function(worlds){
 	this.emit('beginRender',[cxt]);
 	for(var x=0;x<worlds.length;x++){
 		var world = worlds[x];
-		var entities = world.getAllEntities();
+		//just grab entities that are inside the camera for rendering
+		var entities=world.getEntitiesInBox(this.position.x+this.width/2/this.zoom,this.position.y+this.height/2/this.zoom,this.position.x-this.width/2/this.zoom,this.position.y-this.height/2/this.zoom);
+		Firmament.log(entities);
 		for(var y=0;y<entities.length;y++){
 			var ent = entities[y];
 			ent.getRenderer().render(cxt,ent,this);

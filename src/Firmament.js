@@ -4,6 +4,7 @@
  * All Rights Reserved. Do not duplicate without express written permission.
  */
 
+console.log(Box2D);
 
  var   b2Vec2 = Box2D.Common.Math.b2Vec2
          	,	b2BodyDef = Box2D.Dynamics.b2BodyDef
@@ -19,11 +20,16 @@
 
 var Firmament={
 		
-		log:function(ob){
+		log:function(ob,once){
 			if(window.console){
-				window.console.log(ob);
+				if(once !=true || this._logHistory.indexOf(ob)==-1){
+					this._logHistory.push(ob);
+					window.console.log(ob);
+				}
+				
 			}
 		}
+		,_logHistory:[]
 		
 		
 }

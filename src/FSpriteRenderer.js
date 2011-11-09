@@ -19,8 +19,8 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	var pos = item.getPosition();
 	
 	//make sure item is within rendering range
-	if(pos.x < cameraPos.x-2 || pos.x >cameraPos.x+camera.getWidth()+2)return;
-	if(pos.y < cameraPos.y-2 || pos.y >cameraPos.y+camera.getHeight()+2)return;
+	/*if(pos.x < cameraPos.x-2 || pos.x >cameraPos.x+camera.getWidth()+2)return;
+	if(pos.y < cameraPos.y-2 || pos.y >cameraPos.y+camera.getHeight()+2)return;*/
 	
 	
 	

@@ -48,6 +48,10 @@ function FPhysicsEntity(world,config){
     //Firmament.log(this.body);
     this.body.ResetMassData();
     this.position=this.body.m_xf.position; //tie the entity's position to the body's position
+    
+    //set z value
+    this.zPosition =0;
+    
     if(config.image){
     	//console.log(typeof(config.image))
     	if(typeof(config.image)=='string'){
@@ -104,3 +108,9 @@ FPhysicsEntity.prototype.getAngle=function(){
 FPhysicsEntity.prototype.getCurrentImage=function(){
 	return this.currentImage;
 }
+
+
+
+
+
+
