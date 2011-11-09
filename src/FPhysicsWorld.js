@@ -36,12 +36,12 @@ FPhysicsWorld.prototype.createEntity=function(config){
 
 
 
-FPhysicsWorld.prototype.getEntitiesInBox=function(upperBoundX,upperBoundY,lowerBoundX,lowerBoundY){
+FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX,bottomRightY){
 	var selectEntities=[];
 	var query = new Box2D.Collision.b2AABB;
 	
-	query.upperBound.Set(upperBoundX,upperBoundY);
-    query.lowerBound.Set(lowerBoundX,lowerBoundY);
+	query.upperBound.Set(bottomRightX,bottomRightY);
+    query.lowerBound.Set(topLeftX,topLeftY);
     //Firmament.log(query,true);
     //Firmament.log(query);
     this.b2world.QueryAABB(function(fixture){

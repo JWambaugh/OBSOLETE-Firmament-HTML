@@ -11240,6 +11240,17 @@ FWorld.prototype.getAllEntities=function(){
 	
 };
 
+/**
+ * Returns an array of entities within the box described by the points at top left and bottom right.
+ * @param bottomRightX
+ * @param bottomRightY
+ * @param topLeftX
+ * @param topLeftY
+ */
+FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX,bottomRightY){
+	Firmament.log('getEntitiesInBox Not Implemented!');
+}
+
 
 
 function FPhysicsWorld(gravity){
@@ -11277,12 +11288,12 @@ FPhysicsWorld.prototype.createEntity=function(config){
 
 
 
-FPhysicsWorld.prototype.getEntitiesInBox=function(upperBoundX,upperBoundY,lowerBoundX,lowerBoundY){
+FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX,bottomRightY){
 	var selectEntities=[];
 	var query = new Box2D.Collision.b2AABB;
 	
-	query.upperBound.Set(upperBoundX,upperBoundY);
-    query.lowerBound.Set(lowerBoundX,lowerBoundY);
+	query.upperBound.Set(bottomRightX,bottomRightY);
+    query.lowerBound.Set(topLeftX,topLeftY);
     //Firmament.log(query,true);
     //Firmament.log(query);
     this.b2world.QueryAABB(function(fixture){
@@ -11595,8 +11606,9 @@ FCamera.prototype.render=function(worlds){
 	this.emit('beginRender',[cxt]);
 	for(var x=0;x<worlds.length;x++){
 		var world = worlds[x];
-		var entities=world.getEntitiesInBox(this.position.x+this.width/2/this.zoom,this.position.y+this.height/2/this.zoom,this.position.x-this.width/2/this.zoom,this.position.y-this.height/2/this.zoom);
-		Firmament.log(entities);
+		//just grab entities that are inside the camera for rendering
+		var entities=world.getEntitiesInBox(this.position.x-this.width/2/this.zoom,this.position.y-this.height/2/this.zoom,this.position.x+this.width/2/this.zoom,this.position.y+this.height/2/this.zoom);
+		//Firmament.log(entities);
 		for(var y=0;y<entities.length;y++){
 			var ent = entities[y];
 			ent.getRenderer().render(cxt,ent,this);
