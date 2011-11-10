@@ -6,10 +6,10 @@
 
 var FHelper={};
 
-
+/*
 var fg=fgame;
 var FGame=fgame;
-var fh=FHelper;
+var fh=FHelper;*/
 
 
 /**
@@ -25,14 +25,17 @@ FHelper.centerCameraOnEntity=function(entity){
  * @param {FEntity} origin The entity to shoot the bullet from
  * @param {FEntityConfig} bulletDef A config object for the entity to shoot towards the mouse 
  */
-FHelper.shootBulletFromEntityToMouse=function(entity,bulletDef){
+FHelper.shootBulletFromEntityToMouse=function(input,camera,world,entity,bulletDef){
     //get angle from entity to mouse
-    var xdiff=FHelper.getMouseWorldX()-entity.getPositionX();
-    var ydiff=FHelper.getMouseWorldY()-entity.getPositionY();
+	
+	var mouseWorldPos = input.getMouseWorldPos(camera);
+	var entityPos = entity.getPosition();
+    var xdiff=mouseWorldPos.x-entityPos.x;
+    var ydiff=mouseWorldPos.y-entityPos.y;
     var angle=Math.atan2(ydiff,xdiff);
-    bulletDef.positionX=entity.getPositionX()+Math.cos(angle)*1.1;
-    bulletDef.positionY=entity.getPositionY()+Math.sin(angle)*1.1   ;
-    var bullet=fgame.createEntity(bulletDef);
+    bulletDef.positionX=entityPos.x+Math.cos(angle)*1.1;
+    bulletDef.positionY=entityPos.y+Math.sin(angle)*1.1   ;
+    var bullet=world.createEntity(bulletDef);
 
     bullet.setVelocity({x:Math.cos(angle)*10,y:Math.sin(angle)*10});
     

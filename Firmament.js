@@ -10896,6 +10896,14 @@ var Firmament={
 			}
 		}
 		,_logHistory:[]
+		,images:{}
+		,loadImage:function(src){
+			//if(this.images[src]!=undefined)return this.images[src];
+			var img = document.createElement("img");
+			img.src=src;
+			this.images[src]=img;
+			return img;
+		}
 		
 		
 }
@@ -11120,9 +11128,15 @@ function FPhysicsEntity(world,config){
         def.position.x=0;
         def.position.y=0;
     }
+    if(config.positionX!=undefined){
+    	def.position.x=config.positionX;
+    }
+    if(config.positionY!=undefined){
+    	def.position.y=config.positionY;
+    }
     //def.fixedRotation=false;
-    if(config.type=='dynamic')def.type=b2Body.b2_dynamicBody;
-    else def.type=b2Body.b2_staticBody;
+    if(config.type=='static')def.type=b2Body.b2_staticBody;
+    else def.type=Box2D.Dynamics.b2Body.b2_dynamicBody;
     if(config.angle){
     	def.angle=config.angle;
     }
@@ -11140,6 +11154,9 @@ function FPhysicsEntity(world,config){
         var shape = config.shapes[x];
         
         if(shape.type=='box'){
+        	shape.width= shape.width!=undefined?shape.width:1;
+        	shape.height= shape.height!=undefined?shape.hieght:1;
+        	
             fixDef.shape=new b2PolygonShape();
             fixDef.shape.SetAsBox(shape.width/2,shape.height/2);
             width=shape.width;
@@ -11154,12 +11171,20 @@ function FPhysicsEntity(world,config){
         //console.log(fixDef)
         this.body.CreateFixture(fixDef);
     }
-    //Firmament.log(this.body);
+   // Firmament.log(this.body);
     this.body.ResetMassData();
-    this.position=this.body.m_xf.position; //tie the entity's position to the body's position
+    //this.position=this.body.m_xf.position; //tie the entity's position to the body's position
     
     //set z value
     this.zPosition =0;
+    
+    
+    if(config.maxLifeSeconds){
+    	setTimeout(function(){
+    		this.destroy();
+    	}.bind(this),config.maxLifeSeconds*1000);
+    }
+    
     
     if(config.image){
     	//console.log(typeof(config.image))
@@ -11187,6 +11212,10 @@ function FPhysicsEntity(world,config){
     	
     }else{
     	this.setRenderer(new FWireframeRenderer);
+    }
+    
+    if(config.init){
+    	config.init.apply(this,[]);
     }
     
 }
@@ -11220,6 +11249,17 @@ FPhysicsEntity.prototype.getCurrentImage=function(){
 
 
 
+FPhysicsEntity.prototype.setVelocity=function(v){
+	this.body.SetLinearVelocity(v);
+}
+
+
+FPhysicsEntity.prototype.destroy=function(){
+	this.world.b2world.DestroyBody(this.body);
+}
+
+
+FPhysicsEntity.prototype.deleteLater=FPhysicsEntity.prototype.destroy;
 
 
 
@@ -11265,11 +11305,19 @@ FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX
 
 
 function FPhysicsWorld(gravity){
+	this.collisions=[]
 	this.b2world = new b2World(
             new b2Vec2(gravity.x, gravity.y)    //gravity
          ,  true                 //allow sleep
       );
-	
+	this.b2world.SetContactListener({
+		BeginContact:function(contact){
+			this.collisions.push(contact);
+		}.bind(this)
+		,EndContact:function(){}
+		,PreSolve:function(){}
+		,PostSolve:function(){}
+	})
 }
 
 
@@ -11279,16 +11327,27 @@ FPhysicsWorld.prototype = new FWorld;
 
 
 FPhysicsWorld.prototype.step=function(){
-	
+	this.collisions=[];
 	this.b2world.Step(
             1 / 60   //frame-rate
          ,  10       //velocity iterations
          ,  10       //position iterations
       );
+	for(var x=0;x<this.collisions.length;x++){
+		var c=this.collisions[x];
+		var ent1=c.m_fixtureA.m_body.m_userData;
+		var ent2=c.m_fixtureB.m_body.m_userData;
+		
+		ent1.emit("collide",[ent2,c]);
+		ent2.emit("collide",[ent1,c]);
+	}
 	//this.world.DrawDebugData();
 	this.b2world.ClearForces();
 }
 
+FPhysicsWorld.prototype.setGravity=function(gravity){
+	this.b2world.SetGravity(gravity);
+}
 
 FPhysicsWorld.prototype.createEntity=function(config){
 	//Firmament.log(this);
@@ -11496,8 +11555,8 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 			console.log("ratio "+ratio)
 			console.log(" a:"+a+" b:"+b+" c:"+c+" d:"+d+" tx:"+tx+" ty:"+ty);
 			console.log(" ia:"+ia+" ib:"+ib+" ic:"+ic+" id:"+id+" itx:"+itx+" ity:"+ity);
-			console.log("ny:"+ny+ " nx:"+nx);*/
-			console.log(cameraPos);
+			console.log("ny:"+ny+ " nx:"+nx);
+			console.log(cameraPos);*/
 		}
 	} else {
 		var nx=(pos.x-cameraPos.x)*camera.getZoom()/ratio;
@@ -11516,11 +11575,8 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
  * FGame Class constructor.
  *
  */
-function FGame(gravity){
-    if(!gravity){
-        gravity=new FVector(0,0);
-    }
-     
+function FGame(){
+    
      
      /*
        //setup debug draw
@@ -11532,18 +11588,29 @@ function FGame(gravity){
         debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
         this.world.SetDebugDraw(debugDraw);
         */
-        window.setInterval(this.step.bind(this), 1000 / 60);
+       
         window.setInterval(this.frameCount.bind(this),1000);
         this.frames=0;
         this.instep=0;
         this.cameras=[];
 		this.worlds=	[];
 		this.fps=0;
+		this.stepInterval=null;
       
 }
 
+
 FGame.prototype=new FObservable;
 
+
+FGame.prototype.startSimulation=function(){
+	 this.stepInterval=window.setInterval(this.step.bind(this), 1000 / 60);
+};
+
+
+FGame.prototype.stopSimulation=function(){
+	 window.clearInterval(this.stepInterval);
+};
 
 
 FGame.prototype.addCamera=function(camera){
@@ -11751,8 +11818,8 @@ FInput.prototype.getMouseScreenPos=function(e){
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());
-	Firmament.log(offset);
-	Firmament.log(this.mouseX);
+	//Firmament.log(offset);
+	//Firmament.log(this.mouseX);
 	var x=this.mouseX-offset.x;
 	var y=this.mouseY-offset.y;
 	var cameraPos = camera.getTopLeftPosition();
@@ -11804,6 +11871,14 @@ FInput.prototype.isKeyPressed=function(key){
 };
 
 
+FInput.prototype.isMousePressed=function(button){
+	switch(button){
+	case 'left':
+		return this.leftMouseDown;
+	}
+}
+
+
 
 /**
  * @class FHelper
@@ -11812,10 +11887,10 @@ FInput.prototype.isKeyPressed=function(key){
 
 var FHelper={};
 
-
+/*
 var fg=fgame;
 var FGame=fgame;
-var fh=FHelper;
+var fh=FHelper;*/
 
 
 /**
@@ -11831,14 +11906,17 @@ FHelper.centerCameraOnEntity=function(entity){
  * @param {FEntity} origin The entity to shoot the bullet from
  * @param {FEntityConfig} bulletDef A config object for the entity to shoot towards the mouse 
  */
-FHelper.shootBulletFromEntityToMouse=function(entity,bulletDef){
+FHelper.shootBulletFromEntityToMouse=function(input,camera,world,entity,bulletDef){
     //get angle from entity to mouse
-    var xdiff=FHelper.getMouseWorldX()-entity.getPositionX();
-    var ydiff=FHelper.getMouseWorldY()-entity.getPositionY();
+	
+	var mouseWorldPos = input.getMouseWorldPos(camera);
+	var entityPos = entity.getPosition();
+    var xdiff=mouseWorldPos.x-entityPos.x;
+    var ydiff=mouseWorldPos.y-entityPos.y;
     var angle=Math.atan2(ydiff,xdiff);
-    bulletDef.positionX=entity.getPositionX()+Math.cos(angle)*1.1;
-    bulletDef.positionY=entity.getPositionY()+Math.sin(angle)*1.1   ;
-    var bullet=fgame.createEntity(bulletDef);
+    bulletDef.positionX=entityPos.x+Math.cos(angle)*1.1;
+    bulletDef.positionY=entityPos.y+Math.sin(angle)*1.1   ;
+    var bullet=world.createEntity(bulletDef);
 
     bullet.setVelocity({x:Math.cos(angle)*10,y:Math.sin(angle)*10});
     
@@ -12422,4 +12500,106 @@ String.prototype.replaceAll=function(pattern,replace){
 
 
 
+
+
+/**
+ * @class FEntityRepo
+ * Singleton registry for storing element types
+ */
+
+
+var FEntityRepo={
+    
+    elements:{}
+    
+    /**
+     * registers a new entity type in the registry.
+     * @param {string} name the name of the new entity type
+     * @param {Object} type an {@link FEntity} config object for the new type
+     */
+    ,addEntityType:function(name,type){
+        this.elements[name]=type;
+    }
+    /**
+     * Returns an {@link FEntity} config object from the registry of the specified type
+     * @param {String} name the name of the type of  {@link FEntity} config object to return
+     * @return {Object} The config object to create a {@link FEntity} object.
+     */
+    ,getEntityType:function(name){
+        var ob=this.clone(this.elements[name]);
+        ob._entityTypeName=name;
+        return ob;
+    }
+    /**
+     * Creates a new {@link FEntity} of type name and returns it.
+     * This is a helper function that uses getEntityType in conjuction with {@link FGame#createEntity}.
+     * @param {String} name the name of the {@link FEntity} type to create
+     */
+    ,createEntity:function(name){
+        
+        return FGame.createEntity(this.getEntityType(name));
+    }
+    
+    ,clone:function (o) {
+    	function c(o) {
+    		for (var i in o) {
+    		this[i] = o[i];
+    		}
+    		}
+
+    		return new c(o);
+    		}
+    
+};
+
+
+
+/**
+ * @class FStateMachine
+ * Base class for creating a state machine
+ */
+
+
+function FStateMachine(states){
+    this.states=states;
+    this.currentState=null;
+    this.currentStateId=null;
+    
+    this.setState=function(stateId){
+        //do nothing if we're already in that state
+        if(stateId==this.currentStateId) return;
+        if(this.currentState!=null && typeof(this.stopState)=='function'){
+            this.currentState.stopState.call(this);
+        }
+        if(this.states[stateId]){
+            this.currentState=this.states[stateId]
+            this.currentStateId=stateId;
+            if(typeof(this.currentState.initState)=='function'){
+                this.currentState.initState.call(this);
+            }
+        } else {
+            throw "State of type "+stateId+' Is not a valid state object'
+        }
+    }
+    
+    /**
+     *
+     * Returns the currentState
+     */
+    this.getState=function(){
+        return this.currentState;
+    }
+    
+    /**
+     * Calls the function of name func in the current state, in the scope of the state machine.
+     * @param {function} func the name of the function to call
+     * @param {Array} arguments the arguments to pass to the function
+     * @note For the sake of speed, this function does not do any error checking.
+     *
+     */
+    this.callState=function(func,arguments){
+        this.currentState[func].apply(this,arguments)
+    }
+    
+}
 

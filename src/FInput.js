@@ -57,8 +57,8 @@ FInput.prototype.getMouseScreenPos=function(e){
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());
-	Firmament.log(offset);
-	Firmament.log(this.mouseX);
+	//Firmament.log(offset);
+	//Firmament.log(this.mouseX);
 	var x=this.mouseX-offset.x;
 	var y=this.mouseY-offset.y;
 	var cameraPos = camera.getTopLeftPosition();
@@ -108,5 +108,13 @@ FInput.prototype.isKeyPressed=function(key){
 	if(this.keysPressed[key])return true;
 	return false;
 };
+
+
+FInput.prototype.isMousePressed=function(button){
+	switch(button){
+	case 'left':
+		return this.leftMouseDown;
+	}
+}
 
 

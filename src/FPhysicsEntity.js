@@ -11,9 +11,15 @@ function FPhysicsEntity(world,config){
         def.position.x=0;
         def.position.y=0;
     }
+    if(config.positionX!=undefined){
+    	def.position.x=config.positionX;
+    }
+    if(config.positionY!=undefined){
+    	def.position.y=config.positionY;
+    }
     //def.fixedRotation=false;
-    if(config.type=='dynamic')def.type=b2Body.b2_dynamicBody;
-    else def.type=b2Body.b2_staticBody;
+    if(config.type=='static')def.type=b2Body.b2_staticBody;
+    else def.type=Box2D.Dynamics.b2Body.b2_dynamicBody;
     if(config.angle){
     	def.angle=config.angle;
     }
@@ -31,6 +37,9 @@ function FPhysicsEntity(world,config){
         var shape = config.shapes[x];
         
         if(shape.type=='box'){
+        	shape.width= shape.width!=undefined?shape.width:1;
+        	shape.height= shape.height!=undefined?shape.hieght:1;
+        	
             fixDef.shape=new b2PolygonShape();
             fixDef.shape.SetAsBox(shape.width/2,shape.height/2);
             width=shape.width;
@@ -45,12 +54,20 @@ function FPhysicsEntity(world,config){
         //console.log(fixDef)
         this.body.CreateFixture(fixDef);
     }
-    //Firmament.log(this.body);
+   // Firmament.log(this.body);
     this.body.ResetMassData();
-    this.position=this.body.m_xf.position; //tie the entity's position to the body's position
+    //this.position=this.body.m_xf.position; //tie the entity's position to the body's position
     
     //set z value
     this.zPosition =0;
+    
+    
+    if(config.maxLifeSeconds){
+    	setTimeout(function(){
+    		this.destroy();
+    	}.bind(this),config.maxLifeSeconds*1000);
+    }
+    
     
     if(config.image){
     	//console.log(typeof(config.image))
@@ -78,6 +95,10 @@ function FPhysicsEntity(world,config){
     	
     }else{
     	this.setRenderer(new FWireframeRenderer);
+    }
+    
+    if(config.init){
+    	config.init.apply(this,[]);
     }
     
 }
@@ -111,6 +132,17 @@ FPhysicsEntity.prototype.getCurrentImage=function(){
 
 
 
+FPhysicsEntity.prototype.setVelocity=function(v){
+	this.body.SetLinearVelocity(v);
+}
+
+
+FPhysicsEntity.prototype.destroy=function(){
+	this.world.b2world.DestroyBody(this.body);
+}
+
+
+FPhysicsEntity.prototype.deleteLater=FPhysicsEntity.prototype.destroy;
 
 
 

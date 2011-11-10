@@ -2,30 +2,41 @@
 <html>
     <head>
         <script src="../../Firmament.js"></script>
-        
         <script>
-        var myImage=Firmament.loadImage('http://profile.ak.fbcdn.net/hprofile-ak-ash2/369067_648192851_251147483_q.jpg');
-	var camera;
+        
+        var camera;
+
+        var game=new FGame();
+        var world = new FPhysicsWorld(new FVector(0,.5));
+        var fgame=world;
+        game.addWorld(world);
+        //FInput object lets us get input from user
+        var input=new FInput(document);
+        
+        </script>
+          <script src="spaceInvaders.js"></script>
+        <script>
+	
         "use strict";var Timer=Timer||(function(){var c,b,a=Date.now||function(){return(new Date()).getTime()};if(typeof chrome!=="undefined"&&typeof chrome.Interval==="function"){b=(c=chrome.Interval).prototype;b.milliseconds=function(){return this.microseconds()/1000}}else{b=(c=function(){var e=0,d=0;this.start=function(){d=0;e=a()};this.stop=function(){d=a();if(e===0){d=0}};this.milliseconds=function(){var f=d;if(f===0&&e!==0){f=a()}return f-e}}).prototype;b.microseconds=function(){return this.milliseconds()*1000}}b.profile=function(d,e){if(typeof d==="string"){d=new Function(d)}this.start();while(e--){d()}this.stop()};b.seconds=function(){return this.milliseconds()/1000};return c}());
         function init(){
-            var game=new FGame();
+        	 
             var canvasEl=document.getElementById('canvas');
             
 			
 			
 			
             camera=new FCamera(canvasEl);
-            camera.setPosition(new FVector(3,0));
+           
+            camera.setPosition({x:9,y:5});
+            camera.setZoom(60);
             game.addCamera(camera);
             game.connect('fpsUpdate',function(fps){
                 document.getElementById('fps').innerHTML=fps;
             });
-            var world = new FPhysicsWorld(new FVector(0,5));
-            game.addWorld(world);
             
             
-            //FInput object lets us get input from user
-            var input=new FInput(document);
+            
+            /*
             
             //get mouse drag movements
             input.connect('mouseDrag',function(e){
@@ -41,54 +52,37 @@
                 console.log('Key: '+code);
             })
             
+            
+            
+           
+            */
+            
             world.createEntity({
-            	type:'dynamic'
-            		,position:new FVector(0,-3)
-                ,image:myImage 
-            	,shapes:[
-            	        {
-            	        	type:'circle'
-            	        	,radius:.5
-            	        	,restitution:1
-            	        }
-            	]
+                type:'dynamic'
+                    ,position:new FVector(0,-3)
+                ,shapes:[
+                        {
+                            type:'circle'
+                            ,radius:.5
+                            ,restitution:1
+                        }
+                ]
             })
             
             
             
-            for(var x=0;x<50;x++){
-            	for(var y=4;y<50;y++){
-		            world.createEntity({
-		                type:'static'
-		                ,position:new FVector(x*.5,y*.5)
-		                ,image:'images/terrain.png'
-		                ,imageScale:'auto'
-		                ,imageWidth:16
-		                ,shapes:[{
-		                    type:'box'
-		                    ,width:.5
-		                    ,height:.5
-		                    //,radius:.5
-		                    ,density:1
-		                    ,restitution:.2
-		                    }
-		                    ]
-		                });
-            	}
-            }
             
-           
-            
-          game.startSimulation();
-            
+          //start the game
+            console.log(world.getAllEntities())
+            game.startSimulation();
             
             
         }
 	
 	    
 
-count=0
-var input=new FInput(document);
+var count=0
+
 input.connect('keyDown',function(code){
     if (code==37){
 	moveAnimate(1,-.1)//move left
@@ -106,7 +100,7 @@ input.connect('keyDown',function(code){
   function moveAnimate(axis,mover){
 	var IntervalR=setInterval(function(){
 	    count++
-	     pos=camera.getPosition();
+	    var pos=camera.getPosition();
 	    if (axis==1){
 		pos.x= pos.x+mover;
 	    camera.setPosition(pos);
@@ -122,14 +116,16 @@ input.connect('keyDown',function(code){
 function zoom(inOrOut){
     var IntervalZO=setInterval(function(){
 	 count++;
-	 zoomPos= camera.getZoom();
+	 var zoomPos= camera.getZoom();
 	 zoomPos=zoomPos+inOrOut;
 	 camera.setZoom(zoomPos);
 	 },15)
     setTimeout(function(){clearInterval(IntervalZO)},250)
 }
 
+		
 	
+
         </script>
     </head>
     <body onload="init();">

@@ -30,6 +30,14 @@ var Firmament={
 			}
 		}
 		,_logHistory:[]
+		,images:{}
+		,loadImage:function(src){
+			//if(this.images[src]!=undefined)return this.images[src];
+			var img = document.createElement("img");
+			img.src=src;
+			this.images[src]=img;
+			return img;
+		}
 		
 		
 }

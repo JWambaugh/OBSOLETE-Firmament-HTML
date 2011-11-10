@@ -4,11 +4,8 @@
  * FGame Class constructor.
  *
  */
-function FGame(gravity){
-    if(!gravity){
-        gravity=new FVector(0,0);
-    }
-     
+function FGame(){
+    
      
      /*
        //setup debug draw
@@ -20,18 +17,29 @@ function FGame(gravity){
         debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
         this.world.SetDebugDraw(debugDraw);
         */
-        window.setInterval(this.step.bind(this), 1000 / 60);
+       
         window.setInterval(this.frameCount.bind(this),1000);
         this.frames=0;
         this.instep=0;
         this.cameras=[];
 		this.worlds=	[];
 		this.fps=0;
+		this.stepInterval=null;
       
 }
 
+
 FGame.prototype=new FObservable;
 
+
+FGame.prototype.startSimulation=function(){
+	 this.stepInterval=window.setInterval(this.step.bind(this), 1000 / 60);
+};
+
+
+FGame.prototype.stopSimulation=function(){
+	 window.clearInterval(this.stepInterval);
+};
 
 
 FGame.prototype.addCamera=function(camera){

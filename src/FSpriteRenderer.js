@@ -96,8 +96,8 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 			console.log("ratio "+ratio)
 			console.log(" a:"+a+" b:"+b+" c:"+c+" d:"+d+" tx:"+tx+" ty:"+ty);
 			console.log(" ia:"+ia+" ib:"+ib+" ic:"+ic+" id:"+id+" itx:"+itx+" ity:"+ity);
-			console.log("ny:"+ny+ " nx:"+nx);*/
-			console.log(cameraPos);
+			console.log("ny:"+ny+ " nx:"+nx);
+			console.log(cameraPos);*/
 		}
 	} else {
 		var nx=(pos.x-cameraPos.x)*camera.getZoom()/ratio;
