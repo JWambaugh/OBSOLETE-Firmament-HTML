@@ -1,11 +1,13 @@
-
+FRenderable.prototype=new FWorldPositional;
+FRenderable.prototype.constructor=FRenderable;
 function FRenderable(){
 	this.renderer = null;
     this.imageScale = 100;
 	this.zPosition = 0;
+	this.color="#000000";
 }
 
-FRenderable.prototype=new FWorldPositional;
+
 
 
 
@@ -44,3 +46,14 @@ FRenderable.prototype.getZPosition=function(){
 FRenderable.prototype.setZPosition=function(z){
 	this.zPosition=z;
 }
+
+FRenderable.prototype.setColor=function(c){
+	this.color=c;
+}
+
+FRenderable.prototype.getColor=function(){
+	return this.color;
+}
+
+
+

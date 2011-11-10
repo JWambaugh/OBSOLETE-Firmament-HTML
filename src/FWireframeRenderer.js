@@ -16,7 +16,8 @@ FWireframeRenderer.prototype = new FRenderer;
 
 FWireframeRenderer.prototype.render = function(cxt,item,camera){
 	var shapes=item.getShapes();
-	
+	cxt.fillStyle=item.getColor();
+	cxt.strokeStyle=item.getColor();
 	var bodyAngle=item.getAngle();
 	//console.log(bodyAngle);
 	for(var x=0;x<shapes.length;x++){
@@ -40,7 +41,7 @@ FWireframeRenderer.prototype.renderCircle=function(cxt,s,pos,camera){
 	cxt.beginPath();
 	cxt.arc((pos.x-cameraPos.x)*camera.getZoom(),(pos.y-cameraPos.y)*camera.getZoom(),s.m_radius*camera.getZoom(),0,Math.PI*2,true);
 	cxt.closePath();
-	cxt.stroke();
+	cxt.fill();
 }
 
 //todo: add polygon rotation

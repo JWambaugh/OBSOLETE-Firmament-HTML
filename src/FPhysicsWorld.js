@@ -37,6 +37,9 @@ FPhysicsWorld.prototype.step=function(){
 		
 		ent1.emit("collide",[ent2,c]);
 		ent2.emit("collide",[ent1,c]);
+		//console.log("collission!");
+		//console.log(c);
+		
 	}
 	//this.world.DrawDebugData();
 	this.b2world.ClearForces();
@@ -50,6 +53,10 @@ FPhysicsWorld.prototype.createEntity=function(config){
 	//Firmament.log(this);
     var ent= new FPhysicsEntity(this,config);
     this.addEntity(ent);
+    if(config.init){
+    	//Firmament.log(ent._connections);
+    	config.init.apply(ent,[]);
+    }
     return ent;
 };
 

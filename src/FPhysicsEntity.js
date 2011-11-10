@@ -1,3 +1,8 @@
+//FEntity extends FRenderable
+FPhysicsEntity.prototype = new FRenderable;
+FPhysicsEntity.prototype.constructor=FPhysicsEntity;
+
+
 function FPhysicsEntity(world,config){
 	this.world=world;
     this.config=config;
@@ -38,7 +43,7 @@ function FPhysicsEntity(world,config){
         
         if(shape.type=='box'){
         	shape.width= shape.width!=undefined?shape.width:1;
-        	shape.height= shape.height!=undefined?shape.hieght:1;
+        	shape.height= shape.height!=undefined?shape.height:1;
         	
             fixDef.shape=new b2PolygonShape();
             fixDef.shape.SetAsBox(shape.width/2,shape.height/2);
@@ -48,9 +53,9 @@ function FPhysicsEntity(world,config){
             fixDef.shape = new b2CircleShape(shape.radius);
         }
         
-        fixDef.density=shape.density;
-        fixDef.friction=shape.friction;
-        fixDef.restitution=shape.restitution;
+        fixDef.density=shape.density!=undefined?shape.density:1;
+        fixDef.friction=shape.friction!=undefined?shape.friction:1;
+        fixDef.restitution=shape.restitution!=undefined?shape.restitution:0;
         //console.log(fixDef)
         this.body.CreateFixture(fixDef);
     }
@@ -67,6 +72,9 @@ function FPhysicsEntity(world,config){
     		this.destroy();
     	}.bind(this),config.maxLifeSeconds*1000);
     }
+    
+    
+    if(config.color)this.setColor(config.color);
     
     
     if(config.image){
@@ -97,14 +105,11 @@ function FPhysicsEntity(world,config){
     	this.setRenderer(new FWireframeRenderer);
     }
     
-    if(config.init){
-    	config.init.apply(this,[]);
-    }
+    
     
 }
 
-//FEntity extends FRenderable
-FPhysicsEntity.prototype = new FRenderable;
+
 
 FPhysicsEntity.prototype.getShapes=function(){
 	var shapes = [];
@@ -139,6 +144,7 @@ FPhysicsEntity.prototype.setVelocity=function(v){
 
 FPhysicsEntity.prototype.destroy=function(){
 	this.world.b2world.DestroyBody(this.body);
+	this.world.destroyEntity(this)
 }
 
 

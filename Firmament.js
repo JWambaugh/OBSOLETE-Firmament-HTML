@@ -10904,6 +10904,108 @@ var Firmament={
 			this.images[src]=img;
 			return img;
 		}
+
+		,extend:function() {
+			 var options, name, src, copy, copyIsArray, clone,
+				target = arguments[0] || {},
+				i = 1,
+				length = arguments.length,
+				deep = false;
+
+			// Handle a deep copy situation
+			if ( typeof target === "boolean" ) {
+				deep = target;
+				target = arguments[1] || {};
+				// skip the boolean and the target
+				i = 2;
+			}
+
+			// Handle case when target is a string or something (possible in deep copy)
+			if ( typeof target !== "object" && !FHelper.isFunction(target) ) {
+				target = {};
+			}
+
+		    //return the target if there's only one argument
+			if ( length === i ) {
+				return target
+			}
+
+			for ( ; i < length; i++ ) {
+				// Only deal with non-null/undefined values
+				if ( (options = arguments[ i ]) != null ) {
+					// Extend the base object
+					for ( name in options ) {
+						src = target[ name ];
+						copy = options[ name ];
+
+						// Prevent never-ending loop
+						if ( target === copy ) {
+							continue;
+						}
+
+						// Recurse if we're merging plain objects or arrays
+						if ( deep && copy && ( Firmament.isPlainObject(copy) || (copyIsArray = Firmament.isArray(copy)) ) ) {
+							if ( copyIsArray ) {
+								copyIsArray = false;
+								clone = src && Firmament.isArray(src) ? src : [];
+
+							} else {
+								clone = src && Firmament.isPlainObject(src) ? src : {};
+							}
+
+							// Never move original objects, clone them
+							target[ name ] = Firmament.FHelper.extend( deep, clone, copy );
+
+						// Don't bring in undefined values
+						} else if ( copy !== undefined ) {
+							target[ name ] = copy;
+						}
+					}
+				}
+			}
+
+			// Return the modified object
+			return target;
+		}
+
+		,isArray:function(obj){
+		    if(toString.call(obj)=='[object Array]')return true; else return false;
+		}
+
+
+
+		,isPlainObject:function( obj ) {
+				// Must be an Object.
+				// Because of IE, we also have to check the presence of the constructor property.
+				// Make sure that DOM nodes and window objects don't pass through, as well
+				if ( !obj ) {
+					return false;
+				}
+				
+				// Not own constructor property must be Object
+				if ( obj.constructor &&
+					!hasOwn.call(obj, "constructor") &&
+					!hasOwn.call(obj.constructor.prototype, "isPrototypeOf") ) {
+					return false;
+				}
+			
+				// Own properties are enumerated firstly, so to speed up,
+				// if last one is own, then all properties are own.
+			
+				var key;
+				for ( key in obj ) {}
+				
+				return key === undefined || hasOwn.call( obj, key );
+			}
+
+
+		/**
+		 * Returns true if the passed object is a function
+		 */
+		,isFunction:function( obj ) {
+				return typeof(obj)=='function'?true:false;
+			}
+
 		
 		
 }
@@ -10968,6 +11070,9 @@ if (!Object.create) {
         return new F();
     };
 }
+
+
+
 /**
  * 
  */
@@ -10975,20 +11080,25 @@ if (!Object.create) {
 
 
 function FObservable(){
-	this._connections={};
+	//this._connections={};
 }
 
 
 
-FObservable.prototype.connect=function(eventName,func){
+FObservable.prototype.connect=function(eventName,func,scope){
+	if(this._connections==undefined)this._connections={};
 	if(this._connections[eventName] == undefined){
 		this._connections[eventName]=[];
 	}
-	
-	this._connections[eventName].push(func);
+	if(scope==undefined)scope=this;
+	this._connections[eventName].push({
+			func:func
+			,scope:scope
+		});
 }
 
 FObservable.prototype.disconnect=function(eventName,func){
+	if(this._connections==undefined)this._connections={};
 	//only remove specified function
 	if(func != undefined){
 		var connections=this._connections[eventName];
@@ -11007,11 +11117,11 @@ FObservable.prototype.disconnect=function(eventName,func){
 
 
 FObservable.prototype.emit=function(eventName,params){
-	
+	if(this._connections==undefined)this._connections={};
 	var connections=this._connections[eventName];
 	if(connections != undefined){
 		for(var x=0;x<connections.length;x++){
-			connections[x].apply(null,params);
+			connections[x].func.apply(connections[x].scope,params);
 		}
 	}
 	
@@ -11034,7 +11144,9 @@ FVector.prototype = Object.create(Box2D.Common.Math.b2Vec2);
 /**
  * A positional object has a position in the game world.
  */
-
+FWorldPositional.prototype=new FObservable;
+FWorldPositional.prototype.constuctor=FWorldPositional;
+FWorldPositional.prototype.parent=FObservable.prototype;
 function FWorldPositional(){
 	this.position = new FVector(0,0);
     this.positionBase='w'; //'w' = world based, 'c' = camera based
@@ -11042,7 +11154,7 @@ function FWorldPositional(){
 	
 }
 
-FWorldPositional.prototype=new FObservable;
+
 
 
 
@@ -11057,10 +11169,10 @@ FWorldPositional.prototype.getPosition=function(){
 
 
 FWorldPositional.prototype.getPositionX=function(){
-	return this.position.x;
+	return this.getPosition().x;
 };
 FWorldPositional.prototype.getPositionY=function(){
-	return this.position.y;
+	return this.getPosition().y;
 };
 
 
@@ -11069,14 +11181,16 @@ FWorldPositional.prototype.getAngle=function(){
 	return 0;
 }
 
-
+FRenderable.prototype=new FWorldPositional;
+FRenderable.prototype.constructor=FRenderable;
 function FRenderable(){
 	this.renderer = null;
     this.imageScale = 100;
 	this.zPosition = 0;
+	this.color="#000000";
 }
 
-FRenderable.prototype=new FWorldPositional;
+
 
 
 
@@ -11115,6 +11229,22 @@ FRenderable.prototype.getZPosition=function(){
 FRenderable.prototype.setZPosition=function(z){
 	this.zPosition=z;
 }
+
+FRenderable.prototype.setColor=function(c){
+	this.color=c;
+}
+
+FRenderable.prototype.getColor=function(){
+	return this.color;
+}
+
+
+
+//FEntity extends FRenderable
+FPhysicsEntity.prototype = new FRenderable;
+FPhysicsEntity.prototype.constructor=FPhysicsEntity;
+
+
 function FPhysicsEntity(world,config){
 	this.world=world;
     this.config=config;
@@ -11155,7 +11285,7 @@ function FPhysicsEntity(world,config){
         
         if(shape.type=='box'){
         	shape.width= shape.width!=undefined?shape.width:1;
-        	shape.height= shape.height!=undefined?shape.hieght:1;
+        	shape.height= shape.height!=undefined?shape.height:1;
         	
             fixDef.shape=new b2PolygonShape();
             fixDef.shape.SetAsBox(shape.width/2,shape.height/2);
@@ -11165,9 +11295,9 @@ function FPhysicsEntity(world,config){
             fixDef.shape = new b2CircleShape(shape.radius);
         }
         
-        fixDef.density=shape.density;
-        fixDef.friction=shape.friction;
-        fixDef.restitution=shape.restitution;
+        fixDef.density=shape.density!=undefined?shape.density:1;
+        fixDef.friction=shape.friction!=undefined?shape.friction:1;
+        fixDef.restitution=shape.restitution!=undefined?shape.restitution:0;
         //console.log(fixDef)
         this.body.CreateFixture(fixDef);
     }
@@ -11184,6 +11314,9 @@ function FPhysicsEntity(world,config){
     		this.destroy();
     	}.bind(this),config.maxLifeSeconds*1000);
     }
+    
+    
+    if(config.color)this.setColor(config.color);
     
     
     if(config.image){
@@ -11214,14 +11347,11 @@ function FPhysicsEntity(world,config){
     	this.setRenderer(new FWireframeRenderer);
     }
     
-    if(config.init){
-    	config.init.apply(this,[]);
-    }
+    
     
 }
 
-//FEntity extends FRenderable
-FPhysicsEntity.prototype = new FRenderable;
+
 
 FPhysicsEntity.prototype.getShapes=function(){
 	var shapes = [];
@@ -11256,6 +11386,7 @@ FPhysicsEntity.prototype.setVelocity=function(v){
 
 FPhysicsEntity.prototype.destroy=function(){
 	this.world.b2world.DestroyBody(this.body);
+	this.world.destroyEntity(this)
 }
 
 
@@ -11285,6 +11416,12 @@ FWorld.prototype.step=function(){};
 FWorld.prototype.addEntity=function(ent){
 	this.entities.push(ent);
 };
+
+FWorld.prototype.destroyEntity=function(ent){
+	this.entities.splice(this.entities.indexOf(ent), 1);
+};
+
+
 
 FWorld.prototype.getAllEntities=function(){
 	return this.entities;
@@ -11340,6 +11477,9 @@ FPhysicsWorld.prototype.step=function(){
 		
 		ent1.emit("collide",[ent2,c]);
 		ent2.emit("collide",[ent1,c]);
+		//console.log("collission!");
+		//console.log(c);
+		
 	}
 	//this.world.DrawDebugData();
 	this.b2world.ClearForces();
@@ -11353,6 +11493,10 @@ FPhysicsWorld.prototype.createEntity=function(config){
 	//Firmament.log(this);
     var ent= new FPhysicsEntity(this,config);
     this.addEntity(ent);
+    if(config.init){
+    	//Firmament.log(ent._connections);
+    	config.init.apply(ent,[]);
+    }
     return ent;
 };
 
@@ -11411,7 +11555,8 @@ FWireframeRenderer.prototype = new FRenderer;
 
 FWireframeRenderer.prototype.render = function(cxt,item,camera){
 	var shapes=item.getShapes();
-	
+	cxt.fillStyle=item.getColor();
+	cxt.strokeStyle=item.getColor();
 	var bodyAngle=item.getAngle();
 	//console.log(bodyAngle);
 	for(var x=0;x<shapes.length;x++){
@@ -11435,7 +11580,7 @@ FWireframeRenderer.prototype.renderCircle=function(cxt,s,pos,camera){
 	cxt.beginPath();
 	cxt.arc((pos.x-cameraPos.x)*camera.getZoom(),(pos.y-cameraPos.y)*camera.getZoom(),s.m_radius*camera.getZoom(),0,Math.PI*2,true);
 	cxt.closePath();
-	cxt.stroke();
+	cxt.fill();
 }
 
 //todo: add polygon rotation

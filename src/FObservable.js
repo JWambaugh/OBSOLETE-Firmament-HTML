@@ -5,20 +5,25 @@
 
 
 function FObservable(){
-	this._connections={};
+	//this._connections={};
 }
 
 
 
-FObservable.prototype.connect=function(eventName,func){
+FObservable.prototype.connect=function(eventName,func,scope){
+	if(this._connections==undefined)this._connections={};
 	if(this._connections[eventName] == undefined){
 		this._connections[eventName]=[];
 	}
-	
-	this._connections[eventName].push(func);
+	if(scope==undefined)scope=this;
+	this._connections[eventName].push({
+			func:func
+			,scope:scope
+		});
 }
 
 FObservable.prototype.disconnect=function(eventName,func){
+	if(this._connections==undefined)this._connections={};
 	//only remove specified function
 	if(func != undefined){
 		var connections=this._connections[eventName];
@@ -37,11 +42,11 @@ FObservable.prototype.disconnect=function(eventName,func){
 
 
 FObservable.prototype.emit=function(eventName,params){
-	
+	if(this._connections==undefined)this._connections={};
 	var connections=this._connections[eventName];
 	if(connections != undefined){
 		for(var x=0;x<connections.length;x++){
-			connections[x].apply(null,params);
+			connections[x].func.apply(connections[x].scope,params);
 		}
 	}
 	

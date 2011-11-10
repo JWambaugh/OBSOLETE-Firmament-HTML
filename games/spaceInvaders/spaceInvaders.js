@@ -97,7 +97,7 @@ FEntityRepo.addEntityType('fireBullet',{
                 if(ent.health<1){
                     explode(ent);
                 }
-                //this.deleteLater()
+                this.deleteLater();
             }
             
             if(ent.isAlien==true){
@@ -105,9 +105,10 @@ FEntityRepo.addEntityType('fireBullet',{
                 killCount++;
                 //killsDisplay.setText("Aliens Killed: "+killCount);
                
-                //this.deleteLater();
+                this.deleteLater();
             }
-        }.bind(this));
+          this.deleteLater();
+        },this);
         
     }
 	,image:fireBallImage
@@ -143,7 +144,8 @@ function explode(entity){
     if(entity.exploded)return;
     entity.exploded=true;
     var shipColors=['#56849c','#FFFFFF','#fafafa','#fbfcfc','#b4eefb','#bdd1db']
-    /*for (var x=0;x<20;x++){
+   
+    for (var x=0;x<20;x++){
         fgame.createEntity({
             //type:'static'
             positionY:entity.getPositionY()+Math.random()*.2-.1
@@ -152,9 +154,8 @@ function explode(entity){
             ,color:shipColors[Math.floor(Math.random()*shipColors.length)]
             ,shapes:[{
                 friction:5
-                ,type:'box'
-                ,width:Math.random()/5+.01
-                ,height:Math.random()/7+.01
+                ,type:'circle'
+                ,radius:Math.random()/20+.005
             }]
             ,init:function(){
                 var angle=Math.random()*4;
@@ -185,7 +186,7 @@ function explode(entity){
                 //this.setCurrentAnimation(alienAnimation);
                 this.isAlien=true;
             }
-        });*/
+        });
       entity.deleteLater();
 }
 
@@ -337,7 +338,7 @@ game.connect("beginStep",function(){
     } else {
             player.sinceShotAmount=6;
         }    
-    if(Math.random()*25 <1){
+    if(Math.random()*40 <1){
         createAsteroid()
     }
 });

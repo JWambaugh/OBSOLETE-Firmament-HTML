@@ -21,6 +21,12 @@ FWorld.prototype.addEntity=function(ent){
 	this.entities.push(ent);
 };
 
+FWorld.prototype.destroyEntity=function(ent){
+	this.entities.splice(this.entities.indexOf(ent), 1);
+};
+
+
+
 FWorld.prototype.getAllEntities=function(){
 	return this.entities;
 	

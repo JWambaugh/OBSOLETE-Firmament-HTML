@@ -2,7 +2,9 @@
 /**
  * A positional object has a position in the game world.
  */
-
+FWorldPositional.prototype=new FObservable;
+FWorldPositional.prototype.constuctor=FWorldPositional;
+FWorldPositional.prototype.parent=FObservable.prototype;
 function FWorldPositional(){
 	this.position = new FVector(0,0);
     this.positionBase='w'; //'w' = world based, 'c' = camera based
@@ -10,7 +12,7 @@ function FWorldPositional(){
 	
 }
 
-FWorldPositional.prototype=new FObservable;
+
 
 
 
@@ -25,10 +27,10 @@ FWorldPositional.prototype.getPosition=function(){
 
 
 FWorldPositional.prototype.getPositionX=function(){
-	return this.position.x;
+	return this.getPosition().x;
 };
 FWorldPositional.prototype.getPositionY=function(){
-	return this.position.y;
+	return this.getPosition().y;
 };
 
 
