@@ -35,6 +35,12 @@
             <file name="FStateMachine.js" />
         </filelist>
      </concat>
+     <java jar='build/compiler.jar' fork='true'>
+        <arg  value='--js' />
+        <arg  value='Firmament.js' />
+        <arg  value='--js_output_file' />
+        <arg  value='Firmament.min.js' />
+     </java>
   </target>
   
   </project>

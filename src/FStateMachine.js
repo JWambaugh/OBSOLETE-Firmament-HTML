@@ -42,8 +42,8 @@ function FStateMachine(states){
      * @note For the sake of speed, this function does not do any error checking.
      *
      */
-    this.callState=function(func,arguments){
-        this.currentState[func].apply(this,arguments)
+    this.callState=function(func,args){
+        this.currentState[func].apply(this,args)
     }
     
 }

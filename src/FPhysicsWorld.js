@@ -23,10 +23,10 @@ FPhysicsWorld.prototype = new FWorld;
 
 
 
-FPhysicsWorld.prototype.step=function(){
+FPhysicsWorld.prototype.step=function(fpsGoal){
 	this.collisions=[];
 	this.b2world.Step(
-            1 / 60   //frame-rate
+            1 / fpsGoal   //frame-rate
          ,  10       //velocity iterations
          ,  10       //position iterations
       );

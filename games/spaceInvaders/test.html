@@ -1,0 +1,40 @@
+
+
+
+<script>
+
+function thing(){
+	this.name=[];
+	
+}
+
+thing.prototype.setName=function(n){
+	this.name.push(n);
+}
+
+thing.prototype.getName=function(){
+	return this.name;
+}
+
+
+person.prototype = new thing;
+function person(){
+	
+}
+
+
+
+
+
+var bob=new person();
+
+
+
+bob.setName('bob');
+var bill=new person();
+console.log(bob)
+console.log(bill)
+
+</script>
+
+

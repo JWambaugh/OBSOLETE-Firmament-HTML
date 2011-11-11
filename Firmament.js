@@ -11463,10 +11463,10 @@ FPhysicsWorld.prototype = new FWorld;
 
 
 
-FPhysicsWorld.prototype.step=function(){
+FPhysicsWorld.prototype.step=function(fpsGoal){
 	this.collisions=[];
 	this.b2world.Step(
-            1 / 60   //frame-rate
+            1 / fpsGoal   //frame-rate
          ,  10       //velocity iterations
          ,  10       //position iterations
       );
@@ -11735,6 +11735,7 @@ function FGame(){
         */
        
         window.setInterval(this.frameCount.bind(this),1000);
+        this.fpsGoal=30;
         this.frames=0;
         this.instep=0;
         this.cameras=[];
@@ -11749,7 +11750,7 @@ FGame.prototype=new FObservable;
 
 
 FGame.prototype.startSimulation=function(){
-	 this.stepInterval=window.setInterval(this.step.bind(this), 1000 / 60);
+	 this.stepInterval=window.setInterval(this.step.bind(this), 1000 / this.fpsGoal);
 };
 
 
@@ -11780,7 +11781,7 @@ FGame.prototype.step=function() {
 	this.instep=true;
 	this.emit("beginStep");
 	for(var x=0;x<this.worlds.length;x++){
-		this.worlds[x].step();
+		this.worlds[x].step(this.fps);
 	}
 	this.emit("endStep");
 	//window.console.log(this.world);
@@ -11797,7 +11798,7 @@ FGame.prototype.step=function() {
   
   FGame.prototype.frameCount=function(){
 	  this.fps=this.frames;
-	  this.emit("fpsUpdate",[this.fps]);
+	  this.emit("fpsUpdate",[this.fpsGoal]);
 	  this.frames=0;
   }
 
@@ -12742,8 +12743,8 @@ function FStateMachine(states){
      * @note For the sake of speed, this function does not do any error checking.
      *
      */
-    this.callState=function(func,arguments){
-        this.currentState[func].apply(this,arguments)
+    this.callState=function(func,args){
+        this.currentState[func].apply(this,args)
     }
     
 }

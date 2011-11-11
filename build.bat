@@ -1,2 +1,1 @@
-ant/bin/ant.bat
-pause
+build/ant/bin/ant.bat

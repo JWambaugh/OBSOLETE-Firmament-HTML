@@ -12,6 +12,7 @@ var rocketImage=Firmament.loadImage("images/rocket.png");
 var alienImage=Firmament.loadImage("images/alien.jpg");
 var alienAnimation=Firmament.loadImage("images/alienAnimation.gif");
 var ufoAnimation=Firmament.loadImage("images/ufoAnimation.gif");
+var shrapnel=Firmament.loadImage("images/shrapnel.png");
 //var explosionSound=fgame.loadSound("sounds/Explosion.wav");
 //var music=fgame.loadMusic("music/test.mp3");
 //music.play();
@@ -107,7 +108,7 @@ FEntityRepo.addEntityType('fireBullet',{
                
                 this.deleteLater();
             }
-          this.deleteLater();
+          
         },this);
         
     }
@@ -152,6 +153,8 @@ function explode(entity){
             ,positionX:entity.getPositionX()+Math.random()*.2-.1
             ,maxLifeSeconds:2
             ,color:shipColors[Math.floor(Math.random()*shipColors.length)]
+        	,image:shrapnel
+        	,imageWidth:15
             ,shapes:[{
                 friction:5
                 ,type:'circle'
