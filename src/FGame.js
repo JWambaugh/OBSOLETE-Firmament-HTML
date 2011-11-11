@@ -63,9 +63,13 @@ FGame.prototype.addWorld=function(world){
 FGame.prototype.step=function() {
 	if(this.instep)return;
 	this.instep=true;
+	
+	if(this.fps>0&&this.fps<10){
+		Firmament.log(this.worlds);
+	}
 	this.emit("beginStep");
 	for(var x=0;x<this.worlds.length;x++){
-		this.worlds[x].step(this.fps);
+		this.worlds[x].step(this.fpsGoal);
 	}
 	this.emit("endStep");
 	//window.console.log(this.world);

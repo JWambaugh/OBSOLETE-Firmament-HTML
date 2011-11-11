@@ -26,8 +26,8 @@ FHelper.centerCameraOnEntity=function(entity){
  * @param {FEntityConfig} bulletDef A config object for the entity to shoot towards the mouse 
  */
 FHelper.shootBulletFromEntityToMouse=function(input,camera,world,entity,bulletDef){
-    //get angle from entity to mouse
 	
+    //get angle from entity to mouse
 	var mouseWorldPos = input.getMouseWorldPos(camera);
 	var entityPos = entity.getPosition();
     var xdiff=mouseWorldPos.x-entityPos.x;
@@ -35,8 +35,11 @@ FHelper.shootBulletFromEntityToMouse=function(input,camera,world,entity,bulletDe
     var angle=Math.atan2(ydiff,xdiff);
     bulletDef.positionX=entityPos.x+Math.cos(angle)*1.1;
     bulletDef.positionY=entityPos.y+Math.sin(angle)*1.1   ;
+    /*console.log(angle)
+    console.log(mouseWorldPos)
+    console.log(JSON.stringify(entityPos))*/
     var bullet=world.createEntity(bulletDef);
-
+    
     bullet.setVelocity({x:Math.cos(angle)*10,y:Math.sin(angle)*10});
     
 }

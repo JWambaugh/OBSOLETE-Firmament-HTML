@@ -129,7 +129,7 @@ function bleed(entity){
             ,shapes:[{
                 friction:5
                 ,type:'circle'
-                ,radius:Math.random()/30+.005
+                ,radius:.04
             }]
             ,init:function(){
                 var angle=Math.random()*4;
@@ -158,7 +158,7 @@ function explode(entity){
             ,shapes:[{
                 friction:5
                 ,type:'circle'
-                ,radius:Math.random()/20+.005
+                ,radius:.04
             }]
             ,init:function(){
                 var angle=Math.random()*4;
@@ -167,6 +167,8 @@ function explode(entity){
         });
     }
     
+    console.log(JSON.stringify(entity.body.m_xf));
+      //console.log(entity.getPositionY())
       fgame.createEntity({
             //type:'static'
             positionY:entity.getPositionY()+Math.random()*.2-.1
@@ -227,7 +229,7 @@ var player = fgame.createEntity({
     ,shapes:[
         {
             type:'circle'
-            ,radius:'1'
+            ,radius:1
             ,density:.5
             
         }
@@ -253,14 +255,14 @@ var player = fgame.createEntity({
     }
    // ,renderer:'sprite'
 });
-
+console.log(player)
 player.health=100;
 
 function createAsteroid(){
     var radius=.4
     ent=fgame.createEntity({
            type:'statics'
-             ,positionX:Math.random()*17
+            ,positionX:Math.random()*17
             ,positionY:-1
             ,maxLifeSeconds:10
             ,shapes:[{
@@ -309,9 +311,9 @@ game.connect("beginStep",function(){
     
     if(input.isMousePressed("left")){
         if(player.sinceShot==0){
-        	Firmament.log("shooting");
+        	//Firmament.log("shooting");
             player.sinceShot=player.sinceShotAmount; // can shoot 10/60 times a second
-            player.sinceShot2Amount=12;
+            player.sinceShot2Amount=6;
             FHelper.shootBulletFromEntityToMouse(input,camera,world,player,FEntityRepo.getEntityType('fireBullet'));
         }
     }else{

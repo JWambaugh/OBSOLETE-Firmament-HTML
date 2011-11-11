@@ -4150,8 +4150,11 @@ Box2D.postDefs = [];
    }
    b2Vec2.b2Vec2 = function () {};
    b2Vec2.prototype.b2Vec2 = function (x_, y_) {
+	  
+	  
       if (x_ === undefined) x_ = 0;
       if (y_ === undefined) y_ = 0;
+      
       this.x = x_;
       this.y = y_;
    }

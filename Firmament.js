@@ -4150,8 +4150,11 @@ Box2D.postDefs = [];
    }
    b2Vec2.b2Vec2 = function () {};
    b2Vec2.prototype.b2Vec2 = function (x_, y_) {
+	  
+	  
       if (x_ === undefined) x_ = 0;
       if (y_ === undefined) y_ = 0;
+      
       this.x = x_;
       this.y = y_;
    }
@@ -11132,6 +11135,11 @@ FObservable.prototype.emit=function(eventName,params){
  * represents a location in 2D space
  */
 function FVector(x,y){
+	if(x==undefined)x=0;
+	if(y==undefined)y=0;
+	if(isNaN(x)){
+		throw "x IS NAN!!!!!!";
+	}
     this.x=x;
     this.y=y;
 }
@@ -11779,9 +11787,13 @@ FGame.prototype.addWorld=function(world){
 FGame.prototype.step=function() {
 	if(this.instep)return;
 	this.instep=true;
+	
+	if(this.fps>0&&this.fps<10){
+		Firmament.log(this.worlds);
+	}
 	this.emit("beginStep");
 	for(var x=0;x<this.worlds.length;x++){
-		this.worlds[x].step(this.fps);
+		this.worlds[x].step(this.fpsGoal);
 	}
 	this.emit("endStep");
 	//window.console.log(this.world);
@@ -11914,6 +11926,10 @@ function FInput(element){
 	element.onkeyup=this._keyup.bind(this);
 	element.onkeydown=this._keydown.bind(this);
 
+	element.ontouchstart=this._mouseDown.bind(this);
+	element.ontouchend=this._mouseUp.bind(this);
+	element.ontouchmove=this._mouseMove.bind(this);
+	
 	element.onmousedown=this._mouseDown.bind(this);
 	element.onmouseup=this._mouseUp.bind(this);
 	element.onmousemove=this._mouseMove.bind(this);
@@ -11964,8 +11980,7 @@ FInput.prototype.getMouseScreenPos=function(e){
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());
-	//Firmament.log(offset);
-	//Firmament.log(this.mouseX);
+	
 	var x=this.mouseX-offset.x;
 	var y=this.mouseY-offset.y;
 	var cameraPos = camera.getTopLeftPosition();
@@ -11978,8 +11993,13 @@ FInput.prototype.getMouseWorldPos=function(camera){
 
 	
 FInput.prototype._updateMousePos=function(e){
-	this.mouseX=e.x;
-	this.mouseY=e.y;
+	if(e.x!==undefined){
+		this.mouseX=e.x;
+		this.mouseY=e.y;
+	}else{
+		this.mouseX=e.clientX;
+		this.mouseY=e.clientY;
+	}
 };
 
 FInput.prototype._keyup=function(e){
@@ -12053,8 +12073,8 @@ FHelper.centerCameraOnEntity=function(entity){
  * @param {FEntityConfig} bulletDef A config object for the entity to shoot towards the mouse 
  */
 FHelper.shootBulletFromEntityToMouse=function(input,camera,world,entity,bulletDef){
-    //get angle from entity to mouse
 	
+    //get angle from entity to mouse
 	var mouseWorldPos = input.getMouseWorldPos(camera);
 	var entityPos = entity.getPosition();
     var xdiff=mouseWorldPos.x-entityPos.x;
@@ -12062,8 +12082,11 @@ FHelper.shootBulletFromEntityToMouse=function(input,camera,world,entity,bulletDe
     var angle=Math.atan2(ydiff,xdiff);
     bulletDef.positionX=entityPos.x+Math.cos(angle)*1.1;
     bulletDef.positionY=entityPos.y+Math.sin(angle)*1.1   ;
+    /*console.log(angle)
+    console.log(mouseWorldPos)
+    console.log(JSON.stringify(entityPos))*/
     var bullet=world.createEntity(bulletDef);
-
+    
     bullet.setVelocity({x:Math.cos(angle)*10,y:Math.sin(angle)*10});
     
 }

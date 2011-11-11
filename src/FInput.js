@@ -7,6 +7,10 @@ function FInput(element){
 	element.onkeyup=this._keyup.bind(this);
 	element.onkeydown=this._keydown.bind(this);
 
+	element.ontouchstart=this._mouseDown.bind(this);
+	element.ontouchend=this._mouseUp.bind(this);
+	element.ontouchmove=this._mouseMove.bind(this);
+	
 	element.onmousedown=this._mouseDown.bind(this);
 	element.onmouseup=this._mouseUp.bind(this);
 	element.onmousemove=this._mouseMove.bind(this);
@@ -57,8 +61,7 @@ FInput.prototype.getMouseScreenPos=function(e){
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());
-	//Firmament.log(offset);
-	//Firmament.log(this.mouseX);
+	
 	var x=this.mouseX-offset.x;
 	var y=this.mouseY-offset.y;
 	var cameraPos = camera.getTopLeftPosition();
@@ -71,8 +74,13 @@ FInput.prototype.getMouseWorldPos=function(camera){
 
 	
 FInput.prototype._updateMousePos=function(e){
-	this.mouseX=e.x;
-	this.mouseY=e.y;
+	if(e.x!==undefined){
+		this.mouseX=e.x;
+		this.mouseY=e.y;
+	}else{
+		this.mouseX=e.clientX;
+		this.mouseY=e.clientY;
+	}
 };
 
 FInput.prototype._keyup=function(e){
