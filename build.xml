@@ -30,6 +30,10 @@
             <file name="FGame.js" />
             <file name="FCamera.js" />
             <file name="FInput.js" />
+            <file name="FTriangulator.js" />
+            
+            
+            
             <file name="FHelper.js" />
             <file name="FEntityRepo.js" />
             <file name="FStateMachine.js" />
