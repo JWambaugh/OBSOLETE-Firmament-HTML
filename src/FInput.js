@@ -14,7 +14,7 @@ function FInput(element){
 	element.onmousedown=this._mouseDown.bind(this);
 	element.onmouseup=this._mouseUp.bind(this);
 	element.onmousemove=this._mouseMove.bind(this);
-	
+	element.selectstart=function(){return false;}
 	this.mouseX=0;
 	this.mouseY=0;
 	this.leftMouseDown=false;
@@ -77,9 +77,12 @@ FInput.prototype._updateMousePos=function(e){
 	if(e.x!==undefined){
 		this.mouseX=e.x;
 		this.mouseY=e.y;
-	}else{
+	}else if(e.clientX!==undefined){
 		this.mouseX=e.clientX;
 		this.mouseY=e.clientY;
+	}else if(e.pageX!==undefined){
+		this.mouseX=e.pageX;
+		this.mouseY=e.pageY;
 	}
 };
 
