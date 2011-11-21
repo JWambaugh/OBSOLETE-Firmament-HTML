@@ -86,7 +86,7 @@ FGame.prototype.step=function() {
   
   FGame.prototype.frameCount=function(){
 	  this.fps=this.frames;
-	  this.emit("fpsUpdate",[this.fpsGoal]);
+	  this.emit("fpsUpdate",[this.fps]);
 	  this.frames=0;
   }
 

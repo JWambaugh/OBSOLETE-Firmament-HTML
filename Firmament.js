@@ -11810,7 +11810,7 @@ FGame.prototype.step=function() {
   
   FGame.prototype.frameCount=function(){
 	  this.fps=this.frames;
-	  this.emit("fpsUpdate",[this.fpsGoal]);
+	  this.emit("fpsUpdate",[this.fps]);
 	  this.frames=0;
   }
 
@@ -12847,8 +12847,28 @@ var FEntityRepo={
      * @param {Object} type an {@link FEntity} config object for the new type
      */
     ,addEntityType:function(name,type){
+    	var completedShapes=[];
+    	for(var x=0;x<type.shapes.length;x++){
+    		var shape =type.shapes[x];
+    		if(shape.type=='polygon'){
+    			var v=FTriangulator.getTriangles(shape.vectors);
+    			if(v!==false) {
+    				for(var y=0;y<v.length;y++){
+    					var ob = this.clone(shape);
+    					ob.vectors = v[y];
+    					ob.type='triangle';
+    					completedShapes.push(ob);
+    				}
+    			}
+    		}else{
+    			completedShapes.push(shape)
+    		}
+    	}
+    	type.shapes=completedShapes;
         this.elements[name]=type;
     }
+    
+    
     /**
      * Returns an {@link FEntity} config object from the registry of the specified type
      * @param {String} name the name of the type of  {@link FEntity} config object to return
