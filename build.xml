@@ -84,14 +84,8 @@
   
   <target name='apiDocsWindows' if='is.windows'>
   	<exec executable='cmd'>
-  		<arg value="build/naturalDocs/NaturalDocs" />
-  		<arg value="-i" />
-  		<arg value="src" />
-  		<arg value="-o" />
-  		<arg value="HTML" />
-  		<arg value="docs/api" />
-  		<arg value="-p" />
-  		<arg value="docs/naturalDocsProject" />
+  		<arg value='"build/naturalDocs/NaturalDocs.bat -i src -o HTML docs/api -p docs/naturalDocsProject"'' />
+  		
   	</exec>
   </target>
   
