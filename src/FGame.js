@@ -1,7 +1,12 @@
 
 
-/**
- * FGame Class constructor.
+/*
+ * Class: FGame
+ */
+
+
+/*
+ * Constructor: FGame
  *
  */
 function FGame(){

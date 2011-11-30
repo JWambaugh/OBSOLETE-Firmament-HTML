@@ -1,12 +1,27 @@
-<project name="Firmament" default="js" basedir=".">
+<project name="Firmament" default="all" basedir=".">
     <description>
-        simple example build file
+        Build FirmamentWeb
     </description>
   <!-- set global properties for this build -->
   <property name="src" location="src"/>
   <property name="build" location="build"/>
   <property name="external"  location="external"/>
   <property name="buildDest" location="."/>
+  
+  <!-- Figure out if we're on windows or unix -->
+  <condition property="is.windows">
+    <os family="windows"/>
+  </condition>
+  <condition property="is.unix">
+    <os family="unix"/>
+  </condition>
+  
+  
+  <target name='all'>
+  		<antcall target='js' />
+		<antcall target='documentation' />
+  </target>
+  
   <target name='js'>
      <concat destfile="${buildDest}/Firmament.js" fixlastline="yes" eol="lf">
         <filelist dir="${external}">
@@ -45,6 +60,39 @@
         <arg  value='--js_output_file' />
         <arg  value='Firmament.min.js' />
      </java>
+     
+  </target>
+  
+  <target name="documentation">
+ 		<antcall target='apiDocsUnix' />
+		<antcall target='apiDocsWindows' />
+  </target>
+  
+  <target name='apiDocsUnix' if='is.unix'>
+  	<exec executable='build/naturalDocs/NaturalDocs'>
+  		<arg value="-i" />
+  		<arg value="src" />
+  		<arg value="-o" />
+  		<arg value="HTML" />
+  		<arg value="docs/api" />
+  		<arg value="-p" />
+  		<arg value="docs/naturalDocsProject" />
+  	</exec>
+  </target>
+  
+  
+  
+  <target name='apiDocsWindows' if='is.windows'>
+  	<exec executable='cmd'>
+  		<arg value="build/naturalDocs/NaturalDocs" />
+  		<arg value="-i" />
+  		<arg value="src" />
+  		<arg value="-o" />
+  		<arg value="HTML" />
+  		<arg value="docs/api" />
+  		<arg value="-p" />
+  		<arg value="docs/naturalDocsProject" />
+  	</exec>
   </target>
   
   </project>

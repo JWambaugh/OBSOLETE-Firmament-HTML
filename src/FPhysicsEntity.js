@@ -1,3 +1,11 @@
+/*
+ * Class: FEntity
+ * A an entity used in <FPhysicsWorld>
+ * 
+ * Extends: <FRenderable>
+ */
+
+
 //FEntity extends FRenderable
 FPhysicsEntity.prototype = new FRenderable;
 FPhysicsEntity.prototype.constructor=FPhysicsEntity;

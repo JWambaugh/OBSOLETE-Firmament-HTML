@@ -1,6 +1,6 @@
 
 /**
- * @class FHelper
+ * class: FHelper
  * Provides extra functions to make working with firmament easier
  */
 

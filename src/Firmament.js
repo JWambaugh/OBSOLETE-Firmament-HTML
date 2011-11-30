@@ -18,8 +18,15 @@ console.log(Box2D);
          	,	b2DebugDraw = Box2D.Dynamics.b2DebugDraw
             ;
 
+ /* 
+  * Class: Firmament
+  * 
+  */
 var Firmament={
-		
+		/*
+		 * Function: log
+		 * Logs debug data to the console
+		 */
 		log:function(ob,once){
 			if(window.console){
 				if(once !=true || this._logHistory.indexOf(ob)==-1){
@@ -31,6 +38,18 @@ var Firmament={
 		}
 		,_logHistory:[]
 		,images:{}
+		
+		/*
+		 * Function: loadImage
+		 * 
+		 * Preloads an image and returns the loaded image object.
+		 * 
+		 * Parameters: 
+		 * 		src - The url to the image
+		 * 
+		 * Returns:
+		 * 	The loaded image element object 
+		 */
 		,loadImage:function(src){
 			//if(this.images[src]!=undefined)return this.images[src];
 			var img = document.createElement("img");
@@ -39,6 +58,16 @@ var Firmament={
 			return img;
 		}
 
+		/*
+		 * Function: extend
+		 * 
+		 * copys one object into another
+		 * 
+		 * Parameters:
+		 * 		target - The object to copy into
+		 * 		object - The object to copy
+		 * 		objectcs... - More object to copy. objects will be copied from right to left.
+		 */
 		,extend:function() {
 			 var options, name, src, copy, copyIsArray, clone,
 				target = arguments[0] || {},
@@ -102,6 +131,10 @@ var Firmament={
 			return target;
 		}
 
+		/*
+		 * Function: isArray
+		 * Returns true if obj is an array
+		 */
 		,isArray:function(obj){
 		    if(toString.call(obj)=='[object Array]')return true; else return false;
 		}

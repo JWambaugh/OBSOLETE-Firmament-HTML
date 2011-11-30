@@ -10887,8 +10887,15 @@ console.log(Box2D);
          	,	b2DebugDraw = Box2D.Dynamics.b2DebugDraw
             ;
 
+ /* 
+  * Class: Firmament
+  * 
+  */
 var Firmament={
-		
+		/*
+		 * Function: log
+		 * Logs debug data to the console
+		 */
 		log:function(ob,once){
 			if(window.console){
 				if(once !=true || this._logHistory.indexOf(ob)==-1){
@@ -10900,6 +10907,18 @@ var Firmament={
 		}
 		,_logHistory:[]
 		,images:{}
+		
+		/*
+		 * Function: loadImage
+		 * 
+		 * Preloads an image and returns the loaded image object.
+		 * 
+		 * Parameters: 
+		 * 		src - The url to the image
+		 * 
+		 * Returns:
+		 * 	The loaded image element object 
+		 */
 		,loadImage:function(src){
 			//if(this.images[src]!=undefined)return this.images[src];
 			var img = document.createElement("img");
@@ -10908,6 +10927,16 @@ var Firmament={
 			return img;
 		}
 
+		/*
+		 * Function: extend
+		 * 
+		 * copys one object into another
+		 * 
+		 * Parameters:
+		 * 		target - The object to copy into
+		 * 		object - The object to copy
+		 * 		objectcs... - More object to copy. objects will be copied from right to left.
+		 */
 		,extend:function() {
 			 var options, name, src, copy, copyIsArray, clone,
 				target = arguments[0] || {},
@@ -10971,6 +11000,10 @@ var Firmament={
 			return target;
 		}
 
+		/*
+		 * Function: isArray
+		 * Returns true if obj is an array
+		 */
 		,isArray:function(obj){
 		    if(toString.call(obj)=='[object Array]')return true; else return false;
 		}
@@ -11076,7 +11109,8 @@ if (!Object.create) {
 
 
 
-/**
+/*
+ * Class: FObservable
  * 
  */
 
@@ -11130,9 +11164,13 @@ FObservable.prototype.emit=function(eventName,params){
 	
 }
 
-/**
- * FVector class
+/*
+ * Class: FVector
  * represents a location in 2D space
+ */
+
+/*
+ * Constructor: FVector
  */
 function FVector(x,y){
 	if(x==undefined)x=0;
@@ -11147,7 +11185,7 @@ function FVector(x,y){
 
 
 
-FVector.prototype = Object.create(Box2D.Common.Math.b2Vec2);
+FVector.prototype = new Box2D.Common.Math.b2Vec2;
 
 /**
  * A positional object has a position in the game world.
@@ -11246,6 +11284,14 @@ FRenderable.prototype.getColor=function(){
 	return this.color;
 }
 
+
+
+/*
+ * Class: FEntity
+ * A an entity used in <FPhysicsWorld>
+ * 
+ * Extends: <FRenderable>
+ */
 
 
 //FEntity extends FRenderable
@@ -11446,7 +11492,9 @@ FWorld.prototype.getAllEntities=function(){
 FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX,bottomRightY){
 	Firmament.log('getEntitiesInBox Not Implemented!');
 }
-
+/*
+ * Class: FPhysicsWorld
+ */
 
 
 function FPhysicsWorld(gravity){
@@ -11724,8 +11772,13 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 
 
 
-/**
- * FGame Class constructor.
+/*
+ * Class: FGame
+ */
+
+
+/*
+ * Constructor: FGame
  *
  */
 function FGame(){
@@ -11818,7 +11871,7 @@ FGame.prototype.step=function() {
 
 
 /**
- * FCamera Class
+ * Class: FCamera
  */
 function FCamera(canvas){
 	this.canvas=canvas;
@@ -11918,7 +11971,18 @@ FCamera.prototype.calculateTopLeftPosition=function(){
 	this.topLeftPosition.y=this.position.y-(this.height/this.zoom)/2;
 }
 
+/*
+ * Class: FInput
+ * Provides input signals for a specified html element
+ * 
+ * Extends: <FObservable>
+ */
 
+/*
+ * Constructor: FInput
+ * Parameters: 
+ * 		element - The element to attach signals to
+ */
 function FInput(element){
 	if(element==undefined) element=document;
 	this.listenElement=element;
@@ -11944,6 +12008,14 @@ function FInput(element){
 FInput.prototype=new FObservable;
 
 
+/*
+ * Signal: mouseDown
+ * emitted when the mouse is pressed down
+ * 
+ * Parameters:
+ * 		e - the javascript event object for the event
+ */
+
 FInput.prototype._mouseDown=function(e){
 	this._updateMousePos(e);
 	//console.log(e)
@@ -11951,6 +12023,14 @@ FInput.prototype._mouseDown=function(e){
 	this.emit('mouseDown',[e]);
 };
 
+
+/*
+ * Signal: mouseUp
+ * emitted when the mouse button is released
+ * 
+ * Parameters:
+ * 		e - the javascript event object
+ */
 
 
 FInput.prototype._mouseUp=function(e){
@@ -11960,6 +12040,14 @@ FInput.prototype._mouseUp=function(e){
 	this.emit('mouseUp',[e]);
 };
 
+
+/*
+ * Signal: mouseMove
+ * emitted when the mouse is moved
+ * 
+ * Parameters:
+ * 		e - the javascript event object
+ */
 FInput.prototype._mouseMove=function(e){
 	this._updateMousePos(e);
 	
@@ -11970,13 +12058,19 @@ FInput.prototype._mouseMove=function(e){
 	this.emit('mouseMove', [e]);
 };
 
+
+/*
+ * Function: getMouseScreenPos
+ * Returns an <FVector> of the mouse's current position
+ */
 FInput.prototype.getMouseScreenPos=function(e){
 	return new FVector(this.mouseX,this.mouseY);
 };
 
-/**
- * Returns the position
- * @param camera FCamera
+/*
+ * Function: getMouseWorldPos
+ * Returns the position in the world where the mouse is currently located based on camera
+ * Parameters: camera <FCamera> - The camera
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());
@@ -12207,7 +12301,7 @@ var FTriangulator={
 };
 
 /**
- * @class FHelper
+ * class: FHelper
  * Provides extra functions to make working with firmament easier
  */
 
@@ -12832,7 +12926,7 @@ String.prototype.replaceAll=function(pattern,replace){
 
 
 /**
- * @class FEntityRepo
+ * Class: FEntityRepo
  * Singleton registry for storing element types
  */
 

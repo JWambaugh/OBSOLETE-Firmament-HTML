@@ -1,5 +1,16 @@
 
+/*
+ * Class: FInput
+ * Provides input signals for a specified html element
+ * 
+ * Extends: <FObservable>
+ */
 
+/*
+ * Constructor: FInput
+ * Parameters: 
+ * 		element - The element to attach signals to
+ */
 function FInput(element){
 	if(element==undefined) element=document;
 	this.listenElement=element;
@@ -25,6 +36,14 @@ function FInput(element){
 FInput.prototype=new FObservable;
 
 
+/*
+ * Signal: mouseDown
+ * emitted when the mouse is pressed down
+ * 
+ * Parameters:
+ * 		e - the javascript event object for the event
+ */
+
 FInput.prototype._mouseDown=function(e){
 	this._updateMousePos(e);
 	//console.log(e)
@@ -32,6 +51,14 @@ FInput.prototype._mouseDown=function(e){
 	this.emit('mouseDown',[e]);
 };
 
+
+/*
+ * Signal: mouseUp
+ * emitted when the mouse button is released
+ * 
+ * Parameters:
+ * 		e - the javascript event object
+ */
 
 
 FInput.prototype._mouseUp=function(e){
@@ -41,6 +68,14 @@ FInput.prototype._mouseUp=function(e){
 	this.emit('mouseUp',[e]);
 };
 
+
+/*
+ * Signal: mouseMove
+ * emitted when the mouse is moved
+ * 
+ * Parameters:
+ * 		e - the javascript event object
+ */
 FInput.prototype._mouseMove=function(e){
 	this._updateMousePos(e);
 	
@@ -51,13 +86,19 @@ FInput.prototype._mouseMove=function(e){
 	this.emit('mouseMove', [e]);
 };
 
+
+/*
+ * Function: getMouseScreenPos
+ * Returns an <FVector> of the mouse's current position
+ */
 FInput.prototype.getMouseScreenPos=function(e){
 	return new FVector(this.mouseX,this.mouseY);
 };
 
-/**
- * Returns the position
- * @param camera FCamera
+/*
+ * Function: getMouseWorldPos
+ * Returns the position in the world where the mouse is currently located based on camera
+ * Parameters: camera <FCamera> - The camera
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());

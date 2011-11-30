@@ -1,6 +1,6 @@
 
 /**
- * @class FEntityRepo
+ * Class: FEntityRepo
  * Singleton registry for storing element types
  */
 
