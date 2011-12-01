@@ -15,18 +15,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/*
- * Class: FEntity
- * A an entity used in <FPhysicsWorld>
- * 
- * Extends: <FRenderable>
- */
 
 
 //FEntity extends FRenderable
 FPhysicsEntity.prototype = new FRenderable;
 FPhysicsEntity.prototype.constructor=FPhysicsEntity;
 
+/**
+ * 
+ * A an entity used in {@link FPhysicsWorld}
+ * @class
+ * @extends FRenderable
+ */
 
 function FPhysicsEntity(world,config){
 	this.world=world;

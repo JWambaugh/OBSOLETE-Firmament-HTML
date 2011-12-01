@@ -15,12 +15,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/**
- * A positional object has a position in the game world.
- */
+
 FWorldPositional.prototype=new FObservable;
 FWorldPositional.prototype.constuctor=FWorldPositional;
 FWorldPositional.prototype.parent=FObservable.prototype;
+/**
+ * A positional object has a position in the game world.
+ * @class
+ * @extends FObservable
+ */
 function FWorldPositional(){
 	this.position = new FVector(0,0);
     this.positionBase='w'; //'w' = world based, 'c' = camera based

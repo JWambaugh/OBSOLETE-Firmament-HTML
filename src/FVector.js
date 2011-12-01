@@ -16,13 +16,11 @@
  */
 
 
-/*
- * Class: FVector
- * represents a location in 2D space
- */
 
-/*
- * Constructor: FVector
+
+/**
+ * Represents a location in 2d space
+ * @class
  */
 function FVector(x,y){
 	if(x==undefined)x=0;

@@ -16,7 +16,7 @@
  */
 
 /**
- * Class: FCamera
+ * @class FCamera
  */
 function FCamera(canvas){
 	this.canvas=canvas;

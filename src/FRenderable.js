@@ -17,6 +17,11 @@
 
 FRenderable.prototype=new FWorldPositional;
 FRenderable.prototype.constructor=FRenderable;
+/**
+ * @extends FWorldPositional
+ * @class
+ * @returns {FRenderable}
+ */
 function FRenderable(){
 	this.renderer = null;
     this.imageScale = 100;

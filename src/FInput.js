@@ -14,17 +14,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
-/*
- * Class: FInput
- * Provides input signals for a specified html element
- * 
- * Extends: <FObservable>
- */
 
-/*
- * Constructor: FInput
- * Parameters: 
- * 		element - The element to attach signals to
+
+
+/** 
+ * @class
+ * 
+ * @param element  The element to attach signals to
  */
 function FInput(element){
 	if(element==undefined) element=document;
@@ -50,15 +46,12 @@ function FInput(element){
 
 FInput.prototype=new FObservable;
 
-
-/*
- * Signal: mouseDown
+/**
  * emitted when the mouse is pressed down
- * 
- * Parameters:
- * 		e - the javascript event object for the event
+ * @name FInput#mouseDown
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
-
 FInput.prototype._mouseDown=function(e){
 	this._updateMousePos(e);
 	//console.log(e)
@@ -67,15 +60,12 @@ FInput.prototype._mouseDown=function(e){
 };
 
 
-/*
- * Signal: mouseUp
+/**
  * emitted when the mouse button is released
- * 
- * Parameters:
- * 		e - the javascript event object
+ * @name FInput#mouseUp
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
-
-
 FInput.prototype._mouseUp=function(e){
 	this.leftMouseDown=false;
 	
@@ -84,12 +74,11 @@ FInput.prototype._mouseUp=function(e){
 };
 
 
-/*
- * Signal: mouseMove
+/**
  * emitted when the mouse is moved
- * 
- * Parameters:
- * 		e - the javascript event object
+ * @name FInput#mouseMove
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
 FInput.prototype._mouseMove=function(e){
 	this._updateMousePos(e);
@@ -110,10 +99,9 @@ FInput.prototype.getMouseScreenPos=function(e){
 	return new FVector(this.mouseX,this.mouseY);
 };
 
-/*
- * Function: getMouseWorldPos
+/**
  * Returns the position in the world where the mouse is currently located based on camera
- * Parameters: camera <FCamera> - The camera
+ * @param {FCamera} camera The camera
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());
@@ -142,6 +130,13 @@ FInput.prototype._updateMousePos=function(e){
 	}
 };
 
+/**
+ * emitted when a key on the keyboard is released
+ * @name FInput#keyUp
+ * @event
+ * @param {int} keycode the keycode of the released key
+ * @param {Event} e the javascript event object for the event
+ */
 FInput.prototype._keyup=function(e){
 	var keyCode=this._getKeyCode(e);
 	this.keysPressed[keyCode]=false;
@@ -149,7 +144,13 @@ FInput.prototype._keyup=function(e){
 };
 
 
-
+/**
+ * emitted when a key on the keyboard is pressed
+ * @name FInput#keyDown
+ * @event
+ * @param {int} keycode the keycode of the released key
+ * @param {Event} e the javascript event object for the event
+ */
 FInput.prototype._keydown=function(e){
 	var keyCode=this._getKeyCode(e);
 	this.keysPressed[keyCode]=true;

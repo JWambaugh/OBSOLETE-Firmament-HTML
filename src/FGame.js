@@ -15,14 +15,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/*
- * Class: FGame
- */
 
 
-/*
- * Constructor: FGame
- *
+
+/**
+ * FGame
+ * @class
  */
 function FGame(){
     

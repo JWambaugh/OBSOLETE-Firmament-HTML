@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 /**
- * class: FHelper
+ * @class FHelper
  * Provides extra functions to make working with firmament easier
  */
 

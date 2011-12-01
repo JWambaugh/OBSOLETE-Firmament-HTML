@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
-		<title>Firmament | JsDoc Reference</title>
+		<title>FObservable | JsDoc Reference</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<meta name="mobileoptimized" content="0" />
@@ -100,12 +100,12 @@
 			<header>
 				<h1 class="classTitle">
 					
-					Class <span>Firmament</span>
+					Class <span>FObservable</span>
 				</h1>
 				
 				<div class="intro">
 					<p class="description summary">
-						Firmament
+						
 					</p>
 						
 					
@@ -113,7 +113,7 @@
 							
 							
 							
-								<li>Defined in: <a href="../symbols/src/_Users_jordan_source_firmamentWeb_src_Firmament.js.html">Firmament.js</a></li>
+								<li>Defined in: <a href="../symbols/src/_Users_jordan_source_firmamentWeb_src_FObservable.js.html">FObservable.js</a></li>
 							
 							
 						</ul>
@@ -124,7 +124,7 @@
 			
 				<section>
 					<div class="props">
-						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Firmament.">
+						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class FObservable.">
 							<caption class="sectionTitle">Class Summary</caption>
 							<thead>
 								<tr>
@@ -137,9 +137,9 @@
 									<td class="attributes">&nbsp;</td>
 									<td class="nameDescription" >
 										<div class="fixedFont">
-											<b><a href="../symbols/Firmament.html#constructor">Firmament</a></b>()
+											<b><a href="../symbols/FObservable.html#constructor">FObservable</a></b>()
 										</div>
-										<div class="description">Firmament class</div>
+										<div class="description">Base class for observable objects.</div>
 									</td>
 								</tr>
 							</tbody>
@@ -161,7 +161,7 @@
 						
 						
 							<nav>
-								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class Firmament.">
+								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class FObservable.">
 									<thead>
 										<tr>
 											<th scope="col">Method Attributes</th>
@@ -175,77 +175,33 @@
 											<tr
 												 class='item0'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.extend">extend</a></b>()
+													<div class="fixedFont"><b><a href="../symbols/FObservable.html#connect">connect</a></b>(signalName, func, scope)
 													</div>
-													<div class="description"></div>
+													<div class="description">Connects a callback to a signal.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item1'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.getElementOffset">getElementOffset</a></b>(el)
+													<div class="fixedFont"><b><a href="../symbols/FObservable.html#disconnect">disconnect</a></b>(signalName, func)
 													</div>
-													<div class="description"></div>
+													<div class="description">Disconnects a callback from the specified signal.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item2'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isArray">isArray</a></b>(obj)
+													<div class="fixedFont"><b><a href="../symbols/FObservable.html#emit">emit</a></b>(signalName, params)
 													</div>
-													<div class="description"></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item3'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isFunction">isFunction</a></b>(obj)
-													</div>
-													<div class="description">Returns true if the passed object is a function</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item4'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isPlainObject">isPlainObject</a></b>(obj)
-													</div>
-													<div class="description"></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item5'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.loadImage">loadImage</a></b>(src)
-													</div>
-													<div class="description"></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item6'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.log">log</a></b>(ob, once)
-													</div>
-													<div class="description"></div>
+													<div class="description">Emits a signal of type sygnalName, sending the array params with the signal.</div>
 												</td>
 											</tr>
 										
@@ -275,11 +231,15 @@
 							</h2>
 							
 							<div class="fixedFont">
-								<b>Firmament</b>()
+								<b>FObservable</b>()
 							</div>
 							
 							<div class="description">
-								Firmament class
+								Base class for observable objects. 
+Objects inheriting from FObservable may emit signals which may be connected to by other objects.
+A signal may be any event that the object wants to expose to others. 
+A signal may be emitted via the <a href="../symbols/FObservable.html#emit">FObservable#emit</a> function.
+Use <a href="../symbols/FObservable.html#connect">FObservable#connect</a> to connect a callback to a signal.
 								
 							</div>
 							
@@ -313,47 +273,19 @@
 									<li 
 										 class='item0'
 									>
-										<div class="fixedFont heading" id=".extend">
+										<div class="fixedFont heading" id="connect">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>extend</b>()
+											<b>connect</b>(signalName, func, scope)
 										</div>
 										
 										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item1'
-									>
-										<div class="fixedFont heading" id=".getElementOffset">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>getElementOffset</b>(el)
-										</div>
-										
-										<div class="description">
-											
+											Connects a callback to a signal. Any number of callbacks may be attached to a signal.
+When the signal is emitted, callbacks will always be called in the order they were connected.
 											
 											
 											
@@ -367,7 +299,86 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>el</b>
+														<span class="light fixedFont">{<a href="../symbols/String.html">String</a>}</span> <b>signalName</b>
+														
+													</dt>
+													<dd>The name of the signal to connect to</dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/Function.html">Function</a>}</span> <b>func</b>
+														
+													</dt>
+													<dd>The callback function</dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/Object.html">Object</a>}</span> <b>scope</b>
+														
+													</dt>
+													<dd>The object to be used as the 'this' within the callback.</dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/FObservable.html#disconnect">FObservable#disconnect</a></dd>
+													
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item1'
+									>
+										<div class="fixedFont heading" id="disconnect">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>disconnect</b>(signalName, func)
+										</div>
+										
+										<div class="description">
+											Disconnects a callback from the specified signal. If func is not provided, removes all callbacks from the signal.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/String.html">String</a>}</span> <b>signalName</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/Function.html">Function</a>}</span> <b>func</b>
 														
 													</dt>
 													<dd></dd>
@@ -382,18 +393,18 @@
 									<li 
 										 class='item2'
 									>
-										<div class="fixedFont heading" id=".isArray">
+										<div class="fixedFont heading" id="emit">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>isArray</b>(obj)
+											<b>emit</b>(signalName, params)
 										</div>
 										
 										<div class="description">
-											
+											Emits a signal of type sygnalName, sending the array params with the signal.
 											
 											
 											
@@ -407,176 +418,16 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>obj</b>
+														<span class="light fixedFont">{<a href="../symbols/String.html">String</a>}</span> <b>signalName</b>
 														
 													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item3'
-									>
-										<div class="fixedFont heading" id=".isFunction">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>isFunction</b>(obj)
-										</div>
-										
-										<div class="description">
-											Returns true if the passed object is a function
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
+													<dd>The name of the signal</dd>
 												
 													<dt>
-														<b>obj</b>
+														<span class="light fixedFont">{Array}</span> <b>params</b>
 														
 													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item4'
-									>
-										<div class="fixedFont heading" id=".isPlainObject">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>isPlainObject</b>(obj)
-										</div>
-										
-										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>obj</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item5'
-									>
-										<div class="fixedFont heading" id=".loadImage">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>loadImage</b>(src)
-										</div>
-										
-										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>src</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item6'
-									>
-										<div class="fixedFont heading" id=".log">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>log</b>(ob, once)
-										</div>
-										
-										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>ob</b>
-														
-													</dt>
-													<dd></dd>
-												
-													<dt>
-														<b>once</b>
-														
-													</dt>
-													<dd></dd>
+													<dd>Additional parameters to send with the signal (optional)</dd>
 												
 											</dl>
 										
