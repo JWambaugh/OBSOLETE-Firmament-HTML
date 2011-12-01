@@ -1,14 +1,16 @@
 <project name="Firmament" default="all" basedir=".">
-    <description>
-        Build FirmamentWeb
-    </description>
+
   <!-- set global properties for this build -->
   <property name="src" location="src"/>
   <property name="build" location="build"/>
   <property name="external"  location="external"/>
   <property name="buildDest" location="."/>
   
-  
+  <!-- 
+  *************
+  This is the list of source files in the order that they should be included. Add new files to the project here.
+  ************* 
+  -->
    <filelist dir="${src}" id='sourceFiles'>
             <file name="Firmament.js" />
             <file name="polyfill.js" />
@@ -23,19 +25,22 @@
             <file name="FPhysicsWorld.js" />
             <file name="FRenderer.js" />
             <file name="FWireframeRenderer.js" />
-             <file name="FSpriteRenderer.js" />
+            <file name="FSpriteRenderer.js" />
             <file name="FGame.js" />
             <file name="FCamera.js" />
             <file name="FInput.js" />
             <file name="FTriangulator.js" />
             
-            
-            
             <file name="FHelper.js" />
             <file name="FEntityRepo.js" />
             <file name="FStateMachine.js" />
         </filelist>
-  
+        
+   <description>
+        Build FirmamentWeb
+    </description>
+    
+
   
   
   <!-- Figure out if we're on windows or unix -->
@@ -54,27 +59,64 @@
   
   <target name='js'>
      <concat destfile="${buildDest}/Firmament.js" fixlastline="yes" eol="lf">
-        <filelist dir="${external}">
-            <file name="Box2dWeb-2.1.a.3.js" />
-        </filelist>
-       <filelist refid='sourceFiles' />
+       	<filelist refid='sourceFiles' />
      </concat>
-     <java jar='build/compiler.jar' fork='true'>
+     
+     <concat destfile="${buildDest}/FirmamentBundle.js" fixlastline="yes" eol="lf">
+     	<filelist dir='${buildDest}'>
+     		<file name='LicensePrepend.js'/>
+     	</filelist>
+     	<filelist dir="${external}">
+            <file name="Box2dWeb-2.1.a.3.js" />
+      	</filelist>
+      	<filelist refid='sourceFiles' />
+      </concat>
+     
+     <!-- Minify -->
+     <java jar='${build}/compiler.jar' fork='true'>
         <arg  value='--js' />
-        <arg  value='Firmament.js' />
+        <arg  value='${buildDest}/Firmament.js' />
         <arg  value='--js_output_file' />
-        <arg  value='Firmament.min.js' />
+        <arg  value='${buildDest}/Firmament.min.js.temp' />
+     </java>
+     <java jar='${build}/compiler.jar' fork='true'>
+        <arg  value='--js' />
+        <arg  value='${buildDest}/FirmamentBundle.js' />
+        <arg  value='--js_output_file' />
+        <arg  value='${buildDest}/FirmamentBundle.min.js.temp' />
      </java>
      
+     <!-- Add license notice to minified code -->
+     <concat destfile="${buildDest}/Firmament.min.js" fixlastline="yes" eol="lf">
+        <filelist dir="${buildDest}">
+        	<file name="${buildDest}/licensePrepend.js" />
+            <file name="${buildDest}/Firmament.min.js.temp" />
+        </filelist>
+     </concat>
+     
+     <concat destfile="${buildDest}/FirmamentBundle.min.js" fixlastline="yes" eol="lf">
+        <filelist >
+        	<file name="${buildDest}/licensePrepend.js" />
+        	<file name='${external}/Box2dLicense.js' />
+            <file name="${buildDest}/FirmamentBundle.min.js.temp" />
+        </filelist>
+     </concat>
+     
+     
+     <delete file='${buildDest}/Firmament.min.js.temp' />
+     <delete file='${buildDest}/FirmamentBundle.min.js.temp' />
   </target>
   
   <target name="documentation">
- 		<antcall target='apiDocsUnix' />
+ 		<!--  <antcall target='apiDocsUnix' />-->
+ 		<antcall target='jsdoc' />
+ 		
 		
   </target>
   
+  <!-- Naturaldocs -->
   <target name='apiDocsUnix' if='is.unix'>
-  	<exec executable='build/naturalDocs/NaturalDocs'>
+  	<exec executable='${build}/naturalDocs/NaturalDocs'>
   		<arg value="-i" />
   		<arg value="src" />
   		<arg value="-o" />
@@ -86,15 +128,15 @@
   </target>
   
   <target name='jsdoc'>
-  <pathconvert refid='sourceFiles' property='sourcefileList' pathsep=' '></pathconvert>
-  <!-- <echo message='${sourcefileList}' /> -->
-  <java jar='build/jsdoc-toolkit/jsrun.jar' fork='true' dir='build/jsdoc-toolkit'>
+	  <pathconvert refid='sourceFiles' property='sourcefileList' pathsep=' '></pathconvert>
+	  <!-- <echo message='${sourcefileList}' /> -->
+	  <java jar='${build}/jsdoc-toolkit/jsrun.jar' fork='true' dir='${build}/jsdoc-toolkit'>
         <arg value='app/run.js' />
          <arg  value='-d=../../docs/jsdoc/' />
          <arg value='-a' />
          <arg value='-t=templates/codeView' />
          <arg line='${sourcefileList}' />
-     </java>
+      </java>
   
   </target>
   

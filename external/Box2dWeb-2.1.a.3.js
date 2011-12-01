@@ -1,4 +1,5 @@
 /*
+* Box2D
 * Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
 *
 * This software is provided 'as-is', without any express or implied

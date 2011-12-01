@@ -54,7 +54,7 @@ Group: Classes  {
    File: FGame  (FGame.js)
    File: FHelper  (FHelper.js)
    File: FInput  (FInput.js)
-   File: Firmament  (Firmament.js)
+   File: Firmament.js  (Firmament.js)
    File: FObservable  (FObservable.js)
    File: FPhysicsWorld  (FPhysicsWorld.js)
    File: FVector  (FVector.js)
@@ -66,5 +66,6 @@ Group: Index  {
    Class Index: Classes
    Function Index: Functions
    Signal Index: Signals
+   File Index: Files
    }  # Group: Index
 

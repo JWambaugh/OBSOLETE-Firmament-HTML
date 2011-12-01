@@ -1,10 +1,21 @@
-/**
- * Firmament Game Engine
- * Copyright (C) Jordan CM Wambaugh
- * All Rights Reserved. Do not duplicate without express written permission.
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-console.log(Box2D);
+
 
  var   b2Vec2 = Box2D.Common.Math.b2Vec2
          	,	b2BodyDef = Box2D.Dynamics.b2BodyDef
@@ -18,8 +29,9 @@ console.log(Box2D);
          	,	b2DebugDraw = Box2D.Dynamics.b2DebugDraw
             ;
 
- /* 
-  * Class: Firmament
+ /** 
+  *  Firmament class
+  *  @class Firmament
   * 
   */
 var Firmament={
