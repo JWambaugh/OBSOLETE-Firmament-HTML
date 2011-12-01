@@ -8,26 +8,8 @@
   <property name="external"  location="external"/>
   <property name="buildDest" location="."/>
   
-  <!-- Figure out if we're on windows or unix -->
-  <condition property="is.windows">
-    <os family="windows"/>
-  </condition>
-  <condition property="is.unix">
-    <os family="unix"/>
-  </condition>
   
-  
-  <target name='all'>
-  		<antcall target='js' />
-		<antcall target='documentation' />
-  </target>
-  
-  <target name='js'>
-     <concat destfile="${buildDest}/Firmament.js" fixlastline="yes" eol="lf">
-        <filelist dir="${external}">
-            <file name="Box2dWeb-2.1.a.3.js" />
-        </filelist>
-        <filelist dir="${src}">
+   <filelist dir="${src}" id='sourceFiles'>
             <file name="Firmament.js" />
             <file name="polyfill.js" />
             <file name="FObservable.js" />
@@ -53,6 +35,29 @@
             <file name="FEntityRepo.js" />
             <file name="FStateMachine.js" />
         </filelist>
+  
+  
+  
+  <!-- Figure out if we're on windows or unix -->
+  <condition property="is.windows">
+    <os family="windows"/>
+  </condition>
+  <condition property="is.unix">
+    <os family="unix"/>
+  </condition>
+  
+  
+  <target name='all'>
+  		<antcall target='js' />
+		<antcall target='documentation' />
+  </target>
+  
+  <target name='js'>
+     <concat destfile="${buildDest}/Firmament.js" fixlastline="yes" eol="lf">
+        <filelist dir="${external}">
+            <file name="Box2dWeb-2.1.a.3.js" />
+        </filelist>
+       <filelist refid='sourceFiles' />
      </concat>
      <java jar='build/compiler.jar' fork='true'>
         <arg  value='--js' />
@@ -65,7 +70,7 @@
   
   <target name="documentation">
  		<antcall target='apiDocsUnix' />
-		<antcall target='apiDocsWindows' />
+		
   </target>
   
   <target name='apiDocsUnix' if='is.unix'>
@@ -80,13 +85,19 @@
   	</exec>
   </target>
   
+  <target name='jsdoc'>
+  <pathconvert refid='sourceFiles' property='sourcefileList' pathsep=' '></pathconvert>
+  <!-- <echo message='${sourcefileList}' /> -->
+  <java jar='build/jsdoc-toolkit/jsrun.jar' fork='true' dir='build/jsdoc-toolkit'>
+        <arg value='app/run.js' />
+         <arg  value='-d=../../docs/jsdoc/' />
+         <arg value='-a' />
+         <arg value='-t=templates/codeView' />
+         <arg line='${sourcefileList}' />
+     </java>
   
-  
-  <target name='apiDocsWindows' if='is.windows'>
-  	<exec executable='cmd'>
-  		<arg value='"build/naturalDocs/NaturalDocs.bat -i src -o HTML docs/api -p docs/naturalDocsProject"'' />
-  		
-  	</exec>
   </target>
+  
+  
   
   </project>
