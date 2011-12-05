@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="../../Firmament.js"></script>
+        <script src="../../FirmamentBundle.js"></script>
         
         <script>
         var myImage=Firmament.loadImage('http://profile.ak.fbcdn.net/hprofile-ak-ash2/369067_648192851_251147483_q.jpg');
@@ -90,6 +90,7 @@
 count=0
 var input=new FInput(document);
 input.connect('keyDown',function(code){
+	Fimament.log(code);
     if (code==37){
 	moveAnimate(1,-.1)//move left
     }

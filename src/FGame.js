@@ -18,8 +18,11 @@
 
 
 
+
 /**
  * FGame
+ * Represents a game with worlds, entities, cameras, etc.
+ * An FGame object manages both rendering and simulation of the game world.
  * @class
  */
 function FGame(){
@@ -36,7 +39,7 @@ function FGame(){
         this.world.SetDebugDraw(debugDraw);
         */
        
-        window.setInterval(this.frameCount.bind(this),1000);
+        window.setInterval(this._frameCount.bind(this),1000);
         this.fpsGoal=30;
         this.frames=0;
         this.instep=0;
@@ -50,35 +53,53 @@ function FGame(){
 
 FGame.prototype=new FObservable;
 
-
+/**
+ * Starts simulation and rendering loops.
+ */
 FGame.prototype.startSimulation=function(){
-	 this.stepInterval=window.setInterval(this.step.bind(this), 1000 / this.fpsGoal);
+	 this.stepInterval=window.setInterval(this._step.bind(this), 1000 / this.fpsGoal);
 };
 
-
+/**
+ * Stops simulation and rendering loops completely.
+ */
 FGame.prototype.stopSimulation=function(){
 	 window.clearInterval(this.stepInterval);
 };
 
-
+/**
+ * Adds a {@link FCamera} to the game.
+ * A single game can have many cameras.
+ * @param {FCamera} camera
+ */
 FGame.prototype.addCamera=function(camera){
 	camera.setGame(this);
 	this.cameras.push(camera);
 };
 
+/**
+ * Adds a canvas to the game. This automatically creates a new camera for the canvas.
+ * @param {CanvasElement} canvas
+ * @return {FCamera} The generated camera object
+ */
 FGame.prototype.addCanvas = function(canvas){
 	var c = new FCamera(canvas);
 	this.addCamera(c);
+	return c;
 };
 
 
 
-
+/**
+ * Adds a {@link FWorld} to the game.
+ * A single game can have many worlds.
+ * @param world
+ */
 FGame.prototype.addWorld=function(world){
 	this.worlds.push(world);
 }
 
-FGame.prototype.step=function() {
+FGame.prototype._step=function() {
 	if(this.instep)return;
 	this.instep=true;
 	
@@ -102,7 +123,7 @@ FGame.prototype.step=function() {
 	this.instep=false;
   };
   
-  FGame.prototype.frameCount=function(){
+  FGame.prototype._frameCount=function(){
 	  this.fps=this.frames;
 	  this.emit("fpsUpdate",[this.fps]);
 	  this.frames=0;

@@ -287,34 +287,45 @@ if (!Object.create) {
 
 
 /**
- * An observable object
+ * Base class for observable objects. 
+ * Objects inheriting from FObservable may emit signals which may be connected to by other objects.
+ * A signal may be any event that the object wants to expose to others. 
+ * A signal may be emitted via the {@link FObservable#emit} function.
+ * Use {@link FObservable#connect} to connect a callback to a signal.
  * @class
  * 
  */
 
-
-/**
- * Creates a new FObservable
- * @constructor
- */
 function FObservable(){
 	//this._connections={};
 }
 
 
-
-FObservable.prototype.connect=function(eventName,func,scope){
+/**
+ * Connects a callback to a signal. Any number of callbacks may be attached to a signal.
+ * When the signal is emitted, callbacks will always be called in the order they were connected.
+ * @param {String} signalName The name of the signal to connect to
+ * @param {Function} func The callback function
+ * @param {Object} scope The object to be used as the 'this' within the callback.
+ * @see FObservable#disconnect
+ */
+FObservable.prototype.connect=function(signalName,func,scope){
 	if(this._connections==undefined)this._connections={};
-	if(this._connections[eventName] == undefined){
-		this._connections[eventName]=[];
+	if(this._connections[signalName] == undefined){
+		this._connections[signalName]=[];
 	}
 	if(scope==undefined)scope=this;
-	this._connections[eventName].push({
+	this._connections[signalName].push({
 			func:func
 			,scope:scope
 		});
 }
 
+/**
+ * Disconnects a callback from the specified signal. If func is not provided, removes all callbacks from the signal.
+ * @param {String} signalName
+ * @param {Function} func
+ */
 FObservable.prototype.disconnect=function(eventName,func){
 	if(this._connections==undefined)this._connections={};
 	//only remove specified function
@@ -333,10 +344,15 @@ FObservable.prototype.disconnect=function(eventName,func){
 	}
 }
 
-
-FObservable.prototype.emit=function(eventName,params){
+/**
+ * Emits a signal of type sygnalName, sending the array params with the signal.
+ * @param {String} signalName The name of the signal
+ * @param {Array} params Additional parameters to send with the signal (optional)
+ */
+FObservable.prototype.emit=function(signalName,params){
 	if(this._connections==undefined)this._connections={};
-	var connections=this._connections[eventName];
+	var connections=this._connections[signalName];
+	if(params==undefined)params=[];
 	if(connections != undefined){
 		for(var x=0;x<connections.length;x++){
 			connections[x].func.apply(connections[x].scope,params);
@@ -363,13 +379,11 @@ FObservable.prototype.emit=function(eventName,params){
  */
 
 
-/*
- * Class: FVector
- * represents a location in 2D space
- */
 
-/*
- * Constructor: FVector
+
+/**
+ * Represents a location in 2d space
+ * @class
  */
 function FVector(x,y){
 	if(x==undefined)x=0;
@@ -402,12 +416,15 @@ FVector.prototype = new Box2D.Common.Math.b2Vec2;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/**
- * A positional object has a position in the game world.
- */
+
 FWorldPositional.prototype=new FObservable;
 FWorldPositional.prototype.constuctor=FWorldPositional;
 FWorldPositional.prototype.parent=FObservable.prototype;
+/**
+ * A positional object has a position in the game world.
+ * @class
+ * @extends FObservable
+ */
 function FWorldPositional(){
 	this.position = new FVector(0,0);
     this.positionBase='w'; //'w' = world based, 'c' = camera based
@@ -418,30 +435,56 @@ function FWorldPositional(){
 
 
 
-
+/**
+ * Sets the position of the center of the object in 2D space.
+ * @param {FVector} p
+ * @see FWorldPositional#getPosition
+ */
 FWorldPositional.prototype.setPosition=function(p){
 	this.position = p;
 };
 
-
+/**
+ * Returns the position of the object in @D space.
+ * @see FWorldPositional#setPosition
+ * @return {FVector} position
+ */
 FWorldPositional.prototype.getPosition=function(){
 	return this.position;
 };
 
-
+/**
+ * Returns the x coordinate of the object's current position 
+ * @return {Number} the x coordinate
+ */
 FWorldPositional.prototype.getPositionX=function(){
 	return this.getPosition().x;
 };
+
+/**
+ * Returns the Y coordinate of the object's current position
+ * @returns {Number} the Y coordinate
+ */
 FWorldPositional.prototype.getPositionY=function(){
 	return this.getPosition().y;
 };
 
-
+/**
+ * Returns the current angle of the positional object.
+ * @returns {Number} the angle in radians
+ */
 FWorldPositional.prototype.getAngle=function(){
 	
 	return 0;
 }
 
+/**
+ * Sets the current angle of the object
+ * @param {number} a the angle in radians
+ */
+FWorldPositional.prototype.setAngle=function(a){
+	
+}
 /*  Firmament HTML 5 Game Engine
     Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
@@ -461,6 +504,11 @@ FWorldPositional.prototype.getAngle=function(){
 
 FRenderable.prototype=new FWorldPositional;
 FRenderable.prototype.constructor=FRenderable;
+/**
+ * @extends FWorldPositional
+ * @class
+ * @returns {FRenderable}
+ */
 function FRenderable(){
 	this.renderer = null;
     this.imageScale = 100;
@@ -535,18 +583,18 @@ FRenderable.prototype.getColor=function(){
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/*
- * Class: FEntity
- * A an entity used in <FPhysicsWorld>
- * 
- * Extends: <FRenderable>
- */
 
 
 //FEntity extends FRenderable
 FPhysicsEntity.prototype = new FRenderable;
 FPhysicsEntity.prototype.constructor=FPhysicsEntity;
 
+/**
+ * 
+ * A an entity used in {@link FPhysicsWorld}
+ * @class
+ * @extends FRenderable
+ */
 
 function FPhysicsEntity(world,config){
 	this.world=world;
@@ -714,6 +762,11 @@ FPhysicsEntity.prototype.deleteLater=FPhysicsEntity.prototype.destroy;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
+/**
+ * 
+ * @class
+ * 
+ */
 function FWorld(){
 	
 	
@@ -773,10 +826,10 @@ FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/*
- * Class: FPhysicsWorld
+/**
+ * @class
+ * @extends FWorld
  */
-
 
 function FPhysicsWorld(gravity){
 	this.collisions=[]
@@ -874,6 +927,10 @@ FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
+
+/**
+ * @class
+ */
 function FRenderer(){
 	
 }
@@ -905,12 +962,12 @@ FRenderer.prototype.render=function(cxt,item,camera){
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
+
+
 /**
  * 
+ * @class
  */
-
-
-
 function FWireframeRenderer(){
 	
 	
@@ -986,11 +1043,11 @@ FWireframeRenderer.prototype.renderPolygon=function(cxt,s,pos,angle){
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
+
+
 /**
- * 
+ * @class
  */
-
-
 
 function FSpriteRenderer(){
 	
@@ -1115,14 +1172,15 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/*
- * Class: FGame
- */
 
 
-/*
- * Constructor: FGame
- *
+
+
+/**
+ * FGame
+ * Represents a game with worlds, entities, cameras, etc.
+ * An FGame object manages both rendering and simulation of the game world.
+ * @class
  */
 function FGame(){
     
@@ -1138,7 +1196,7 @@ function FGame(){
         this.world.SetDebugDraw(debugDraw);
         */
        
-        window.setInterval(this.frameCount.bind(this),1000);
+        window.setInterval(this._frameCount.bind(this),1000);
         this.fpsGoal=30;
         this.frames=0;
         this.instep=0;
@@ -1152,35 +1210,53 @@ function FGame(){
 
 FGame.prototype=new FObservable;
 
-
+/**
+ * Starts simulation and rendering loops.
+ */
 FGame.prototype.startSimulation=function(){
-	 this.stepInterval=window.setInterval(this.step.bind(this), 1000 / this.fpsGoal);
+	 this.stepInterval=window.setInterval(this._step.bind(this), 1000 / this.fpsGoal);
 };
 
-
+/**
+ * Stops simulation and rendering loops completely.
+ */
 FGame.prototype.stopSimulation=function(){
 	 window.clearInterval(this.stepInterval);
 };
 
-
+/**
+ * Adds a {@link FCamera} to the game.
+ * A single game can have many cameras.
+ * @param {FCamera} camera
+ */
 FGame.prototype.addCamera=function(camera){
 	camera.setGame(this);
 	this.cameras.push(camera);
 };
 
+/**
+ * Adds a canvas to the game. This automatically creates a new camera for the canvas.
+ * @param {CanvasElement} canvas
+ * @return {FCamera} The generated camera object
+ */
 FGame.prototype.addCanvas = function(canvas){
 	var c = new FCamera(canvas);
 	this.addCamera(c);
+	return c;
 };
 
 
 
-
+/**
+ * Adds a {@link FWorld} to the game.
+ * A single game can have many worlds.
+ * @param world
+ */
 FGame.prototype.addWorld=function(world){
 	this.worlds.push(world);
 }
 
-FGame.prototype.step=function() {
+FGame.prototype._step=function() {
 	if(this.instep)return;
 	this.instep=true;
 	
@@ -1204,7 +1280,7 @@ FGame.prototype.step=function() {
 	this.instep=false;
   };
   
-  FGame.prototype.frameCount=function(){
+  FGame.prototype._frameCount=function(){
 	  this.fps=this.frames;
 	  this.emit("fpsUpdate",[this.fps]);
 	  this.frames=0;
@@ -1228,8 +1304,15 @@ FGame.prototype.step=function() {
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
+
 /**
- * Class: FCamera
+ * A camera to the game world.
+ * In firmament, you use cameras to display content from the game world.
+ * Cameras are attached to DOM Canvas Elements which they render to.
+ *
+ * @class FCamera
+ * @param {CanvasElement} canvas - The canvas element on which the camera should render
+ * @extends FWorldPositional
  */
 function FCamera(canvas){
 	this.canvas=canvas;
@@ -1246,6 +1329,11 @@ function FCamera(canvas){
 FCamera.prototype=new FWorldPositional;
 
 
+/**
+ * Renders the contents of the camera onto its attached canvas.
+ * This is normally called by FGame within the regular render loop.
+ * @param {Array} worlds An array of {@link FWorld} objects to render.
+ */
 FCamera.prototype.render=function(worlds){
 	var cxt = this.getCanvas().getContext('2d');
 	cxt.clearRect(0, 0, this.width, this.height);
@@ -1265,19 +1353,28 @@ FCamera.prototype.render=function(worlds){
 	this.emit('endRender',[cxt]);
 };
 
-
+/**
+ * Returns the canvas that the camera is attached to
+ * @returns {CanvasElement}
+ */
 FCamera.prototype.getCanvas = function(){
 	return this.canvas;
 }
 
+/**
+ * Assigns the camera to the specified {@link FGame} instance.
+ * This is normally called by the FGame object itself.
+ * @param {FGame} g
+ */
 FCamera.prototype.setGame=function(g){
 	this.game = g;
 };
 
 
 /**
- * Sets the width of the camera's display
- * @param {FVector} width
+ * Sets the width of the camera's display.
+ * This is normally just set to the kkwidth of the canvas element
+ * @param {int} w
  */
 
 FCamera.prototype.setWidth=function(w){
@@ -1285,49 +1382,68 @@ FCamera.prototype.setWidth=function(w){
     this.calculateTopLeftPosition();
 };
 
+
+/**
+ * Returns the width of the camera. 
+ * @returns {int}
+ */
 FCamera.prototype.getWidth=function(){
 	return this.width;
 }
 
 /**
- * Sets the width of the camera's display
- * @param {FVector} width
+ * Sets the height of the camera's display
+ * @param {int} h
  */
 
 FCamera.prototype.setHeight=function(h){
     this.height=h;
     this.calculateTopLeftPosition();
 };
-
+/**
+ * Returns the current height of the camera.
+ * @returns {int}
+ */
 FCamera.prototype.getHeight=function(){
 	return this.height;
-}
+};
 
-
+/**
+ * Returns the camera's current zoom ratio.
+ * @returns {Number}
+ */
 FCamera.prototype.getZoom=function(){
 	return this.zoom;
-}
+};
 
+/**
+ * Sets the camera's zoom ratio.
+ * @param {Number} z
+ */
 FCamera.prototype.setZoom=function(z){
 	this.zoom=z;
 	this.calculateTopLeftPosition();
-}
+};
 
 
-
+/**
+ * Sets the position of the center of the camera in 2D space.
+ * @param {FVector} pos
+ */
 FCamera.prototype.setPosition=function(pos){
 	this.position=pos;
 	this.calculateTopLeftPosition();
-}
+};
+
 
 FCamera.prototype.getTopLeftPosition=function(){
 	return this.topLeftPosition;
-}
+};
 
 FCamera.prototype.calculateTopLeftPosition=function(){
 	this.topLeftPosition.x=this.position.x-(this.width/this.zoom)/2;
 	this.topLeftPosition.y=this.position.y-(this.height/this.zoom)/2;
-}
+};
 /*  Firmament HTML 5 Game Engine
     Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
@@ -1344,17 +1460,13 @@ FCamera.prototype.calculateTopLeftPosition=function(){
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
-/*
- * Class: FInput
- * Provides input signals for a specified html element
- * 
- * Extends: <FObservable>
- */
 
-/*
- * Constructor: FInput
- * Parameters: 
- * 		element - The element to attach signals to
+
+
+/** 
+ * @class
+ * 
+ * @param element  The element to attach signals to
  */
 function FInput(element){
 	if(element==undefined) element=document;
@@ -1380,15 +1492,12 @@ function FInput(element){
 
 FInput.prototype=new FObservable;
 
-
-/*
- * Signal: mouseDown
+/**
  * emitted when the mouse is pressed down
- * 
- * Parameters:
- * 		e - the javascript event object for the event
+ * @name FInput#mouseDown
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
-
 FInput.prototype._mouseDown=function(e){
 	this._updateMousePos(e);
 	//console.log(e)
@@ -1397,15 +1506,12 @@ FInput.prototype._mouseDown=function(e){
 };
 
 
-/*
- * Signal: mouseUp
+/**
  * emitted when the mouse button is released
- * 
- * Parameters:
- * 		e - the javascript event object
+ * @name FInput#mouseUp
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
-
-
 FInput.prototype._mouseUp=function(e){
 	this.leftMouseDown=false;
 	
@@ -1414,12 +1520,11 @@ FInput.prototype._mouseUp=function(e){
 };
 
 
-/*
- * Signal: mouseMove
+/**
  * emitted when the mouse is moved
- * 
- * Parameters:
- * 		e - the javascript event object
+ * @name FInput#mouseMove
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
 FInput.prototype._mouseMove=function(e){
 	this._updateMousePos(e);
@@ -1440,10 +1545,9 @@ FInput.prototype.getMouseScreenPos=function(e){
 	return new FVector(this.mouseX,this.mouseY);
 };
 
-/*
- * Function: getMouseWorldPos
+/**
  * Returns the position in the world where the mouse is currently located based on camera
- * Parameters: camera <FCamera> - The camera
+ * @param {FCamera} camera The camera
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());
@@ -1472,6 +1576,13 @@ FInput.prototype._updateMousePos=function(e){
 	}
 };
 
+/**
+ * emitted when a key on the keyboard is released
+ * @name FInput#keyUp
+ * @event
+ * @param {int} keycode the keycode of the released key
+ * @param {Event} e the javascript event object for the event
+ */
 FInput.prototype._keyup=function(e){
 	var keyCode=this._getKeyCode(e);
 	this.keysPressed[keyCode]=false;
@@ -1479,7 +1590,13 @@ FInput.prototype._keyup=function(e){
 };
 
 
-
+/**
+ * emitted when a key on the keyboard is pressed
+ * @name FInput#keyDown
+ * @event
+ * @param {int} keycode the keycode of the released key
+ * @param {Event} e the javascript event object for the event
+ */
 FInput.prototype._keydown=function(e){
 	var keyCode=this._getKeyCode(e);
 	this.keysPressed[keyCode]=true;
@@ -1531,12 +1648,11 @@ FInput.prototype.isMousePressed=function(button){
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
+
 /**
+ * @class
  * 
  */
-
-
-
 var FTriangulator={
 		EPSILON:0.0000000001
 		,area :function(contour)
@@ -1705,7 +1821,7 @@ var FTriangulator={
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 /**
- * class: FHelper
+ * @class FHelper
  * Provides extra functions to make working with firmament easier
  */
 
@@ -2437,7 +2553,6 @@ var FEntityRepo={
  * @class FStateMachine
  * Base class for creating a state machine
  */
-
 
 function FStateMachine(states){
     this.states=states;

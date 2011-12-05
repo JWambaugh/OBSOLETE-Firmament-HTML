@@ -87,7 +87,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-			<time datetime='2011-11-1' pubdate>2011-11-1 13:22</time>
+			<time datetime='2011-11-5' pubdate>2011-11-5 15:06</time>
 		</footer>
 	</div>
 </div>
@@ -181,7 +181,7 @@
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#getAngle">getAngle</a></b>()
 													</div>
-													<div class="description"></div>
+													<div class="description">Returns the current angle of the positional object.</div>
 												</td>
 											</tr>
 										
@@ -192,7 +192,7 @@
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#getPosition">getPosition</a></b>()
 													</div>
-													<div class="description"></div>
+													<div class="description">Returns the position of the object in @D space.</div>
 												</td>
 											</tr>
 										
@@ -203,7 +203,7 @@
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#getPositionX">getPositionX</a></b>()
 													</div>
-													<div class="description"></div>
+													<div class="description">Returns the x coordinate of the object's current position</div>
 												</td>
 											</tr>
 										
@@ -214,7 +214,7 @@
 												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#getPositionY">getPositionY</a></b>()
 													</div>
-													<div class="description"></div>
+													<div class="description">Returns the Y coordinate of the object's current position</div>
 												</td>
 											</tr>
 										
@@ -223,9 +223,20 @@
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#setAngle">setAngle</a></b>(a)
+													</div>
+													<div class="description">Sets the current angle of the object</div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item5'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
 													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#setPosition">setPosition</a></b>(p)
 													</div>
-													<div class="description"></div>
+													<div class="description">Sets the position of the center of the object in 2D space.</div>
 												</td>
 											</tr>
 										
@@ -304,13 +315,13 @@
 											
 											</span>
 											
-											
+											<span class="light">{Number}</span>
 											
 											<b>getAngle</b>()
 										</div>
 										
 										<div class="description">
-											
+											Returns the current angle of the positional object.
 											
 											
 											
@@ -321,6 +332,27 @@
 										
 										
 										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Number}</span> the angle in radians</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
 										
 										<div class="hr"></div>
 									</li>
@@ -333,13 +365,13 @@
 											
 											</span>
 											
-											
+											<span class="light">{<a href="../symbols/FVector.html">FVector</a>}</span>
 											
 											<b>getPosition</b>()
 										</div>
 										
 										<div class="description">
-											
+											Returns the position of the object in @D space.
 											
 											
 											
@@ -350,6 +382,32 @@
 										
 										
 										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/FVector.html">FVector</a>}</span> position</dd>
+													
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/FWorldPositional.html#setPosition">FWorldPositional#setPosition</a></dd>
+													
+												
+											
+											</dl>
 										
 										<div class="hr"></div>
 									</li>
@@ -362,13 +420,13 @@
 											
 											</span>
 											
-											
+											<span class="light">{Number}</span>
 											
 											<b>getPositionX</b>()
 										</div>
 										
 										<div class="description">
-											
+											Returns the x coordinate of the object's current position
 											
 											
 											
@@ -379,6 +437,27 @@
 										
 										
 										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Number}</span> the x coordinate</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
 										
 										<div class="hr"></div>
 									</li>
@@ -391,13 +470,13 @@
 											
 											</span>
 											
-											
+											<span class="light">{Number}</span>
 											
 											<b>getPositionY</b>()
 										</div>
 										
 										<div class="description">
-											
+											Returns the Y coordinate of the object's current position
 											
 											
 											
@@ -408,6 +487,27 @@
 										
 										
 										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Number}</span> the Y coordinate</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
 										
 										<div class="hr"></div>
 									</li>
@@ -415,18 +515,18 @@
 									<li 
 										 class='item4'
 									>
-										<div class="fixedFont heading" id="setPosition">
+										<div class="fixedFont heading" id="setAngle">
 											<span class='lighter'>
 											
 											</span>
 											
 											
 											
-											<b>setPosition</b>(p)
+											<b>setAngle</b>(a)
 										</div>
 										
 										<div class="description">
-											
+											Sets the current angle of the object
 											
 											
 											
@@ -440,7 +540,47 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>p</b>
+														<span class="light fixedFont">{number}</span> <b>a</b>
+														
+													</dt>
+													<dd>the angle in radians</dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item5'
+									>
+										<div class="fixedFont heading" id="setPosition">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>setPosition</b>(p)
+										</div>
+										
+										<div class="description">
+											Sets the position of the center of the object in 2D space.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<span class="light fixedFont">{<a href="../symbols/FVector.html">FVector</a>}</span> <b>p</b>
 														
 													</dt>
 													<dd></dd>
@@ -448,6 +588,27 @@
 											</dl>
 										
 										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/FWorldPositional.html#getPosition">FWorldPositional#getPosition</a></dd>
+													
+												
+											
+											</dl>
 										
 										
 									</li>
