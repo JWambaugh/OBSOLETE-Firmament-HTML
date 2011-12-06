@@ -1085,18 +1085,12 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	
 	if(ratio!=1)
 		cxt.scale(ratio,ratio);
-	//Below code scales the matrix, but we can let the context do that.
-	/*a*=ratio;
-	b*=ratio;
-	c*=ratio;
-	d*=ratio;
-	tx*=ratio;
-	ty*=ratio;
-	*/
 	
 	
-	
+	var scaleRatio = camera.getZoom()/ratio;
 	if(bodyAngle!=0){
+		
+		
 		//rotate our matrix
 		var _a=a;
 		var _b=b;
@@ -1120,33 +1114,26 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 		
 		
 		//get inverse of matrix
-		var ia=d/(a*d-b*c);
-		var ib=-b/(a*d-b*c);
-		var ic=-c/(a*d-b*c);
-		var id=a/(a*d-b*c);
-		var itx=(c*ty-d*tx)/(a*d-b*c);
-		var ity=(a*ty-b*tx)/(a*d-b*c)
+		
+		var adbc = (a*d-b*c);
+		var ia=d/adbc;
+		var ib=-b/adbc;
+		var ic=-c/adbc;
+		var id=a/adbc;
+		var itx=(c*ty-d*tx)/adbc;
+		var ity=(a*ty-b*tx)/adbc;
 		
 		
 		
 		//get x and y in relation to the inverted matrix
-		var x=(pos.x-cameraPos.x)*camera.getZoom()/ratio;
-		var y=(pos.y-cameraPos.y)*camera.getZoom()/ratio;
+		var x=(pos.x-cameraPos.x)*scaleRatio;
+		var y=(pos.y-cameraPos.y)*scaleRatio;
 		var nx=ia*x+ic*y+itx;
 		var ny=id*y+ib*x+ity;
-		if(renderCount%50==0){
-			/*console.log("x:"+x+" y:"+y)
-			console.log("posx:"+pos.x+" posy:"+pos.y)
-			console.log("zoom "+camera.getZoom())
-			console.log("ratio "+ratio)
-			console.log(" a:"+a+" b:"+b+" c:"+c+" d:"+d+" tx:"+tx+" ty:"+ty);
-			console.log(" ia:"+ia+" ib:"+ib+" ic:"+ic+" id:"+id+" itx:"+itx+" ity:"+ity);
-			console.log("ny:"+ny+ " nx:"+nx);
-			console.log(cameraPos);*/
-		}
+		
 	} else {
-		var nx=(pos.x-cameraPos.x)*camera.getZoom()/ratio;
-		var ny=(pos.y-cameraPos.y)*camera.getZoom()/ratio;
+		var nx=(pos.x-cameraPos.x)*scaleRatio;
+		var ny=(pos.y-cameraPos.y)*scaleRatio;
 	}
 	
 	cxt.drawImage(image,nx-image.width/2,ny-image.height/2);
