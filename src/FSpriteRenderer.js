@@ -49,7 +49,7 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 		cxt.scale(ratio,ratio);
 	
 	
-	
+	var scaleRatio = camera.getZoom()/ratio;
 	
 	
 	
@@ -61,4 +61,3 @@ FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	cxt.restore();
 	//console.log(shapes);
 }
-

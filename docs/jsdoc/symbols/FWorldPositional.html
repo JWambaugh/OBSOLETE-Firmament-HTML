@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
-		<title>Firmament | JsDoc Reference</title>
+		<title>FWorldPositional | JsDoc Reference</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<meta name="mobileoptimized" content="0" />
@@ -87,11 +87,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-<<<<<<< HEAD
-			<time datetime='2011-11-6' pubdate>2011-11-6 10:52</time>
-=======
 			<time datetime='2011-11-5' pubdate>2011-11-5 17:59</time>
->>>>>>> fa660c1b482507a2a3e12d6fd213e1bfa2566004
 		</footer>
 	</div>
 </div>
@@ -104,12 +100,12 @@
 			<header>
 				<h1 class="classTitle">
 					
-					Class <span>Firmament</span>
+					Class <span>FWorldPositional</span>
 				</h1>
 				
 				<div class="intro">
 					<p class="description summary">
-						Firmament
+						
 					</p>
 						
 					
@@ -117,8 +113,10 @@
 							
 							
 							
-								<li>Defined in: <a href="../symbols/src/C__devprojects_firmamentWeb_src_Firmament.js.html">Firmament.js</a></li>
+								<li>Defined in: <a href="../symbols/src/_Users_jordan_source_firmamentWeb_src_FWorldPositional.js.html">FWorldPositional.js</a></li>
 							
+							<li>Extends <span class="fixedFont">
+								<a href="../symbols/FObservable.html">FObservable</a></span></li>
 							
 						</ul>
 					
@@ -128,7 +126,7 @@
 			
 				<section>
 					<div class="props">
-						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Firmament.">
+						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class FWorldPositional.">
 							<caption class="sectionTitle">Class Summary</caption>
 							<thead>
 								<tr>
@@ -141,9 +139,9 @@
 									<td class="attributes">&nbsp;</td>
 									<td class="nameDescription" >
 										<div class="fixedFont">
-											<b><a href="../symbols/Firmament.html#constructor">Firmament</a></b>()
+											<b><a href="../symbols/FWorldPositional.html#constructor">FWorldPositional</a></b>()
 										</div>
-										<div class="description">Firmament class</div>
+										<div class="description">A positional object has a position in the game world.</div>
 									</td>
 								</tr>
 							</tbody>
@@ -165,7 +163,7 @@
 						
 						
 							<nav>
-								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class Firmament.">
+								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class FWorldPositional.">
 									<thead>
 										<tr>
 											<th scope="col">Method Attributes</th>
@@ -179,77 +177,66 @@
 											<tr
 												 class='item0'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.extend">extend</a></b>()
+													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#getAngle">getAngle</a></b>()
 													</div>
-													<div class="description"></div>
+													<div class="description">Returns the current angle of the positional object.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item1'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.getElementOffset">getElementOffset</a></b>(el)
+													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#getPosition">getPosition</a></b>()
 													</div>
-													<div class="description"></div>
+													<div class="description">Returns the position of the object in @D space.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item2'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isArray">isArray</a></b>(obj)
+													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#getPositionX">getPositionX</a></b>()
 													</div>
-													<div class="description"></div>
+													<div class="description">Returns the x coordinate of the object's current position</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item3'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isFunction">isFunction</a></b>(obj)
+													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#getPositionY">getPositionY</a></b>()
 													</div>
-													<div class="description">Returns true if the passed object is a function</div>
+													<div class="description">Returns the Y coordinate of the object's current position</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item4'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isPlainObject">isPlainObject</a></b>(obj)
+													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#setAngle">setAngle</a></b>(a)
 													</div>
-													<div class="description"></div>
+													<div class="description">Sets the current angle of the object</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item5'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.loadImage">loadImage</a></b>(src)
+													<div class="fixedFont"><b><a href="../symbols/FWorldPositional.html#setPosition">setPosition</a></b>(p)
 													</div>
-													<div class="description"></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item6'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.log">log</a></b>(ob, once)
-													</div>
-													<div class="description"></div>
+													<div class="description">Sets the position of the center of the object in 2D space.</div>
 												</td>
 											</tr>
 										
@@ -258,6 +245,12 @@
 							</nav>
 						
 					
+						
+							<nav>
+								<dl class="inheritsList" id="MethodsListInherited">
+								<dt>Methods borrowed from class <span class='fixedFont'><a href="../symbols/FObservable.html">FObservable</a></span>: </dt><dd><span class='fixedFont'><a href="../symbols/FObservable.html#connect">connect</a></span></dd> <dd><span class='fixedFont'><a href="../symbols/FObservable.html#disconnect">disconnect</a></span></dd> <dd><span class='fixedFont'><a href="../symbols/FObservable.html#emit">emit</a></span></dd>
+								</dl>
+							</nav>
 						
 					</div>
 				</section>
@@ -279,11 +272,11 @@
 							</h2>
 							
 							<div class="fixedFont">
-								<b>Firmament</b>()
+								<b>FWorldPositional</b>()
 							</div>
 							
 							<div class="description">
-								Firmament class
+								A positional object has a position in the game world.
 								
 							</div>
 							
@@ -317,18 +310,18 @@
 									<li 
 										 class='item0'
 									>
-										<div class="fixedFont heading" id=".extend">
+										<div class="fixedFont heading" id="getAngle">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
+											<span class="light">{Number}</span>
 											
-											
-											<span class="light">Firmament.</span><b>extend</b>()
+											<b>getAngle</b>()
 										</div>
 										
 										<div class="description">
-											
+											Returns the current angle of the positional object.
 											
 											
 											
@@ -339,6 +332,27 @@
 										
 										
 										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Number}</span> the angle in radians</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
 										
 										<div class="hr"></div>
 									</li>
@@ -346,18 +360,18 @@
 									<li 
 										 class='item1'
 									>
-										<div class="fixedFont heading" id=".getElementOffset">
+										<div class="fixedFont heading" id="getPosition">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
+											<span class="light">{<a href="../symbols/FVector.html">FVector</a>}</span>
 											
-											
-											<span class="light">Firmament.</span><b>getElementOffset</b>(el)
+											<b>getPosition</b>()
 										</div>
 										
 										<div class="description">
-											
+											Returns the position of the object in @D space.
 											
 											
 											
@@ -367,18 +381,33 @@
 										
 										
 										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
+										
+										
+											<dl class="detailList nomargin">
+											
 												
-													<dt>
-														<b>el</b>
-														
-													</dt>
-													<dd></dd>
 												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/FVector.html">FVector</a>}</span> position</dd>
+													
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/FWorldPositional.html#setPosition">FWorldPositional#setPosition</a></dd>
+													
+												
+											
 											</dl>
-										
-										
 										
 										<div class="hr"></div>
 									</li>
@@ -386,18 +415,18 @@
 									<li 
 										 class='item2'
 									>
-										<div class="fixedFont heading" id=".isArray">
+										<div class="fixedFont heading" id="getPositionX">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
+											<span class="light">{Number}</span>
 											
-											
-											<span class="light">Firmament.</span><b>isArray</b>(obj)
+											<b>getPositionX</b>()
 										</div>
 										
 										<div class="description">
-											
+											Returns the x coordinate of the object's current position
 											
 											
 											
@@ -407,18 +436,28 @@
 										
 										
 										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
+										
+										
+											<dl class="detailList nomargin">
+											
 												
-													<dt>
-														<b>obj</b>
-														
-													</dt>
-													<dd></dd>
 												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Number}</span> the x coordinate</dd>
+													
+												
+												
+												
+												
+												
+											
 											</dl>
-										
-										
 										
 										<div class="hr"></div>
 									</li>
@@ -426,18 +465,18 @@
 									<li 
 										 class='item3'
 									>
-										<div class="fixedFont heading" id=".isFunction">
+										<div class="fixedFont heading" id="getPositionY">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
+											<span class="light">{Number}</span>
 											
-											
-											<span class="light">Firmament.</span><b>isFunction</b>(obj)
+											<b>getPositionY</b>()
 										</div>
 										
 										<div class="description">
-											Returns true if the passed object is a function
+											Returns the Y coordinate of the object's current position
 											
 											
 											
@@ -447,18 +486,28 @@
 										
 										
 										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
+										
+										
+											<dl class="detailList nomargin">
+											
 												
-													<dt>
-														<b>obj</b>
-														
-													</dt>
-													<dd></dd>
 												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{Number}</span> the Y coordinate</dd>
+													
+												
+												
+												
+												
+												
+											
 											</dl>
-										
-										
 										
 										<div class="hr"></div>
 									</li>
@@ -466,18 +515,18 @@
 									<li 
 										 class='item4'
 									>
-										<div class="fixedFont heading" id=".isPlainObject">
+										<div class="fixedFont heading" id="setAngle">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>isPlainObject</b>(obj)
+											<b>setAngle</b>(a)
 										</div>
 										
 										<div class="description">
-											
+											Sets the current angle of the object
 											
 											
 											
@@ -491,10 +540,10 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>obj</b>
+														<span class="light fixedFont">{number}</span> <b>a</b>
 														
 													</dt>
-													<dd></dd>
+													<dd>the angle in radians</dd>
 												
 											</dl>
 										
@@ -506,18 +555,18 @@
 									<li 
 										 class='item5'
 									>
-										<div class="fixedFont heading" id=".loadImage">
+										<div class="fixedFont heading" id="setPosition">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>loadImage</b>(src)
+											<b>setPosition</b>(p)
 										</div>
 										
 										<div class="description">
-											
+											Sets the position of the center of the object in 2D space.
 											
 											
 											
@@ -531,7 +580,7 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>src</b>
+														<span class="light fixedFont">{<a href="../symbols/FVector.html">FVector</a>}</span> <b>p</b>
 														
 													</dt>
 													<dd></dd>
@@ -540,51 +589,26 @@
 										
 										
 										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item6'
-									>
-										<div class="fixedFont heading" id=".log">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
+											<dl class="detailList nomargin">
 											
-											
-											
-											<span class="light">Firmament.</span><b>log</b>(ob, once)
-										</div>
-										
-										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
 												
-													<dt>
-														<b>ob</b>
-														
-													</dt>
-													<dd></dd>
 												
-													<dt>
-														<b>once</b>
-														
-													</dt>
-													<dd></dd>
 												
+												
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">See:</dt>
+													
+														<dd><a href="../symbols/FWorldPositional.html#getPosition">FWorldPositional#getPosition</a></dd>
+													
+												
+											
 											</dl>
-										
-										
 										
 										
 									</li>

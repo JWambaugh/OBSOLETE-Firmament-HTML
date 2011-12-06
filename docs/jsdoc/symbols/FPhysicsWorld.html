@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
-		<title>Firmament | JsDoc Reference</title>
+		<title>FPhysicsWorld | JsDoc Reference</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<meta name="mobileoptimized" content="0" />
@@ -87,11 +87,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-<<<<<<< HEAD
-			<time datetime='2011-11-6' pubdate>2011-11-6 10:52</time>
-=======
 			<time datetime='2011-11-5' pubdate>2011-11-5 17:59</time>
->>>>>>> fa660c1b482507a2a3e12d6fd213e1bfa2566004
 		</footer>
 	</div>
 </div>
@@ -104,12 +100,12 @@
 			<header>
 				<h1 class="classTitle">
 					
-					Class <span>Firmament</span>
+					Class <span>FPhysicsWorld</span>
 				</h1>
 				
 				<div class="intro">
 					<p class="description summary">
-						Firmament
+						
 					</p>
 						
 					
@@ -117,8 +113,10 @@
 							
 							
 							
-								<li>Defined in: <a href="../symbols/src/C__devprojects_firmamentWeb_src_Firmament.js.html">Firmament.js</a></li>
+								<li>Defined in: <a href="../symbols/src/_Users_jordan_source_firmamentWeb_src_FPhysicsWorld.js.html">FPhysicsWorld.js</a></li>
 							
+							<li>Extends <span class="fixedFont">
+								<a href="../symbols/FWorld.html">FWorld</a></span></li>
 							
 						</ul>
 					
@@ -128,7 +126,7 @@
 			
 				<section>
 					<div class="props">
-						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Firmament.">
+						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class FPhysicsWorld.">
 							<caption class="sectionTitle">Class Summary</caption>
 							<thead>
 								<tr>
@@ -141,9 +139,9 @@
 									<td class="attributes">&nbsp;</td>
 									<td class="nameDescription" >
 										<div class="fixedFont">
-											<b><a href="../symbols/Firmament.html#constructor">Firmament</a></b>()
+											<b><a href="../symbols/FPhysicsWorld.html#constructor">FPhysicsWorld</a></b>(gravity)
 										</div>
-										<div class="description">Firmament class</div>
+										<div class="description"></div>
 									</td>
 								</tr>
 							</tbody>
@@ -165,7 +163,7 @@
 						
 						
 							<nav>
-								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class Firmament.">
+								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class FPhysicsWorld.">
 									<thead>
 										<tr>
 											<th scope="col">Method Attributes</th>
@@ -179,9 +177,9 @@
 											<tr
 												 class='item0'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.extend">extend</a></b>()
+													<div class="fixedFont"><b><a href="../symbols/FPhysicsWorld.html#createEntity">createEntity</a></b>(config)
 													</div>
 													<div class="description"></div>
 												</td>
@@ -190,20 +188,20 @@
 											<tr
 												 class='item1'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.getElementOffset">getElementOffset</a></b>(el)
+													<div class="fixedFont"><b><a href="../symbols/FPhysicsWorld.html#getEntitiesInBox">getEntitiesInBox</a></b>(bottomRightX, bottomRightY, topLeftX, topLeftY)
 													</div>
-													<div class="description"></div>
+													<div class="description">Returns an array of entities within the box described by the points at top left and bottom right.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item2'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isArray">isArray</a></b>(obj)
+													<div class="fixedFont"><b><a href="../symbols/FPhysicsWorld.html#setGravity">setGravity</a></b>(gravity)
 													</div>
 													<div class="description"></div>
 												</td>
@@ -212,42 +210,9 @@
 											<tr
 												 class='item3'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isFunction">isFunction</a></b>(obj)
-													</div>
-													<div class="description">Returns true if the passed object is a function</div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item4'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isPlainObject">isPlainObject</a></b>(obj)
-													</div>
-													<div class="description"></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item5'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.loadImage">loadImage</a></b>(src)
-													</div>
-													<div class="description"></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item6'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.log">log</a></b>(ob, once)
+													<div class="fixedFont"><b><a href="../symbols/FPhysicsWorld.html#step">step</a></b>(fpsGoal)
 													</div>
 													<div class="description"></div>
 												</td>
@@ -258,6 +223,12 @@
 							</nav>
 						
 					
+						
+							<nav>
+								<dl class="inheritsList" id="MethodsListInherited">
+								<dt>Methods borrowed from class <span class='fixedFont'><a href="../symbols/FWorld.html">FWorld</a></span>: </dt><dd><span class='fixedFont'><a href="../symbols/FWorld.html#addEntity">addEntity</a></span></dd> <dd><span class='fixedFont'><a href="../symbols/FWorld.html#destroyEntity">destroyEntity</a></span></dd> <dd><span class='fixedFont'><a href="../symbols/FWorld.html#getAllEntities">getAllEntities</a></span></dd>
+								</dl>
+							</nav>
 						
 					</div>
 				</section>
@@ -279,16 +250,27 @@
 							</h2>
 							
 							<div class="fixedFont">
-								<b>Firmament</b>()
+								<b>FPhysicsWorld</b>(gravity)
 							</div>
 							
 							<div class="description">
-								Firmament class
+								
 								
 							</div>
 							
 							
 						
+							
+								<dl class="detailList params">
+									<dt class="heading">Parameters:</dt>
+									
+										<dt>
+											 <b>gravity</b>
+											
+										</dt>
+										<dd></dd>
+									
+								</dl>
 							
 							
 							
@@ -317,43 +299,14 @@
 									<li 
 										 class='item0'
 									>
-										<div class="fixedFont heading" id=".extend">
+										<div class="fixedFont heading" id="createEntity">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>extend</b>()
-										</div>
-										
-										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item1'
-									>
-										<div class="fixedFont heading" id=".getElementOffset">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>getElementOffset</b>(el)
+											<b>createEntity</b>(config)
 										</div>
 										
 										<div class="description">
@@ -371,7 +324,68 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>el</b>
+														<b>config</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item1'
+									>
+										<div class="fixedFont heading" id="getEntitiesInBox">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>getEntitiesInBox</b>(bottomRightX, bottomRightY, topLeftX, topLeftY)
+										</div>
+										
+										<div class="description">
+											Returns an array of entities within the box described by the points at top left and bottom right.
+											
+											
+												<br />
+												<i>Defined in: </i> <a href="../symbols/src/_Users_jordan_source_firmamentWeb_src_FWorld.js.html">FWorld.js</a>.
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<b>bottomRightX</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<b>bottomRightY</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<b>topLeftX</b>
+														
+													</dt>
+													<dd></dd>
+												
+													<dt>
+														<b>topLeftY</b>
 														
 													</dt>
 													<dd></dd>
@@ -386,14 +400,14 @@
 									<li 
 										 class='item2'
 									>
-										<div class="fixedFont heading" id=".isArray">
+										<div class="fixedFont heading" id="setGravity">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>isArray</b>(obj)
+											<b>setGravity</b>(gravity)
 										</div>
 										
 										<div class="description">
@@ -411,7 +425,7 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>obj</b>
+														<b>gravity</b>
 														
 													</dt>
 													<dd></dd>
@@ -426,54 +440,14 @@
 									<li 
 										 class='item3'
 									>
-										<div class="fixedFont heading" id=".isFunction">
+										<div class="fixedFont heading" id="step">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>isFunction</b>(obj)
-										</div>
-										
-										<div class="description">
-											Returns true if the passed object is a function
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>obj</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item4'
-									>
-										<div class="fixedFont heading" id=".isPlainObject">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>isPlainObject</b>(obj)
+											<b>step</b>(fpsGoal)
 										</div>
 										
 										<div class="description">
@@ -491,93 +465,7 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>obj</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item5'
-									>
-										<div class="fixedFont heading" id=".loadImage">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>loadImage</b>(src)
-										</div>
-										
-										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>src</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item6'
-									>
-										<div class="fixedFont heading" id=".log">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>log</b>(ob, once)
-										</div>
-										
-										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>ob</b>
-														
-													</dt>
-													<dd></dd>
-												
-													<dt>
-														<b>once</b>
+														<b>fpsGoal</b>
 														
 													</dt>
 													<dd></dd>

@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
-		<title>Firmament | JsDoc Reference</title>
+		<title>FGame | JsDoc Reference</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<meta name="mobileoptimized" content="0" />
@@ -87,11 +87,7 @@
 			Documentation generator: <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0<br />
 			Template: <a href="http://www.thebrightlines.com/2010/05/06/new-template-for-jsdoctoolkit-codeview/" target="_blank">Codeview</a> 1.2<br />
 			Generated on:
-<<<<<<< HEAD
-			<time datetime='2011-11-6' pubdate>2011-11-6 10:52</time>
-=======
 			<time datetime='2011-11-5' pubdate>2011-11-5 17:59</time>
->>>>>>> fa660c1b482507a2a3e12d6fd213e1bfa2566004
 		</footer>
 	</div>
 </div>
@@ -104,12 +100,12 @@
 			<header>
 				<h1 class="classTitle">
 					
-					Class <span>Firmament</span>
+					Class <span>FGame</span>
 				</h1>
 				
 				<div class="intro">
 					<p class="description summary">
-						Firmament
+						
 					</p>
 						
 					
@@ -117,7 +113,7 @@
 							
 							
 							
-								<li>Defined in: <a href="../symbols/src/C__devprojects_firmamentWeb_src_Firmament.js.html">Firmament.js</a></li>
+								<li>Defined in: <a href="../symbols/src/_Users_jordan_source_firmamentWeb_src_FGame.js.html">FGame.js</a></li>
 							
 							
 						</ul>
@@ -128,7 +124,7 @@
 			
 				<section>
 					<div class="props">
-						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Firmament.">
+						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class FGame.">
 							<caption class="sectionTitle">Class Summary</caption>
 							<thead>
 								<tr>
@@ -141,9 +137,10 @@
 									<td class="attributes">&nbsp;</td>
 									<td class="nameDescription" >
 										<div class="fixedFont">
-											<b><a href="../symbols/Firmament.html#constructor">Firmament</a></b>()
+											<b><a href="../symbols/FGame.html#constructor">FGame</a></b>()
 										</div>
-										<div class="description">Firmament class</div>
+										<div class="description">FGame
+Represents a game with worlds, entities, cameras, etc.</div>
 									</td>
 								</tr>
 							</tbody>
@@ -165,7 +162,7 @@
 						
 						
 							<nav>
-								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class Firmament.">
+								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class FGame.">
 									<thead>
 										<tr>
 											<th scope="col">Method Attributes</th>
@@ -179,77 +176,55 @@
 											<tr
 												 class='item0'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.extend">extend</a></b>()
+													<div class="fixedFont"><b><a href="../symbols/FGame.html#addCamera">addCamera</a></b>(camera)
 													</div>
-													<div class="description"></div>
+													<div class="description">Adds a <a href="../symbols/FCamera.html">FCamera</a> to the game.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item1'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.getElementOffset">getElementOffset</a></b>(el)
+													<div class="fixedFont"><b><a href="../symbols/FGame.html#addCanvas">addCanvas</a></b>(canvas)
 													</div>
-													<div class="description"></div>
+													<div class="description">Adds a canvas to the game.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item2'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isArray">isArray</a></b>(obj)
+													<div class="fixedFont"><b><a href="../symbols/FGame.html#addWorld">addWorld</a></b>(world)
 													</div>
-													<div class="description"></div>
+													<div class="description">Adds a <a href="../symbols/FWorld.html">FWorld</a> to the game.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item3'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isFunction">isFunction</a></b>(obj)
+													<div class="fixedFont"><b><a href="../symbols/FGame.html#startSimulation">startSimulation</a></b>()
 													</div>
-													<div class="description">Returns true if the passed object is a function</div>
+													<div class="description">Starts simulation and rendering loops.</div>
 												</td>
 											</tr>
 										
 											<tr
 												 class='item4'
 											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
+												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.isPlainObject">isPlainObject</a></b>(obj)
+													<div class="fixedFont"><b><a href="../symbols/FGame.html#stopSimulation">stopSimulation</a></b>()
 													</div>
-													<div class="description"></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item5'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.loadImage">loadImage</a></b>(src)
-													</div>
-													<div class="description"></div>
-												</td>
-											</tr>
-										
-											<tr
-												 class='item6'
-											>
-												<td class="attributes">&lt;static&gt; &nbsp;</td>
-												<td class="nameDescription">
-													<div class="fixedFont">Firmament.<b><a href="../symbols/Firmament.html#.log">log</a></b>(ob, once)
-													</div>
-													<div class="description"></div>
+													<div class="description">Stops simulation and rendering loops completely.</div>
 												</td>
 											</tr>
 										
@@ -279,11 +254,13 @@
 							</h2>
 							
 							<div class="fixedFont">
-								<b>Firmament</b>()
+								<b>FGame</b>()
 							</div>
 							
 							<div class="description">
-								Firmament class
+								FGame
+Represents a game with worlds, entities, cameras, etc.
+An FGame object manages both rendering and simulation of the game world.
 								
 							</div>
 							
@@ -317,47 +294,19 @@
 									<li 
 										 class='item0'
 									>
-										<div class="fixedFont heading" id=".extend">
+										<div class="fixedFont heading" id="addCamera">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>extend</b>()
+											<b>addCamera</b>(camera)
 										</div>
 										
 										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item1'
-									>
-										<div class="fixedFont heading" id=".getElementOffset">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>getElementOffset</b>(el)
-										</div>
-										
-										<div class="description">
-											
+											Adds a <a href="../symbols/FCamera.html">FCamera</a> to the game.
+A single game can have many cameras.
 											
 											
 											
@@ -371,7 +320,7 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>el</b>
+														<span class="light fixedFont">{<a href="../symbols/FCamera.html">FCamera</a>}</span> <b>camera</b>
 														
 													</dt>
 													<dd></dd>
@@ -384,20 +333,20 @@
 									</li>
 								
 									<li 
-										 class='item2'
+										 class='item1'
 									>
-										<div class="fixedFont heading" id=".isArray">
+										<div class="fixedFont heading" id="addCanvas">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
+											<span class="light">{<a href="../symbols/FCamera.html">FCamera</a>}</span>
 											
-											
-											<span class="light">Firmament.</span><b>isArray</b>(obj)
+											<b>addCanvas</b>(canvas)
 										</div>
 										
 										<div class="description">
-											
+											Adds a canvas to the game. This automatically creates a new camera for the canvas.
 											
 											
 											
@@ -411,7 +360,69 @@
 												<dt class="heading">Parameters:</dt>
 												
 													<dt>
-														<b>obj</b>
+														<span class="light fixedFont">{CanvasElement}</span> <b>canvas</b>
+														
+													</dt>
+													<dd></dd>
+												
+											</dl>
+										
+										
+										
+											<dl class="detailList nomargin">
+											
+												
+												
+												
+												
+												
+												
+												
+													<dt class="heading">Returns:</dt>
+													
+														<dd><span class="light fixedFont">{<a href="../symbols/FCamera.html">FCamera</a>}</span> The generated camera object</dd>
+													
+												
+												
+												
+												
+												
+											
+											</dl>
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item2'
+									>
+										<div class="fixedFont heading" id="addWorld">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>addWorld</b>(world)
+										</div>
+										
+										<div class="description">
+											Adds a <a href="../symbols/FWorld.html">FWorld</a> to the game.
+A single game can have many worlds.
+											
+											
+											
+											
+										</div>
+										
+										
+										
+										
+											<dl class="detailList params">
+												<dt class="heading">Parameters:</dt>
+												
+													<dt>
+														<b>world</b>
 														
 													</dt>
 													<dd></dd>
@@ -426,18 +437,18 @@
 									<li 
 										 class='item3'
 									>
-										<div class="fixedFont heading" id=".isFunction">
+										<div class="fixedFont heading" id="startSimulation">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>isFunction</b>(obj)
+											<b>startSimulation</b>()
 										</div>
 										
 										<div class="description">
-											Returns true if the passed object is a function
+											Starts simulation and rendering loops.
 											
 											
 											
@@ -446,17 +457,6 @@
 										
 										
 										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>obj</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
 										
 										
 										
@@ -466,58 +466,18 @@
 									<li 
 										 class='item4'
 									>
-										<div class="fixedFont heading" id=".isPlainObject">
+										<div class="fixedFont heading" id="stopSimulation">
 											<span class='lighter'>
-											&lt;static&gt; 
+											
 											</span>
 											
 											
 											
-											<span class="light">Firmament.</span><b>isPlainObject</b>(obj)
+											<b>stopSimulation</b>()
 										</div>
 										
 										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>obj</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item5'
-									>
-										<div class="fixedFont heading" id=".loadImage">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>loadImage</b>(src)
-										</div>
-										
-										<div class="description">
-											
+											Stops simulation and rendering loops completely.
 											
 											
 											
@@ -526,63 +486,6 @@
 										
 										
 										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>src</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
-										
-										
-										
-										<div class="hr"></div>
-									</li>
-								
-									<li 
-										 class='item6'
-									>
-										<div class="fixedFont heading" id=".log">
-											<span class='lighter'>
-											&lt;static&gt; 
-											</span>
-											
-											
-											
-											<span class="light">Firmament.</span><b>log</b>(ob, once)
-										</div>
-										
-										<div class="description">
-											
-											
-											
-											
-											
-										</div>
-										
-										
-										
-										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>ob</b>
-														
-													</dt>
-													<dd></dd>
-												
-													<dt>
-														<b>once</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
 										
 										
 										
