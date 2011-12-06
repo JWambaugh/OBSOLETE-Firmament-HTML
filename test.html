@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="Firmament.js"></script>
+        <script src="FirmamentBundle.js"></script>
         
         <script>
         
         function init(){
             var game=new FGame();
-            game.addCanvas(document.getElementById('canvas'));
+            
             game.connect('fpsUpdate',function(fps){
             	document.getElementById('fps').innerHTML=fps;
             });
-            var camera=new FCamera(canvasEl);
+            var camera=new FCamera(document.getElementById('canvas'));
             camera.setPosition(new FVector(0,0));
             game.addCamera(camera);
             game.connect('fpsUpdate',function(fps){
                 document.getElementById('fps').innerHTML=fps;
             });
-	    var world = new FPhysicsWorld(new FVector(0,5));
+            var world = new FPhysicsWorld(new FVector(0,5));
             game.addWorld(world);
             for(var x=0;x<50;x++){
             world.createEntity({
@@ -47,6 +47,7 @@
             
             world.createEntity({
                 position:new FVector(3,4)
+                ,type:'static'
                 ,shapes:[{
                     type:'circle'
                     ,width:1
@@ -60,7 +61,8 @@
                 });
             world.createEntity({
                 position:new FVector(.5,4)
-                ,shapes:[{
+            ,type:'static'    
+            ,shapes:[{
                     type:'circle'
                     ,width:1
                     ,height:.2
@@ -71,6 +73,7 @@
                     
                     ]
                 });
+            game.startSimulation();
         }
 	function screenDown(){
 	    window.scrollBy(0,100)

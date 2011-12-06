@@ -16,31 +16,46 @@
  */
 
 
-/*
- * Class: FObservable
+/**
+ * Base class for observable objects. 
+ * Objects inheriting from FObservable may emit signals which may be connected to by other objects.
+ * A signal may be any event that the object wants to expose to others. 
+ * A signal may be emitted via the {@link FObservable#emit} function.
+ * Use {@link FObservable#connect} to connect a callback to a signal.
+ * @class
  * 
  */
-
-
 
 function FObservable(){
 	//this._connections={};
 }
 
 
-
-FObservable.prototype.connect=function(eventName,func,scope){
+/**
+ * Connects a callback to a signal. Any number of callbacks may be attached to a signal.
+ * When the signal is emitted, callbacks will always be called in the order they were connected.
+ * @param {String} signalName The name of the signal to connect to
+ * @param {Function} func The callback function
+ * @param {Object} scope The object to be used as the 'this' within the callback.
+ * @see FObservable#disconnect
+ */
+FObservable.prototype.connect=function(signalName,func,scope){
 	if(this._connections==undefined)this._connections={};
-	if(this._connections[eventName] == undefined){
-		this._connections[eventName]=[];
+	if(this._connections[signalName] == undefined){
+		this._connections[signalName]=[];
 	}
 	if(scope==undefined)scope=this;
-	this._connections[eventName].push({
+	this._connections[signalName].push({
 			func:func
 			,scope:scope
 		});
 }
 
+/**
+ * Disconnects a callback from the specified signal. If func is not provided, removes all callbacks from the signal.
+ * @param {String} signalName
+ * @param {Function} func
+ */
 FObservable.prototype.disconnect=function(eventName,func){
 	if(this._connections==undefined)this._connections={};
 	//only remove specified function
@@ -59,10 +74,15 @@ FObservable.prototype.disconnect=function(eventName,func){
 	}
 }
 
-
-FObservable.prototype.emit=function(eventName,params){
+/**
+ * Emits a signal of type sygnalName, sending the array params with the signal.
+ * @param {String} signalName The name of the signal
+ * @param {Array} params Additional parameters to send with the signal (optional)
+ */
+FObservable.prototype.emit=function(signalName,params){
 	if(this._connections==undefined)this._connections={};
-	var connections=this._connections[eventName];
+	var connections=this._connections[signalName];
+	if(params==undefined)params=[];
 	if(connections != undefined){
 		for(var x=0;x<connections.length;x++){
 			connections[x].func.apply(connections[x].scope,params);

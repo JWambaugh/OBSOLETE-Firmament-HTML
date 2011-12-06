@@ -12,9 +12,7 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 /*
 * Box2D
@@ -10886,11 +10884,24 @@ Box2D.postDefs = [];
 var i;
 for (i = 0; i < Box2D.postDefs.length; ++i) Box2D.postDefs[i]();
 delete Box2D.postDefs;
-/**
- * Firmament Game Engine
- * Copyright (C) Jordan CM Wambaugh
- * All Rights Reserved. Do not duplicate without express written permission.
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
+
+
 
  var   b2Vec2 = Box2D.Common.Math.b2Vec2
          	,	b2BodyDef = Box2D.Dynamics.b2BodyDef
@@ -11086,6 +11097,22 @@ Firmament.getElementOffset = function( el ) {
 
 
 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
 
 //Function.prototype.bind polyfill
 if ( !Function.prototype.bind ) {
@@ -11127,31 +11154,64 @@ if (!Object.create) {
 
 
 
-/*
- * Class: FObservable
- * 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
 
+/**
+ * Base class for observable objects. 
+ * Objects inheriting from FObservable may emit signals which may be connected to by other objects.
+ * A signal may be any event that the object wants to expose to others. 
+ * A signal may be emitted via the {@link FObservable#emit} function.
+ * Use {@link FObservable#connect} to connect a callback to a signal.
+ * @class
+ * 
+ */
 
 function FObservable(){
 	//this._connections={};
 }
 
 
-
-FObservable.prototype.connect=function(eventName,func,scope){
+/**
+ * Connects a callback to a signal. Any number of callbacks may be attached to a signal.
+ * When the signal is emitted, callbacks will always be called in the order they were connected.
+ * @param {String} signalName The name of the signal to connect to
+ * @param {Function} func The callback function
+ * @param {Object} scope The object to be used as the 'this' within the callback.
+ * @see FObservable#disconnect
+ */
+FObservable.prototype.connect=function(signalName,func,scope){
 	if(this._connections==undefined)this._connections={};
-	if(this._connections[eventName] == undefined){
-		this._connections[eventName]=[];
+	if(this._connections[signalName] == undefined){
+		this._connections[signalName]=[];
 	}
 	if(scope==undefined)scope=this;
-	this._connections[eventName].push({
+	this._connections[signalName].push({
 			func:func
 			,scope:scope
 		});
 }
 
+/**
+ * Disconnects a callback from the specified signal. If func is not provided, removes all callbacks from the signal.
+ * @param {String} signalName
+ * @param {Function} func
+ */
 FObservable.prototype.disconnect=function(eventName,func){
 	if(this._connections==undefined)this._connections={};
 	//only remove specified function
@@ -11170,10 +11230,15 @@ FObservable.prototype.disconnect=function(eventName,func){
 	}
 }
 
-
-FObservable.prototype.emit=function(eventName,params){
+/**
+ * Emits a signal of type sygnalName, sending the array params with the signal.
+ * @param {String} signalName The name of the signal
+ * @param {Array} params Additional parameters to send with the signal (optional)
+ */
+FObservable.prototype.emit=function(signalName,params){
 	if(this._connections==undefined)this._connections={};
-	var connections=this._connections[eventName];
+	var connections=this._connections[signalName];
+	if(params==undefined)params=[];
 	if(connections != undefined){
 		for(var x=0;x<connections.length;x++){
 			connections[x].func.apply(connections[x].scope,params);
@@ -11182,13 +11247,29 @@ FObservable.prototype.emit=function(eventName,params){
 	
 }
 
-/*
- * Class: FVector
- * represents a location in 2D space
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/*
- * Constructor: FVector
+
+
+
+/**
+ * Represents a location in 2d space
+ * @class
  */
 function FVector(x,y){
 	if(x==undefined)x=0;
@@ -11204,13 +11285,32 @@ function FVector(x,y){
 
 
 FVector.prototype = new Box2D.Common.Math.b2Vec2;
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
-/**
- * A positional object has a position in the game world.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
+
+
 FWorldPositional.prototype=new FObservable;
 FWorldPositional.prototype.constuctor=FWorldPositional;
 FWorldPositional.prototype.parent=FObservable.prototype;
+/**
+ * A positional object has a position in the game world.
+ * @class
+ * @extends FObservable
+ */
 function FWorldPositional(){
 	this.position = new FVector(0,0);
     this.positionBase='w'; //'w' = world based, 'c' = camera based
@@ -11221,32 +11321,80 @@ function FWorldPositional(){
 
 
 
-
+/**
+ * Sets the position of the center of the object in 2D space.
+ * @param {FVector} p
+ * @see FWorldPositional#getPosition
+ */
 FWorldPositional.prototype.setPosition=function(p){
 	this.position = p;
 };
 
-
+/**
+ * Returns the position of the object in @D space.
+ * @see FWorldPositional#setPosition
+ * @return {FVector} position
+ */
 FWorldPositional.prototype.getPosition=function(){
 	return this.position;
 };
 
-
+/**
+ * Returns the x coordinate of the object's current position 
+ * @return {Number} the x coordinate
+ */
 FWorldPositional.prototype.getPositionX=function(){
 	return this.getPosition().x;
 };
+
+/**
+ * Returns the Y coordinate of the object's current position
+ * @returns {Number} the Y coordinate
+ */
 FWorldPositional.prototype.getPositionY=function(){
 	return this.getPosition().y;
 };
 
-
+/**
+ * Returns the current angle of the positional object.
+ * @returns {Number} the angle in radians
+ */
 FWorldPositional.prototype.getAngle=function(){
 	
 	return 0;
 }
 
+/**
+ * Sets the current angle of the object
+ * @param {number} a the angle in radians
+ */
+FWorldPositional.prototype.setAngle=function(a){
+	
+}
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
+
 FRenderable.prototype=new FWorldPositional;
 FRenderable.prototype.constructor=FRenderable;
+/**
+ * @extends FWorldPositional
+ * @class
+ * @returns {FRenderable}
+ */
 function FRenderable(){
 	this.renderer = null;
     this.imageScale = 100;
@@ -11304,18 +11452,35 @@ FRenderable.prototype.getColor=function(){
 
 
 
-/*
- * Class: FEntity
- * A an entity used in <FPhysicsWorld>
- * 
- * Extends: <FRenderable>
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
+
 
 
 //FEntity extends FRenderable
 FPhysicsEntity.prototype = new FRenderable;
 FPhysicsEntity.prototype.constructor=FPhysicsEntity;
 
+/**
+ * 
+ * A an entity used in {@link FPhysicsWorld}
+ * @class
+ * @extends FRenderable
+ */
 
 function FPhysicsEntity(world,config){
 	this.world=world;
@@ -11466,8 +11631,28 @@ FPhysicsEntity.prototype.deleteLater=FPhysicsEntity.prototype.destroy;
 
 
 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
 
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
+
+/**
+ * 
+ * @class
+ * 
+ */
 function FWorld(){
 	
 	
@@ -11510,10 +11695,27 @@ FWorld.prototype.getAllEntities=function(){
 FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX,bottomRightY){
 	Firmament.log('getEntitiesInBox Not Implemented!');
 }
-/*
- * Class: FPhysicsWorld
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
+/**
+ * @class
+ * @extends FWorld
+ */
 
 function FPhysicsWorld(gravity){
 	this.collisions=[]
@@ -11595,7 +11797,26 @@ FPhysicsWorld.prototype.getEntitiesInBox=function(topLeftX,topLeftY,bottomRightX
 
 
 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
+
+/**
+ * @class
+ */
 function FRenderer(){
 	
 }
@@ -11611,12 +11832,28 @@ FRenderer.prototype.render=function(cxt,item,camera){
 
 
 
-/**
- * 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
 
-
+/**
+ * 
+ * @class
+ */
 function FWireframeRenderer(){
 	
 	
@@ -11676,11 +11913,27 @@ FWireframeRenderer.prototype.renderPolygon=function(cxt,s,pos,angle){
 	cxt.stroke();
 }
 
-/**
- * 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
 
+/**
+ * @class
+ */
 
 function FSpriteRenderer(){
 	
@@ -11691,113 +11944,65 @@ function FSpriteRenderer(){
 
 FSpriteRenderer.prototype = new FRenderer;
 
-var renderCount=0;
 FSpriteRenderer.prototype.render = function(cxt,item,camera){
 	var cameraPos=camera.getTopLeftPosition();
 	var pos = item.getPosition();
-	
-	//make sure item is within rendering range
-	/*if(pos.x < cameraPos.x-2 || pos.x >cameraPos.x+camera.getWidth()+2)return;
-	if(pos.y < cameraPos.y-2 || pos.y >cameraPos.y+camera.getHeight()+2)return;*/
-	
-	
-	
-	var shapes=item.getShapes();
 	
 	var bodyAngle=item.getAngle();
 	var image=item.getCurrentImage();
 	var ratio=camera.getZoom()/item.getImageScale();
 	
-	var a=1,b=0,c=0,d=1,tx=0,ty=0;
 	cxt.save();
 	
 	
 	
-	
-	
+	var nx=(pos.x-cameraPos.x)*camera.getZoom();
+	var ny=(pos.y-cameraPos.y)*camera.getZoom();
+	cxt.translate(nx,ny);
 	
 	if(ratio!=1)
 		cxt.scale(ratio,ratio);
-	//Below code scales the matrix, but we can let the context do that.
-	/*a*=ratio;
-	b*=ratio;
-	c*=ratio;
-	d*=ratio;
-	tx*=ratio;
-	ty*=ratio;
-	*/
+	
+	
+	
 	
 	
 	
 	if(bodyAngle!=0){
-		//rotate our matrix
-		var _a=a;
-		var _b=b;
-		var _c=c;
-		var _d=d;
-		var _tx=tx;
-		var _ty=ty;
-		var sin=Math.sin(bodyAngle);
-		var cos=Math.cos(bodyAngle);
-		a=_a*cos-_b*sin;
-		b=_a*sin + _b*cos;
-		c = _c*cos - _d*sin;
-		d = _c*sin +_d*cos;
-		tx=_tx*cos-_ty*sin;
-		ty =_tx*sin+_ty*cos;
-		
-		
-		//apply rotation
-		cxt.transform(a,b,c,d,tx,ty);
-		
-		
-		
-		//get inverse of matrix
-		var ia=d/(a*d-b*c);
-		var ib=-b/(a*d-b*c);
-		var ic=-c/(a*d-b*c);
-		var id=a/(a*d-b*c);
-		var itx=(c*ty-d*tx)/(a*d-b*c);
-		var ity=(a*ty-b*tx)/(a*d-b*c)
-		
-		
-		
-		//get x and y in relation to the inverted matrix
-		var x=(pos.x-cameraPos.x)*camera.getZoom()/ratio;
-		var y=(pos.y-cameraPos.y)*camera.getZoom()/ratio;
-		var nx=ia*x+ic*y+itx;
-		var ny=id*y+ib*x+ity;
-		if(renderCount%50==0){
-			/*console.log("x:"+x+" y:"+y)
-			console.log("posx:"+pos.x+" posy:"+pos.y)
-			console.log("zoom "+camera.getZoom())
-			console.log("ratio "+ratio)
-			console.log(" a:"+a+" b:"+b+" c:"+c+" d:"+d+" tx:"+tx+" ty:"+ty);
-			console.log(" ia:"+ia+" ib:"+ib+" ic:"+ic+" id:"+id+" itx:"+itx+" ity:"+ity);
-			console.log("ny:"+ny+ " nx:"+nx);
-			console.log(cameraPos);*/
-		}
-	} else {
-		var nx=(pos.x-cameraPos.x)*camera.getZoom()/ratio;
-		var ny=(pos.y-cameraPos.y)*camera.getZoom()/ratio;
+		cxt.rotate(bodyAngle);
 	}
-	
-	cxt.drawImage(image,nx-image.width/2,ny-image.height/2);
+		
+	cxt.drawImage(image,0-image.width/2,0-image.height/2);
 	cxt.restore();
 	//console.log(shapes);
-	renderCount++;
 }
 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
 
-/*
- * Class: FGame
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
 
-/*
- * Constructor: FGame
- *
+
+
+
+/**
+ * FGame
+ * Represents a game with worlds, entities, cameras, etc.
+ * An FGame object manages both rendering and simulation of the game world.
+ * @class
  */
 function FGame(){
     
@@ -11813,7 +12018,7 @@ function FGame(){
         this.world.SetDebugDraw(debugDraw);
         */
        
-        window.setInterval(this.frameCount.bind(this),1000);
+        window.setInterval(this._frameCount.bind(this),1000);
         this.fpsGoal=30;
         this.frames=0;
         this.instep=0;
@@ -11827,35 +12032,53 @@ function FGame(){
 
 FGame.prototype=new FObservable;
 
-
+/**
+ * Starts simulation and rendering loops.
+ */
 FGame.prototype.startSimulation=function(){
-	 this.stepInterval=window.setInterval(this.step.bind(this), 1000 / this.fpsGoal);
+	 this.stepInterval=window.setInterval(this._step.bind(this), 1000 / this.fpsGoal);
 };
 
-
+/**
+ * Stops simulation and rendering loops completely.
+ */
 FGame.prototype.stopSimulation=function(){
 	 window.clearInterval(this.stepInterval);
 };
 
-
+/**
+ * Adds a {@link FCamera} to the game.
+ * A single game can have many cameras.
+ * @param {FCamera} camera
+ */
 FGame.prototype.addCamera=function(camera){
 	camera.setGame(this);
 	this.cameras.push(camera);
 };
 
+/**
+ * Adds a canvas to the game. This automatically creates a new camera for the canvas.
+ * @param {CanvasElement} canvas
+ * @return {FCamera} The generated camera object
+ */
 FGame.prototype.addCanvas = function(canvas){
 	var c = new FCamera(canvas);
 	this.addCamera(c);
+	return c;
 };
 
 
 
-
+/**
+ * Adds a {@link FWorld} to the game.
+ * A single game can have many worlds.
+ * @param world
+ */
 FGame.prototype.addWorld=function(world){
 	this.worlds.push(world);
 }
 
-FGame.prototype.step=function() {
+FGame.prototype._step=function() {
 	if(this.instep)return;
 	this.instep=true;
 	
@@ -11879,17 +12102,39 @@ FGame.prototype.step=function() {
 	this.instep=false;
   };
   
-  FGame.prototype.frameCount=function(){
+  FGame.prototype._frameCount=function(){
 	  this.fps=this.frames;
 	  this.emit("fpsUpdate",[this.fps]);
 	  this.frames=0;
   }
 
 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
 
 
 /**
- * Class: FCamera
+ * A camera to the game world.
+ * In firmament, you use cameras to display content from the game world.
+ * Cameras are attached to DOM Canvas Elements which they render to.
+ *
+ * @class FCamera
+ * @param {CanvasElement} canvas - The canvas element on which the camera should render
+ * @extends FWorldPositional
  */
 function FCamera(canvas){
 	this.canvas=canvas;
@@ -11906,6 +12151,11 @@ function FCamera(canvas){
 FCamera.prototype=new FWorldPositional;
 
 
+/**
+ * Renders the contents of the camera onto its attached canvas.
+ * This is normally called by FGame within the regular render loop.
+ * @param {Array} worlds An array of {@link FWorld} objects to render.
+ */
 FCamera.prototype.render=function(worlds){
 	var cxt = this.getCanvas().getContext('2d');
 	cxt.clearRect(0, 0, this.width, this.height);
@@ -11925,19 +12175,28 @@ FCamera.prototype.render=function(worlds){
 	this.emit('endRender',[cxt]);
 };
 
-
+/**
+ * Returns the canvas that the camera is attached to
+ * @returns {CanvasElement}
+ */
 FCamera.prototype.getCanvas = function(){
 	return this.canvas;
 }
 
+/**
+ * Assigns the camera to the specified {@link FGame} instance.
+ * This is normally called by the FGame object itself.
+ * @param {FGame} g
+ */
 FCamera.prototype.setGame=function(g){
 	this.game = g;
 };
 
 
 /**
- * Sets the width of the camera's display
- * @param {FVector} width
+ * Sets the width of the camera's display.
+ * This is normally just set to the kkwidth of the canvas element
+ * @param {int} w
  */
 
 FCamera.prototype.setWidth=function(w){
@@ -11945,61 +12204,91 @@ FCamera.prototype.setWidth=function(w){
     this.calculateTopLeftPosition();
 };
 
+
+/**
+ * Returns the width of the camera. 
+ * @returns {int}
+ */
 FCamera.prototype.getWidth=function(){
 	return this.width;
 }
 
 /**
- * Sets the width of the camera's display
- * @param {FVector} width
+ * Sets the height of the camera's display
+ * @param {int} h
  */
 
 FCamera.prototype.setHeight=function(h){
     this.height=h;
     this.calculateTopLeftPosition();
 };
-
+/**
+ * Returns the current height of the camera.
+ * @returns {int}
+ */
 FCamera.prototype.getHeight=function(){
 	return this.height;
-}
+};
 
-
+/**
+ * Returns the camera's current zoom ratio.
+ * @returns {Number}
+ */
 FCamera.prototype.getZoom=function(){
 	return this.zoom;
-}
+};
 
+/**
+ * Sets the camera's zoom ratio.
+ * @param {Number} z
+ */
 FCamera.prototype.setZoom=function(z){
 	this.zoom=z;
 	this.calculateTopLeftPosition();
-}
+};
 
 
-
+/**
+ * Sets the position of the center of the camera in 2D space.
+ * @param {FVector} pos
+ */
 FCamera.prototype.setPosition=function(pos){
 	this.position=pos;
 	this.calculateTopLeftPosition();
-}
+};
+
 
 FCamera.prototype.getTopLeftPosition=function(){
 	return this.topLeftPosition;
-}
+};
 
 FCamera.prototype.calculateTopLeftPosition=function(){
 	this.topLeftPosition.x=this.position.x-(this.width/this.zoom)/2;
 	this.topLeftPosition.y=this.position.y-(this.height/this.zoom)/2;
-}
+};
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
-/*
- * Class: FInput
- * Provides input signals for a specified html element
- * 
- * Extends: <FObservable>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/*
- * Constructor: FInput
- * Parameters: 
- * 		element - The element to attach signals to
+
+
+/** 
+ * @class
+ * 
+ * @param element  The element to attach signals to
  */
 function FInput(element){
 	if(element==undefined) element=document;
@@ -12025,15 +12314,12 @@ function FInput(element){
 
 FInput.prototype=new FObservable;
 
-
-/*
- * Signal: mouseDown
+/**
  * emitted when the mouse is pressed down
- * 
- * Parameters:
- * 		e - the javascript event object for the event
+ * @name FInput#mouseDown
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
-
 FInput.prototype._mouseDown=function(e){
 	this._updateMousePos(e);
 	//console.log(e)
@@ -12042,15 +12328,12 @@ FInput.prototype._mouseDown=function(e){
 };
 
 
-/*
- * Signal: mouseUp
+/**
  * emitted when the mouse button is released
- * 
- * Parameters:
- * 		e - the javascript event object
+ * @name FInput#mouseUp
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
-
-
 FInput.prototype._mouseUp=function(e){
 	this.leftMouseDown=false;
 	
@@ -12059,12 +12342,11 @@ FInput.prototype._mouseUp=function(e){
 };
 
 
-/*
- * Signal: mouseMove
+/**
  * emitted when the mouse is moved
- * 
- * Parameters:
- * 		e - the javascript event object
+ * @name FInput#mouseMove
+ * @event
+ * @param {Event} e the javascript event object for the event
  */
 FInput.prototype._mouseMove=function(e){
 	this._updateMousePos(e);
@@ -12085,10 +12367,9 @@ FInput.prototype.getMouseScreenPos=function(e){
 	return new FVector(this.mouseX,this.mouseY);
 };
 
-/*
- * Function: getMouseWorldPos
+/**
  * Returns the position in the world where the mouse is currently located based on camera
- * Parameters: camera <FCamera> - The camera
+ * @param {FCamera} camera The camera
  */
 FInput.prototype.getMouseWorldPos=function(camera){
 	var offset=Firmament.getElementOffset(camera.getCanvas());
@@ -12117,6 +12398,13 @@ FInput.prototype._updateMousePos=function(e){
 	}
 };
 
+/**
+ * emitted when a key on the keyboard is released
+ * @name FInput#keyUp
+ * @event
+ * @param {int} keycode the keycode of the released key
+ * @param {Event} e the javascript event object for the event
+ */
 FInput.prototype._keyup=function(e){
 	var keyCode=this._getKeyCode(e);
 	this.keysPressed[keyCode]=false;
@@ -12124,7 +12412,13 @@ FInput.prototype._keyup=function(e){
 };
 
 
-
+/**
+ * emitted when a key on the keyboard is pressed
+ * @name FInput#keyDown
+ * @event
+ * @param {int} keycode the keycode of the released key
+ * @param {Event} e the javascript event object for the event
+ */
 FInput.prototype._keydown=function(e){
 	var keyCode=this._getKeyCode(e);
 	this.keysPressed[keyCode]=true;
@@ -12160,12 +12454,27 @@ FInput.prototype.isMousePressed=function(button){
 }
 
 
-/**
- * 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-
-
+/**
+ * @class
+ * 
+ */
 var FTriangulator={
 		EPSILON:0.0000000001
 		,area :function(contour)
@@ -12317,9 +12626,24 @@ var FTriangulator={
 		
 		
 };
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
 /**
- * class: FHelper
+ * @class FHelper
  * Provides extra functions to make working with firmament easier
  */
 
@@ -12942,7 +13266,22 @@ String.prototype.replaceAll=function(pattern,replace){
 
 
 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
 /**
  * Class: FEntityRepo
  * Singleton registry for storing element types
@@ -13014,12 +13353,28 @@ var FEntityRepo={
 };
 
 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
+
 
 /**
  * @class FStateMachine
  * Base class for creating a state machine
  */
-
 
 function FStateMachine(states){
     this.states=states;

@@ -15,12 +15,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/**
- * A positional object has a position in the game world.
- */
+
 FWorldPositional.prototype=new FObservable;
 FWorldPositional.prototype.constuctor=FWorldPositional;
 FWorldPositional.prototype.parent=FObservable.prototype;
+/**
+ * A positional object has a position in the game world.
+ * @class
+ * @extends FObservable
+ */
 function FWorldPositional(){
 	this.position = new FVector(0,0);
     this.positionBase='w'; //'w' = world based, 'c' = camera based
@@ -31,27 +34,53 @@ function FWorldPositional(){
 
 
 
-
+/**
+ * Sets the position of the center of the object in 2D space.
+ * @param {FVector} p
+ * @see FWorldPositional#getPosition
+ */
 FWorldPositional.prototype.setPosition=function(p){
 	this.position = p;
 };
 
-
+/**
+ * Returns the position of the object in @D space.
+ * @see FWorldPositional#setPosition
+ * @return {FVector} position
+ */
 FWorldPositional.prototype.getPosition=function(){
 	return this.position;
 };
 
-
+/**
+ * Returns the x coordinate of the object's current position 
+ * @return {Number} the x coordinate
+ */
 FWorldPositional.prototype.getPositionX=function(){
 	return this.getPosition().x;
 };
+
+/**
+ * Returns the Y coordinate of the object's current position
+ * @returns {Number} the Y coordinate
+ */
 FWorldPositional.prototype.getPositionY=function(){
 	return this.getPosition().y;
 };
 
-
+/**
+ * Returns the current angle of the positional object.
+ * @returns {Number} the angle in radians
+ */
 FWorldPositional.prototype.getAngle=function(){
 	
 	return 0;
 }
 
+/**
+ * Sets the current angle of the object
+ * @param {number} a the angle in radians
+ */
+FWorldPositional.prototype.setAngle=function(a){
+	
+}

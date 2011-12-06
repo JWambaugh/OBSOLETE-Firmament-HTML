@@ -21,7 +21,6 @@
  * Base class for creating a state machine
  */
 
-
 function FStateMachine(states){
     this.states=states;
     this.currentState=null;

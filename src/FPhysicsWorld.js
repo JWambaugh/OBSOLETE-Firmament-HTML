@@ -15,10 +15,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
 
-/*
- * Class: FPhysicsWorld
+/**
+ * @class
+ * @extends FWorld
  */
-
 
 function FPhysicsWorld(gravity){
 	this.collisions=[]
