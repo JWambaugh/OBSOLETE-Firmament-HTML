@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title id='title'>Tools</title>
+
+<script src='../FirmamentBundle.js'></script>
+
+<script>
+
+
+var ToolUI={
+	init:function(){
+		var loadFiles = this.getQueryVariable('loadFiles')
+		if(loadFiles)loadFiles=loadFiles.split('|');
+		for(var x=0;x<loadFiles.length;x++){
+			this.loadScript(loadFiles[x]);
+		}
+	}	
+    ,getQueryVariable:function (variable) {
+        var query = window.location.search.substring(1); 
+        var vars = query.split("&"); 
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                return pair[1]; 
+            } 
+        }
+        return false;
+    }
+    
+    ,loadScript:function(fileName){
+    	var el = document.createElement('script');
+    	el.src=fileName;
+    	document.head.appendChild(el);
+    }
+}
+
+function init(){
+	
+	ToolUI.init();
+	
+	
+}
+
+</script>
+
+
+</head>
+<body onload='init();'>
+
+</body>
+</html>
