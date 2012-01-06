@@ -12138,14 +12138,14 @@ FGame.prototype._step=function() {
 function FCamera(canvas){
 	this.canvas=canvas;
 	window.onresize=this.canvasResized.bind(this);
-	this.width=canvas.width;
-	this.height=canvas.height;
+	
 
 
 	this.game= null;
 	this.zoom=100;
 	this.topLeftPosition=new FVector();
 	this.setPosition(new FVector(0,0));
+	this.canvasResized();
 }
 
 FCamera.prototype=new FWorldPositional;

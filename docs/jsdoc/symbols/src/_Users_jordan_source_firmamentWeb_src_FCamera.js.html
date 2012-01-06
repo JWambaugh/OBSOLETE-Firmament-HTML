@@ -35,14 +35,14 @@
 <span class='line'> 28</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">FCamera</span><span class="PUNC">(</span><span class="NAME">canvas</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 29</span> </span><span class="WHIT">	</span><span class="NAME">this.canvas</span><span class="PUNC">=</span><span class="NAME">canvas</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 30</span> </span><span class="WHIT">	</span><span class="NAME">window.onresize</span><span class="PUNC">=</span><span class="NAME">this.canvasResized.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 31</span> </span><span class="WHIT">	</span><span class="NAME">this.width</span><span class="PUNC">=</span><span class="NAME">canvas.width</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 32</span> </span><span class="WHIT">	</span><span class="NAME">this.height</span><span class="PUNC">=</span><span class="NAME">canvas.height</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">	
+<span class='line'> 32</span> 
 <span class='line'> 33</span> 
-<span class='line'> 34</span> 
-<span class='line'> 35</span> </span><span class="WHIT">	</span><span class="NAME">this.game</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 36</span> </span><span class="WHIT">	</span><span class="NAME">this.zoom</span><span class="PUNC">=</span><span class="NUMB">100</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 37</span> </span><span class="WHIT">	</span><span class="NAME">this.topLeftPosition</span><span class="PUNC">=</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">FVector</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 38</span> </span><span class="WHIT">	</span><span class="NAME">this.setPosition</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">FVector</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 34</span> 	</span><span class="NAME">this.game</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">	</span><span class="NAME">this.zoom</span><span class="PUNC">=</span><span class="NUMB">100</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">	</span><span class="NAME">this.topLeftPosition</span><span class="PUNC">=</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">FVector</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">	</span><span class="NAME">this.setPosition</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">FVector</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="WHIT">	</span><span class="NAME">this.canvasResized</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 39</span> </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 40</span> 
 <span class='line'> 41</span> </span><span class="NAME">FCamera.prototype</span><span class="PUNC">=</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">FWorldPositional</span><span class="PUNC">;</span><span class="WHIT">
