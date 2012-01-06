@@ -12137,6 +12137,7 @@ FGame.prototype._step=function() {
  */
 function FCamera(canvas){
 	this.canvas=canvas;
+	window.onresize=this.canvasResized.bind(this);
 	this.width=canvas.width;
 	this.height=canvas.height;
 
@@ -12270,6 +12271,20 @@ FCamera.prototype.calculateTopLeftPosition=function(){
 	this.topLeftPosition.x=this.position.x-(this.width/this.zoom)/2;
 	this.topLeftPosition.y=this.position.y-(this.height/this.zoom)/2;
 };
+
+
+
+
+FCamera.prototype.canvasResized=function(e){
+	this.width=this.canvas.clientWidth;
+	this.height=this.canvas.clientHeight;
+	this.canvas.width=this.width;
+	this.canvas.height=this.height;
+	this.calculateTopLeftPosition();
+}
+
+
+
 /*  Firmament HTML 5 Game Engine
     Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
