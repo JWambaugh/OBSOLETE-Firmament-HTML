@@ -3,7 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title id='title'>Tools</title>
+<style>
+div{
+	border: 1px solid;
+}
+#leftSide{
+	float:left;
+}
 
+
+</style>
 <script src='../FirmamentBundle.js'></script>
 
 <script>
@@ -16,7 +25,13 @@ var ToolUI={
 		for(var x=0;x<loadFiles.length;x++){
 			this.loadScript(loadFiles[x]);
 		}
+		this.loadScript('toolList.js');
+		this.elements.header=document.getElementById('header');
+		this.elements.body=document.getElementById('body');
+		this.elements.leftSide=document.getElementById('leftSide');
+		this.elements.content=document.getElementById('content');
 	}	
+	,elements:{}
     ,getQueryVariable:function (variable) {
         var query = window.location.search.substring(1); 
         var vars = query.split("&"); 
@@ -31,8 +46,15 @@ var ToolUI={
     
     ,loadScript:function(fileName){
     	var el = document.createElement('script');
-    	el.src=fileName;
+    	el.src=fileName+"?rand="+Math.random();
     	document.head.appendChild(el);
+    }
+    ,render:function(element, thing){
+    	
+    	if(this.elements[element] == undefined){
+    		throw "element ";
+    	}
+    	this.elements[element].appendChild(thing);
     }
 }
 
@@ -48,6 +70,10 @@ function init(){
 
 </head>
 <body onload='init();'>
-
+<div id='header'>header</div>
+<div id='body'>
+<div id='leftSide'>Left bar</div>
+<div id='content'>Content</div>
+</div>
 </body>
 </html>
