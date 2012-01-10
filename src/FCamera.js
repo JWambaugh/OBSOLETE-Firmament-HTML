@@ -27,8 +27,9 @@
  */
 function FCamera(canvas){
 	this.canvas=canvas;
-	window.onresize=this.canvasResized.bind(this);
-	
+	if(!Firmament.isMobileSafari()){
+		window.onresize=this.canvasResized.bind(this);
+	}
 
 
 	this.game= null;

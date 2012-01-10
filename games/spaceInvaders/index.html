@@ -128,10 +128,30 @@ function zoom(inOrOut){
 	
 
         </script>
+        <style>
+        *{
+	-webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+            user-select: none;
+        }
+        canvas{
+	
+        	-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+			user-select: none;
+        	width:100%;height:100%;-webkit-user-select: none;background-color:black;cursor:crosshair;
+        }
+        </style>
     </head>
     <body onload="init();">
         
-         <canvas id="canvas"  style="width:100%;height:100%;-webkit-user-select: none;background-color:black;"></canvas>
+         <canvas id="canvas"  style=""></canvas>
         
         <br>
         

@@ -184,6 +184,13 @@ var Firmament={
 		,isFunction:function( obj ) {
 				return typeof(obj)=='function'?true:false;
 			}
+		
+		/**
+		 * Returns true if the browser is mobile safari.
+		 */
+		,isMobileSafari:function(){
+			return navigator.userAgent.match(/(iPod|iPhone|iPad)/);
+		}
 
 		
 		
@@ -1251,8 +1258,9 @@ FGame.prototype._step=function() {
  */
 function FCamera(canvas){
 	this.canvas=canvas;
-	window.onresize=this.canvasResized.bind(this);
-	
+	if(!Firmament.isMobileSafari()){
+		window.onresize=this.canvasResized.bind(this);
+	}
 
 
 	this.game= null;
@@ -1390,6 +1398,7 @@ FCamera.prototype.calculateTopLeftPosition=function(){
 
 
 FCamera.prototype.canvasResized=function(e){
+	console.log("clientHeight:"+this.canvas.clientHeight+'  height:'+this.canvas.height);
 	this.width=this.canvas.clientWidth;
 	this.height=this.canvas.clientHeight;
 	this.canvas.width=this.width;

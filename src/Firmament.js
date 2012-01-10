@@ -184,6 +184,13 @@ var Firmament={
 		,isFunction:function( obj ) {
 				return typeof(obj)=='function'?true:false;
 			}
+		
+		/**
+		 * Returns true if the browser is mobile safari.
+		 */
+		,isMobileSafari:function(){
+			return navigator.userAgent.match(/(iPod|iPhone|iPad)/);
+		}
 
 		
 		
