@@ -6,6 +6,8 @@
   <property name="external"  location="external"/>
   <property name="buildDest" location="."/>
   
+  <property name="markdownDir" location="docs/markdown"/>
+  <property name="htmlDocsDir" location="docs/html"/>
   <!-- 
   *************
   This is the list of source files in the order that they should be included. Add new files to the project here.
@@ -110,7 +112,7 @@
   <target name="documentation">
  		<!--  <antcall target='apiDocsUnix' />-->
  		<antcall target='jsdoc' />
- 		
+ 		<antcall target='markdown' />
 		
   </target>
   
@@ -132,11 +134,28 @@
 	  <!-- <echo message='${sourcefileList}' /> -->
 	  <java jar='${build}/jsdoc-toolkit/jsrun.jar' fork='true' dir='${build}/jsdoc-toolkit'>
         <arg value='app/run.js' />
-         <arg  value='-d=../../docs/jsdoc/' />
+         <arg  value='-d=../../docs/html/jsdoc/' />
          <arg value='-a' />
          <arg value='-t=templates/codeView' />
          <arg line='${sourcefileList}' />
       </java>
+  
+  </target>
+  
+ <!-- Processes all markdown files in the markdown dir. --> 
+  <target name='markdown'>
+  
+    <apply executable="java" verbose="true" addsourcefile="false"> 
+	    <arg value="-cp"/> 
+	    <arg value="${build}/markdownj.jar"/> 
+	    <arg value="com.petebevin.markdown.MarkdownProcessor"/> 
+	    <fileset dir="${markdownDir}" includes="*.md"/> 
+	    <redirector>
+	       <inputmapper type="glob" from="*.md" to="${markdownDir}/*.md"/>
+	        <outputmapper id="out" type="glob" from="*.md" to="${htmlDocsDir}/*.html"/>
+        </redirector> 
+	
+    </apply> 
   
   </target>
   
