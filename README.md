@@ -2,10 +2,10 @@ Firmament HTML 5 Game Engine
 ============================
 Firmament is an open-source, HTML 5-based, 2 dimensional game engine developed for the easy creation of video games. It is currently under heavy development, so its feature list is constantly expanding. Its main features are:
 
-*Robust 2D physics engine for realistic 2-dimensional simulations. Make physics-based games like 'Angry Birds' with ease!
-*Easy game creation using full-featured JavaScript API. Use your javascript skills to build games!
-*HTML5 based - runs in any HTML 5 compliant web browser ( tested in chrome, firefox, internet explorer)
-*Open source - Firmament is licensed under the GPL version 3. Download the engine and use it in your open source project for free.
+* Robust 2D physics engine for realistic 2-dimensional simulations. Make physics-based games like 'Angry Birds' with ease!
+* Easy game creation using full-featured JavaScript API. Use your javascript skills to build games!
+* HTML5 based - runs in any HTML 5 compliant web browser ( tested in chrome, firefox, internet explorer)
+* Open source - Firmament is licensed under the GPL version 3. Download the engine and use it in your open source project for free.
 
 For the latest version, visit the github page: https://github.com/martamius/Firmament-Game-Engine
 
