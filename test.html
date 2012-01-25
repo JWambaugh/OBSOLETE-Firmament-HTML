@@ -4,8 +4,15 @@
         <script src="FirmamentBundle.js"></script>
         
         <script>
-        
+        manager = new FSoundManager();
+        var sound = manager.loadSound('applause-2.wav');
         function init(){
+        	
+        	
+        	manager.play(sound);
+        	
+        	/*
+        	
             var game=new FGame();
             
             game.connect('fpsUpdate',function(fps){
@@ -73,7 +80,7 @@
                     
                     ]
                 });
-            game.startSimulation();
+            game.startSimulation();*/
         }
 	function screenDown(){
 	    window.scrollBy(0,100)

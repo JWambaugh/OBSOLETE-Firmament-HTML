@@ -5,7 +5,7 @@
 
 
 //load sprites
-
+var audioManager = new FSoundManager();
 var saucerImage=Firmament.loadImage("images/ufo.gif");
 var fireBallImage=Firmament.loadImage('images/fireball.jpeg');
 var rocketImage=Firmament.loadImage("images/rocket.png");
@@ -13,7 +13,9 @@ var alienImage=Firmament.loadImage("images/alien.jpg");
 var alienAnimation=Firmament.loadImage("images/alienAnimation.gif");
 var ufoAnimation=Firmament.loadImage("images/ufoAnimation.gif");
 var shrapnel=Firmament.loadImage("images/shrapnel.png");
-//var explosionSound=fgame.loadSound("sounds/Explosion.wav");
+var explosionSound = audioManager.loadSound('sounds/grenade.mp3');
+
+
 //var music=fgame.loadMusic("music/test.mp3");
 //music.play();
 //test button
@@ -141,9 +143,10 @@ function bleed(entity){
     }
 }
 function explode(entity){
-    //explosionSound.play();
+    
     if(entity.exploded)return;
     entity.exploded=true;
+    explosionSound.play();
     var shipColors=['#56849c','#FFFFFF','#fafafa','#fbfcfc','#b4eefb','#bdd1db']
    
     for (var x=0;x<20;x++){

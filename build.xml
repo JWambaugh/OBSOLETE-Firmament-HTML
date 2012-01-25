@@ -32,7 +32,9 @@
             <file name="FCamera.js" />
             <file name="FInput.js" />
             <file name="FTriangulator.js" />
-            
+            <file name="FSound.js" />
+             <file name="FSoundPlayer.js" />
+            <file name="FSoundManager.js" />
             <file name="FHelper.js" />
             <file name="FEntityRepo.js" />
             <file name="FStateMachine.js" />

@@ -191,6 +191,17 @@ var Firmament={
 		,isMobileSafari:function(){
 			return navigator.userAgent.match(/(iPod|iPhone|iPad)/);
 		}
+		
+		
+		,getSoundManager:function(){
+			if(this.soundManager == undefined){
+				this.soundManager = new FSoundManager();
+			}
+			return this.soundManager;
+		}
+		,loadSound:function(sound){
+			this.getSoundManager().loadSound(sound);
+		}
 
 		
 		

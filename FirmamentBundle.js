@@ -11077,6 +11077,17 @@ var Firmament={
 		,isMobileSafari:function(){
 			return navigator.userAgent.match(/(iPod|iPhone|iPad)/);
 		}
+		
+		
+		,getSoundManager:function(){
+			if(this.soundManager == undefined){
+				this.soundManager = new FSoundManager();
+			}
+			return this.soundManager;
+		}
+		,loadSound:function(sound){
+			this.getSoundManager().loadSound(sound);
+		}
 
 		
 		
@@ -12284,7 +12295,6 @@ FCamera.prototype.calculateTopLeftPosition=function(){
 
 
 FCamera.prototype.canvasResized=function(e){
-	console.log("clientHeight:"+this.canvas.clientHeight+'  height:'+this.canvas.height);
 	this.width=this.canvas.clientWidth;
 	this.height=this.canvas.clientHeight;
 	this.canvas.width=this.width;
@@ -12654,6 +12664,106 @@ var FTriangulator={
 		
 		
 };
+/**
+ * 
+ */
+
+
+
+
+function FSound(fileName){
+	
+	this.fileName = fileName;
+	
+	
+}
+
+
+
+FSound.prototype.play = function(){
+	return Firmament.getSoundManager().play(this);
+}
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
+
+
+
+
+function FSoundPlayer(sound){
+	this.soundObj=sound;
+	this.audioObj = new Audio(sound.fileName);
+	
+	this.audioObj.onplay=function(){
+		
+		Firmament.log('Playing!');
+	}
+	
+}
+
+FSoundPlayer.prototype = new FObservable();
+
+
+FSoundPlayer.prototype.play=function(){
+	this.audioObj.play();
+}
+
+FSoundPlayer.prototype.pause=function(){
+	this.audioObj.pause();
+}
+
+
+/**
+ * 
+ */
+
+
+
+function FSoundManager(){
+	this.cache={};
+	this.players=[];
+	
+}
+
+
+FSoundManager.prototype = new FObservable();
+
+FSoundManager.prototype.loadSound=function(audioFile){
+	this.cache[audioFile]={};
+	this.cache[audioFile].sound = new FSound(audioFile);
+	//preload it 
+	this.cache[audioFile].player = new FSoundPlayer(this.cache[audioFile].sound);
+	return this.cache[audioFile].sound;
+}
+
+FSoundManager.prototype.getSoundPlayer=function(sound){
+	var soundP = new FSoundPlayer(sound);
+	return soundP;
+}
+
+
+FSoundManager.prototype.play=function(sound){
+	var soundP = this.getSoundPlayer(sound);
+	this.players.push(soundP);
+	soundP.play();
+	return soundP;
+}
+
+
+
 /*  Firmament HTML 5 Game Engine
     Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
