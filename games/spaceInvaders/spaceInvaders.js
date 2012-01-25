@@ -13,7 +13,7 @@ var alienImage=Firmament.loadImage("images/alien.jpg");
 var alienAnimation=Firmament.loadImage("images/alienAnimation.gif");
 var ufoAnimation=Firmament.loadImage("images/ufoAnimation.gif");
 var shrapnel=Firmament.loadImage("images/shrapnel.png");
-var explosionSound = audioManager.loadSound('sounds/grenade.mp3');
+var explosionSound = Firmament.loadSound('sounds/grenade.mp3');
 
 
 //var music=fgame.loadMusic("music/test.mp3");

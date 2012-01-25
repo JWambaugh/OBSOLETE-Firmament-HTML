@@ -200,7 +200,7 @@ var Firmament={
 			return this.soundManager;
 		}
 		,loadSound:function(sound){
-			this.getSoundManager().loadSound(sound);
+			return this.getSoundManager().loadSound(sound);
 		}
 
 		
