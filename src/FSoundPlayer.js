@@ -17,11 +17,18 @@
 
 
 
+/**
+ * A sound player
 
+ *
+ * @class FSoundPlayer
+ * @param {FSound} sound - the sound object to play
+ * @extends FObservable
+ */
 function FSoundPlayer(sound){
 	this.soundObj=sound;
 	this.audioObj = new Audio(sound.fileName);
-	
+	Firmament.log(this.audioObj);
 	this.audioObj.onplay=function(){
 		
 		Firmament.log('Playing!');

@@ -24,28 +24,35 @@
 <span class='line'> 17</span> 
 <span class='line'> 18</span> 
 <span class='line'> 19</span> 
-<span class='line'> 20</span> 
-<span class='line'> 21</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">FSoundPlayer</span><span class="PUNC">(</span><span class="NAME">sound</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 22</span> </span><span class="WHIT">	</span><span class="NAME">this.soundObj</span><span class="PUNC">=</span><span class="NAME">sound</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 23</span> </span><span class="WHIT">	</span><span class="NAME">this.audioObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Audio</span><span class="PUNC">(</span><span class="NAME">sound.fileName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 24</span> </span><span class="WHIT">	
-<span class='line'> 25</span> 	</span><span class="NAME">this.audioObj.onplay</span><span class="PUNC">=</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 26</span> </span><span class="WHIT">		
-<span class='line'> 27</span> 		</span><span class="NAME">Firmament.log</span><span class="PUNC">(</span><span class="STRN">'Playing!'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 28</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 29</span> </span><span class="WHIT">	
-<span class='line'> 30</span> </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 31</span> 
-<span class='line'> 32</span> </span><span class="NAME">FSoundPlayer.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">FObservable</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 33</span> 
-<span class='line'> 34</span> 
-<span class='line'> 35</span> </span><span class="NAME">FSoundPlayer.prototype.play</span><span class="PUNC">=</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 36</span> </span><span class="WHIT">	</span><span class="NAME">this.audioObj.play</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="COMM">/**
+<span class='line'> 21</span>  * A sound player
+<span class='line'> 22</span> 
+<span class='line'> 23</span>  *
+<span class='line'> 24</span>  * @class FSoundPlayer
+<span class='line'> 25</span>  * @param {FSound} sound - the sound object to play
+<span class='line'> 26</span>  * @extends FObservable
+<span class='line'> 27</span>  */</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">FSoundPlayer</span><span class="PUNC">(</span><span class="NAME">sound</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">	</span><span class="NAME">this.soundObj</span><span class="PUNC">=</span><span class="NAME">sound</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="WHIT">	</span><span class="NAME">this.audioObj</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Audio</span><span class="PUNC">(</span><span class="NAME">sound.fileName</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">	</span><span class="NAME">Firmament.log</span><span class="PUNC">(</span><span class="NAME">this.audioObj</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">	</span><span class="NAME">this.audioObj.onplay</span><span class="PUNC">=</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">		
+<span class='line'> 34</span> 		</span><span class="NAME">Firmament.log</span><span class="PUNC">(</span><span class="STRN">'Playing!'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">	
 <span class='line'> 37</span> </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 38</span> 
-<span class='line'> 39</span> </span><span class="NAME">FSoundPlayer.prototype.pause</span><span class="PUNC">=</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 40</span> </span><span class="WHIT">	</span><span class="NAME">this.audioObj.pause</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 41</span> </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 42</span> 
-<span class='line'> 43</span> 
-<span class='line'> 44</span> </span></pre></body></html>
+<span class='line'> 39</span> </span><span class="NAME">FSoundPlayer.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">FObservable</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 40</span> 
+<span class='line'> 41</span> 
+<span class='line'> 42</span> </span><span class="NAME">FSoundPlayer.prototype.play</span><span class="PUNC">=</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">	</span><span class="NAME">this.audioObj.play</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 45</span> 
+<span class='line'> 46</span> </span><span class="NAME">FSoundPlayer.prototype.pause</span><span class="PUNC">=</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">	</span><span class="NAME">this.audioObj.pause</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 49</span> 
+<span class='line'> 50</span> 
+<span class='line'> 51</span> </span></pre></body></html>

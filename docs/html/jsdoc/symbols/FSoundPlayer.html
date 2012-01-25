@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
-		<title>FRenderer | JsDoc Reference</title>
+		<title>FSoundPlayer | JsDoc Reference</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 		<meta name="mobileoptimized" content="0" />
@@ -104,12 +104,12 @@
 			<header>
 				<h1 class="classTitle">
 					
-					Class <span>FRenderer</span>
+					Class <span>FSoundPlayer</span>
 				</h1>
 				
 				<div class="intro">
 					<p class="description summary">
-						
+						FSoundPlayer
 					</p>
 						
 					
@@ -117,8 +117,10 @@
 							
 							
 							
-								<li>Defined in: <a href="../symbols/src/_Users_jordan_source_firmamentWeb_src_FRenderer.js.html">FRenderer.js</a></li>
+								<li>Defined in: <a href="../symbols/src/_Users_jordan_source_firmamentWeb_src_FSoundPlayer.js.html">FSoundPlayer.js</a></li>
 							
+							<li>Extends <span class="fixedFont">
+								<a href="../symbols/FObservable.html">FObservable</a></span></li>
 							
 						</ul>
 					
@@ -128,7 +130,7 @@
 			
 				<section>
 					<div class="props">
-						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class FRenderer.">
+						<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class FSoundPlayer.">
 							<caption class="sectionTitle">Class Summary</caption>
 							<thead>
 								<tr>
@@ -141,9 +143,9 @@
 									<td class="attributes">&nbsp;</td>
 									<td class="nameDescription" >
 										<div class="fixedFont">
-											<b><a href="../symbols/FRenderer.html#constructor">FRenderer</a></b>()
+											<b><a href="../symbols/FSoundPlayer.html#constructor">FSoundPlayer</a></b>(sound)
 										</div>
-										<div class="description"></div>
+										<div class="description">A sound player</div>
 									</td>
 								</tr>
 							</tbody>
@@ -165,7 +167,7 @@
 						
 						
 							<nav>
-								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class FRenderer.">
+								<table class="summaryTable" id="MethodsList" cellspacing="0" summary="A summary of the methods documented in the class FSoundPlayer.">
 									<thead>
 										<tr>
 											<th scope="col">Method Attributes</th>
@@ -181,9 +183,20 @@
 											>
 												<td class="attributes">&nbsp;</td>
 												<td class="nameDescription">
-													<div class="fixedFont"><b><a href="../symbols/FRenderer.html#render">render</a></b>(cxt, item, camera)
+													<div class="fixedFont"><b><a href="../symbols/FSoundPlayer.html#pause">pause</a></b>()
 													</div>
-													<div class="description">Renders a renderable object</div>
+													<div class="description"></div>
+												</td>
+											</tr>
+										
+											<tr
+												 class='item1'
+											>
+												<td class="attributes">&nbsp;</td>
+												<td class="nameDescription">
+													<div class="fixedFont"><b><a href="../symbols/FSoundPlayer.html#play">play</a></b>()
+													</div>
+													<div class="description"></div>
 												</td>
 											</tr>
 										
@@ -192,6 +205,12 @@
 							</nav>
 						
 					
+						
+							<nav>
+								<dl class="inheritsList" id="MethodsListInherited">
+								<dt>Methods borrowed from class <span class='fixedFont'><a href="../symbols/FObservable.html">FObservable</a></span>: </dt><dd><span class='fixedFont'><a href="../symbols/FObservable.html#connect">connect</a></span></dd> <dd><span class='fixedFont'><a href="../symbols/FObservable.html#disconnect">disconnect</a></span></dd> <dd><span class='fixedFont'><a href="../symbols/FObservable.html#emit">emit</a></span></dd>
+								</dl>
+							</nav>
 						
 					</div>
 				</section>
@@ -213,16 +232,27 @@
 							</h2>
 							
 							<div class="fixedFont">
-								<b>FRenderer</b>()
+								<b>FSoundPlayer</b>(sound)
 							</div>
 							
 							<div class="description">
-								
+								A sound player
 								
 							</div>
 							
 							
 						
+							
+								<dl class="detailList params">
+									<dt class="heading">Parameters:</dt>
+									
+										<dt>
+											<span class="light fixedFont">{<a href="../symbols/FSound.html">FSound</a>}</span>  <b>sound</b>
+											
+										</dt>
+										<dd>- the sound object to play</dd>
+									
+								</dl>
 							
 							
 							
@@ -251,18 +281,18 @@
 									<li 
 										 class='item0'
 									>
-										<div class="fixedFont heading" id="render">
+										<div class="fixedFont heading" id="pause">
 											<span class='lighter'>
 											
 											</span>
 											
 											
 											
-											<b>render</b>(cxt, item, camera)
+											<b>pause</b>()
 										</div>
 										
 										<div class="description">
-											Renders a renderable object
+											
 											
 											
 											
@@ -272,28 +302,34 @@
 										
 										
 										
-											<dl class="detailList params">
-												<dt class="heading">Parameters:</dt>
-												
-													<dt>
-														<b>cxt</b>
-														
-													</dt>
-													<dd></dd>
-												
-													<dt>
-														<b>item</b>
-														
-													</dt>
-													<dd></dd>
-												
-													<dt>
-														<b>camera</b>
-														
-													</dt>
-													<dd></dd>
-												
-											</dl>
+										
+										
+										<div class="hr"></div>
+									</li>
+								
+									<li 
+										 class='item1'
+									>
+										<div class="fixedFont heading" id="play">
+											<span class='lighter'>
+											
+											</span>
+											
+											
+											
+											<b>play</b>()
+										</div>
+										
+										<div class="description">
+											
+											
+											
+											
+											
+										</div>
+										
+										
+										
 										
 										
 										

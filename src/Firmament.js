@@ -144,7 +144,6 @@ var Firmament={
 		}
 
 		/*
-		 * Function: isArray
 		 * Returns true if obj is an array
 		 */
 		,isArray:function(obj){
@@ -199,6 +198,11 @@ var Firmament={
 			}
 			return this.soundManager;
 		}
+		
+		
+		/**
+		 * Loads and returns an {@link FSound} object.
+		 */
 		,loadSound:function(sound){
 			return this.getSoundManager().loadSound(sound);
 		}
