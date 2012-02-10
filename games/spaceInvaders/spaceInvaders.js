@@ -5,7 +5,6 @@
 
 
 //load sprites
-var audioManager = new FSoundManager();
 var saucerImage=Firmament.loadImage("images/ufo.gif");
 var fireBallImage=Firmament.loadImage('images/fireball.jpeg');
 var rocketImage=Firmament.loadImage("images/rocket.png");
@@ -13,8 +12,8 @@ var alienImage=Firmament.loadImage("images/alien.jpg");
 var alienAnimation=Firmament.loadImage("images/alienAnimation.gif");
 var ufoAnimation=Firmament.loadImage("images/ufoAnimation.gif");
 var shrapnel=Firmament.loadImage("images/shrapnel.png");
-var explosionSound = Firmament.loadSound('sounds/grenade.mp3');
-
+var explosionSound = Firmament.loadSound('sounds/grenade.mp3',3);
+var shootSound = Firmament.loadSound('sounds/shoot.mp3',.5);
 
 //var music=fgame.loadMusic("music/test.mp3");
 //music.play();
@@ -317,6 +316,7 @@ game.connect("beginStep",function(){
         	//Firmament.log("shooting");
             player.sinceShot=player.sinceShotAmount; // can shoot 10/60 times a second
             player.sinceShot2Amount=6;
+            shootSound.play();
             FHelper.shootBulletFromEntityToMouse(input,camera,world,player,FEntityRepo.getEntityType('fireBullet'));
         }
     }else{

@@ -203,8 +203,12 @@ var Firmament={
 		/**
 		 * Loads and returns an {@link FSound} object.
 		 */
-		,loadSound:function(sound){
-			return this.getSoundManager().loadSound(sound);
+		,loadSound:function(sound,duration){
+			this.log(_BrowserDetect.browser);
+			if(_BrowserDetect.browser == 'Firefox'){
+				sound=sound.replace(".mp3",".ogg");
+			}
+			return this.getSoundManager().loadSound(sound,duration);
 		}
 
 		

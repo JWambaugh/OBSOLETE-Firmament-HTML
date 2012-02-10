@@ -25,10 +25,10 @@
  * @param {string} fileName - The name of the audio file
  * @extends FObservable
  */
-function FSound(fileName){
+function FSound(fileName,duration){
 	
 	this.fileName = fileName;
-	
+	this.duration=duration;
 	
 }
 FSound.prototype = new FObservable();

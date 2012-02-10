@@ -52,7 +52,9 @@ FObservable.prototype.connect=function(signalName,func,scope){
 }
 
 /**
- * Disconnects a callback from the specified signal. If func is not provided, removes all callbacks from the signal.
+ * Disconnects a callback from the specified signal.
+ * If func is not provided, removes all callbacks from the signal.
+ * If no parameters are provided, all connections will be removed.
  * @param {String} signalName
  * @param {Function} func
  */
@@ -68,9 +70,11 @@ FObservable.prototype.disconnect=function(eventName,func){
 				}
 			}
 		}
-	} else{
+	} else if(eventName != undefined){
 		//remove all functions connected to event
 		this._connections[eventName]=[];
+	} else {
+		this._connections={};
 	}
 }
 

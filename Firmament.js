@@ -203,8 +203,12 @@ var Firmament={
 		/**
 		 * Loads and returns an {@link FSound} object.
 		 */
-		,loadSound:function(sound){
-			return this.getSoundManager().loadSound(sound);
+		,loadSound:function(sound,duration){
+			this.log(_BrowserDetect.browser);
+			if(_BrowserDetect.browser == 'Firefox'){
+				sound=sound.replace(".mp3",".ogg");
+			}
+			return this.getSoundManager().loadSound(sound,duration);
 		}
 
 		
@@ -290,6 +294,123 @@ if (!Object.create) {
 
 
 
+var _BrowserDetect = {
+	init: function () {
+		this.browser = this.searchString(this.dataBrowser) || "An unknown browser";
+		this.version = this.searchVersion(navigator.userAgent)
+			|| this.searchVersion(navigator.appVersion)
+			|| "an unknown version";
+		this.OS = this.searchString(this.dataOS) || "an unknown OS";
+	},
+	searchString: function (data) {
+		for (var i=0;i<data.length;i++)	{
+			var dataString = data[i].string;
+			var dataProp = data[i].prop;
+			this.versionSearchString = data[i].versionSearch || data[i].identity;
+			if (dataString) {
+				if (dataString.indexOf(data[i].subString) != -1)
+					return data[i].identity;
+			}
+			else if (dataProp)
+				return data[i].identity;
+		}
+	},
+	searchVersion: function (dataString) {
+		var index = dataString.indexOf(this.versionSearchString);
+		if (index == -1) return;
+		return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+	},
+	dataBrowser: [
+		{
+			string: navigator.userAgent,
+			subString: "Chrome",
+			identity: "Chrome"
+		},
+		{ 	string: navigator.userAgent,
+			subString: "OmniWeb",
+			versionSearch: "OmniWeb/",
+			identity: "OmniWeb"
+		},
+		{
+			string: navigator.vendor,
+			subString: "Apple",
+			identity: "Safari",
+			versionSearch: "Version"
+		},
+		{
+			prop: window.opera,
+			identity: "Opera",
+			versionSearch: "Version"
+		},
+		{
+			string: navigator.vendor,
+			subString: "iCab",
+			identity: "iCab"
+		},
+		{
+			string: navigator.vendor,
+			subString: "KDE",
+			identity: "Konqueror"
+		},
+		{
+			string: navigator.userAgent,
+			subString: "Firefox",
+			identity: "Firefox"
+		},
+		{
+			string: navigator.vendor,
+			subString: "Camino",
+			identity: "Camino"
+		},
+		{		// for newer Netscapes (6+)
+			string: navigator.userAgent,
+			subString: "Netscape",
+			identity: "Netscape"
+		},
+		{
+			string: navigator.userAgent,
+			subString: "MSIE",
+			identity: "Explorer",
+			versionSearch: "MSIE"
+		},
+		{
+			string: navigator.userAgent,
+			subString: "Gecko",
+			identity: "Mozilla",
+			versionSearch: "rv"
+		},
+		{ 		// for older Netscapes (4-)
+			string: navigator.userAgent,
+			subString: "Mozilla",
+			identity: "Netscape",
+			versionSearch: "Mozilla"
+		}
+	],
+	dataOS : [
+		{
+			string: navigator.platform,
+			subString: "Win",
+			identity: "Windows"
+		},
+		{
+			string: navigator.platform,
+			subString: "Mac",
+			identity: "Mac"
+		},
+		{
+			   string: navigator.userAgent,
+			   subString: "iPhone",
+			   identity: "iPhone/iPod"
+	    },
+		{
+			string: navigator.platform,
+			subString: "Linux",
+			identity: "Linux"
+		}
+	]
+
+};
+_BrowserDetect.init();
 /*  Firmament HTML 5 Game Engine
     Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
@@ -344,7 +465,9 @@ FObservable.prototype.connect=function(signalName,func,scope){
 }
 
 /**
- * Disconnects a callback from the specified signal. If func is not provided, removes all callbacks from the signal.
+ * Disconnects a callback from the specified signal.
+ * If func is not provided, removes all callbacks from the signal.
+ * If no parameters are provided, all connections will be removed.
  * @param {String} signalName
  * @param {Function} func
  */
@@ -360,9 +483,11 @@ FObservable.prototype.disconnect=function(eventName,func){
 				}
 			}
 		}
-	} else{
+	} else if(eventName != undefined){
 		//remove all functions connected to event
 		this._connections[eventName]=[];
+	} else {
+		this._connections={};
 	}
 }
 
@@ -383,6 +508,59 @@ FObservable.prototype.emit=function(signalName,params){
 	
 }
 
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
+
+
+
+
+/** 
+ * @class
+ * 
+ * @param constructor the constructor for the class to control a pool of
+ */
+
+
+function FResourcePool( constructor){
+	//this.max=poolMax;
+	this.constructorFunc = constructor;
+	this.availablePool=[];
+	this.totalPool=[];
+
+}
+
+
+FResourcePool.prototype.get=function(){
+	var resource;
+	if(this.availablePool.length>0){
+		resource= this.availablePool.pop();
+	}else{
+		resource = new this.constructorFunc();
+		this.totalPool.push(resource);
+		//console.log('pool size: ' + this.totalPool.length);
+	}
+	return resource;
+};
+
+
+FResourcePool.prototype.addBack=function(object){
+	//adds a resource back to the pool
+	this.availablePool.push(object)
+};
 /*  Firmament HTML 5 Game Engine
     Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
 
@@ -1218,7 +1396,7 @@ FGame.prototype._step=function() {
 	this.instep=true;
 	
 	if(this.fps>0&&this.fps<10){
-		Firmament.log(this.worlds);
+		//Firmament.log(this.worlds);
 	}
 	this.emit("beginStep");
 	for(var x=0;x<this.worlds.length;x++){
@@ -1438,6 +1616,7 @@ FCamera.prototype.canvasResized=function(e){
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.  
  */
+
 
 
 
@@ -1809,10 +1988,10 @@ var FTriangulator={
  * @param {string} fileName - The name of the audio file
  * @extends FObservable
  */
-function FSound(fileName){
+function FSound(fileName,duration){
 	
 	this.fileName = fileName;
-	
+	this.duration=duration;
 	
 }
 FSound.prototype = new FObservable();
@@ -1853,29 +2032,61 @@ FSound.prototype.play = function(){
  * @extends FObservable
  */
 function FSoundPlayer(sound){
-	this.soundObj=sound;
-	this.audioObj = new Audio(sound.fileName);
-	Firmament.log(this.audioObj);
-	this.audioObj.onplay=function(){
-		
-		Firmament.log('Playing!');
+	if(sound != undefined){
+		this.audioObj = new Audio(sound.fileName);
+		this.setSound(sound);
 	}
+	else
+		this.audioObj = new Audio();
 	
 }
 
+
+
+
 FSoundPlayer.prototype = new FObservable();
 
+FSoundPlayer.prototype.setSound=function(sound){
+	this.soundObj=sound;
+	this.audioObj.src=sound.fileName;
+	this.audioObj.load();
+	
+};
 
 FSoundPlayer.prototype.play=function(){
+	
 	this.audioObj.play();
+	var duration=5;//default assume 5 second duration
+	if(this.audioObj.duration && ! isNaN(this.audioObj.duration));
+	else if(this.soundObj.duration != undefined)duration = this.soundObj.duration;
+	setTimeout(function(){this.emit("canCleanUp",[this])}.bind(this),(duration+1)*1000);
 }
 
-FSoundPlayer.prototype.pause=function(){
-	this.audioObj.pause();
-}
+
+
+/*  Firmament HTML 5 Game Engine
+    Copyright (C) 2011 Jordan CM Wambaugh jordan@wambaugh.org http://firmament.wambaugh.org
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+ */
+
+
 
 
 /**
+ * Manages sound objects and their playback 
+ * @class FSoundManager
  * 
  */
 
@@ -1883,30 +2094,34 @@ FSoundPlayer.prototype.pause=function(){
 
 function FSoundManager(){
 	this.cache={};
-	this.players=[];
+	this.playerPool = new FResourcePool(FSoundPlayer);
 	
 }
 
 
 FSoundManager.prototype = new FObservable();
 
-FSoundManager.prototype.loadSound=function(audioFile){
+FSoundManager.prototype.loadSound=function(audioFile,duration){
 	this.cache[audioFile]={};
-	this.cache[audioFile].sound = new FSound(audioFile);
+	this.cache[audioFile].sound = new FSound(audioFile,duration);
 	//preload it 
 	this.cache[audioFile].player = new FSoundPlayer(this.cache[audioFile].sound);
 	return this.cache[audioFile].sound;
 }
 
 FSoundManager.prototype.getSoundPlayer=function(sound){
-	var soundP = new FSoundPlayer(sound);
+	var soundP = this.playerPool.get();
+	
+	soundP.disconnect();
+	soundP.setSound(sound);
+	soundP.connect("canCleanUp",function(player){this.playerPool.addBack(player)}.bind(this));
 	return soundP;
 }
 
 
 FSoundManager.prototype.play=function(sound){
 	var soundP = this.getSoundPlayer(sound);
-	this.players.push(soundP);
+	
 	soundP.play();
 	return soundP;
 }

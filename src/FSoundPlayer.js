@@ -26,25 +26,35 @@
  * @extends FObservable
  */
 function FSoundPlayer(sound){
-	this.soundObj=sound;
-	this.audioObj = new Audio(sound.fileName);
-	Firmament.log(this.audioObj);
-	this.audioObj.onplay=function(){
-		
-		Firmament.log('Playing!');
+	if(sound != undefined){
+		this.audioObj = new Audio(sound.fileName);
+		this.setSound(sound);
 	}
+	else
+		this.audioObj = new Audio();
 	
 }
 
+
+
+
 FSoundPlayer.prototype = new FObservable();
 
+FSoundPlayer.prototype.setSound=function(sound){
+	this.soundObj=sound;
+	this.audioObj.src=sound.fileName;
+	this.audioObj.load();
+	
+};
 
 FSoundPlayer.prototype.play=function(){
+	
 	this.audioObj.play();
+	var duration=5;//default assume 5 second duration
+	if(this.audioObj.duration && ! isNaN(this.audioObj.duration));
+	else if(this.soundObj.duration != undefined)duration = this.soundObj.duration;
+	setTimeout(function(){this.emit("canCleanUp",[this])}.bind(this),(duration+1)*1000);
 }
 
-FSoundPlayer.prototype.pause=function(){
-	this.audioObj.pause();
-}
 
 

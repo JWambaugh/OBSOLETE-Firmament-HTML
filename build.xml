@@ -14,9 +14,11 @@
   ************* 
   -->
    <filelist dir="${src}" id='sourceFiles'>
-            <file name="Firmament.js" />
+            <file name="Firmament.js" /> 
             <file name="polyfill.js" />
+            <file name="BrowserDetect.js" />
             <file name="FObservable.js" />
+            <file name="FResourcePool.js" />
             
             <file name="FVector.js" />
             <file name="FWorldPositional.js" />
