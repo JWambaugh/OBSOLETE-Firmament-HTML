@@ -1,3 +1,10 @@
+PROJECT OBSOLETE
+================
+The HTML5 version of firmament is no longer active, and is instead replaced by the Haxe Firmament project located here: https://github.com/martamius/Firmament
+
+I am keeping the code here for historical reasons and in case somebody would like to fork the project.
+
+
 Firmament HTML 5 Game Engine
 ============================
 Firmament is an open-source, HTML 5-based, 2 dimensional game engine developed for the easy creation of video games. It is currently under heavy development, so its feature list is constantly expanding. Its main features are:
